@@ -1,0 +1,49 @@
+# macOS and editor files
+.DS_Store
+**/.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Python build artifacts
+build/
+dist/
+*.egg-info/
+
+# Exported Docker images (Dockerfile and .dockerignore remain versioned)
+/docker-artifacts/
+
+# Local runtime output
+applications/h2o-hybrid-aimd/outputs/*
+!applications/h2o-hybrid-aimd/outputs/.gitkeep
+
+# Historical reports are archived outside the public repository; new reports are local outputs.
+applications/h2o-hybrid-aimd/reports/*
+!applications/h2o-hybrid-aimd/reports/.gitkeep
+
+# Preserve legacy Dashboard runtime data in place during migration.
+fusion-platform/runtime-state/
+fusion-platform/ray-outputs/
+fusion-platform/performance-outputs/
+fusion-platform/secrets/
+fusion-platform/logs/
+fusion-platform/.qperfsim-runtime/
+fusion-platform/perf-probe/
+
+# Local logs and temporary files
+*.log
+*.tmp
+*.temp

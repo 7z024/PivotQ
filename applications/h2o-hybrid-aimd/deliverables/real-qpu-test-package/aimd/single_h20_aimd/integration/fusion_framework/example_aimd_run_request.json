@@ -1,0 +1,30 @@
+{
+  "api_version": "1.0",
+  "run_id": "h2o-f2-fusion-aimd-001",
+  "task_id": "h2o-f2-fusion-aimd-001.aimd",
+  "parent_task_id": null,
+  "task_type": "aimd_run",
+  "payload": {
+    "config_path": "/data/hzhang/tmp/lcz_hybrid_v1/single_h20_aimd/configs/h2o_aimd.yaml",
+    "checkpoint_path": "/data/hzhang/tmp/lcz_hybrid_v1/single_h20_aimd/checkpoints/hybrid_model.pt",
+    "output_dir": "/data/hzhang/tmp/lcz_hybrid_v1/single_h20_aimd/outputs/fusion/h2o-f2-fusion-aimd-001",
+    "execution_mode": "heterogeneous",
+    "quantum_target": "gpu",
+    "config_overrides": {}
+  },
+  "resources": {
+    "cpu": 1.0,
+    "gpu": 0.0,
+    "qpu": 0.0,
+    "memory_bytes": null,
+    "custom": {}
+  },
+  "timeout_seconds": 7200.0,
+  "max_retries": 0,
+  "idempotency_key": "h2o-f2-fusion-aimd-001",
+  "metadata": {
+    "molecule": "H2O",
+    "model": "three-qubit-F2-A2-ADAPT",
+    "purpose": "complete-heterogeneous-nve-aimd"
+  }
+}

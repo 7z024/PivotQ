@@ -1,0 +1,1651 @@
+{
+  "schema_version": 2,
+  "evidence_status": "current_framework_simulation_validation",
+  "run_id": "sim-qpu-full-20261002",
+  "date": "2026-10-02",
+  "scope": "Unmodified H2O application requests QPU quantum circuits and GPU classical inference; the framework selects exact CPU simulators and schedules them through real isolated Ray actors.",
+  "reproduce_command": "uv run --locked python -B tests/integration/run_cpu_aimd.py --steps 1000",
+  "output_directory": "applications/h2o-hybrid-aimd/outputs/integration/sim-qpu-full-20261002",
+  "path_normalization": "Repository-local absolute paths are normalized to relative paths in this summary; raw output files retain their original paths and are identified by artifact_sha256.",
+  "environment": {
+    "os": "Ubuntu 22.04.5 LTS",
+    "architecture": "x86_64",
+    "python": "3.12.13",
+    "packages": {
+      "ray": "2.31.0",
+      "torch": "2.13.0+cpu",
+      "numpy": "2.5.2",
+      "qiskit": "2.5.1",
+      "ase": "3.29.0",
+      "qiskit-aer": "0.17.2",
+      "pyscf": "2.14.0",
+      "scipy": "1.18.1",
+      "threadpoolctl": "3.7.0"
+    },
+    "httpx_installed": false
+  },
+  "passed": true,
+  "checks": {
+    "driver_succeeded": true,
+    "driver_resources_cleaned": true,
+    "application_succeeded": true,
+    "scientific_acceptance_passed": true,
+    "trajectory_frames_match": true,
+    "log_steps_and_time_match": true,
+    "quantum_component_scheduled": true,
+    "persistent_classical_actor_used": true,
+    "all_invocations_succeeded_on_ray": true,
+    "only_cpu_resources_executed": true,
+    "framework_selected_cpu_simulators": true,
+    "trace_identifies_requested_and_actual_devices": true,
+    "application_hardware_schedule_preserved": true,
+    "application_requested_devices_preserved": true,
+    "runtime_reports_consistent": true,
+    "artifact_hashes_match": true,
+    "qpu_returns_exact_probabilities_without_hardware_shots": true,
+    "qpu_simulation_counters_match_framework_calls": true,
+    "source_manifest_unchanged": true
+  },
+  "scientific_checks": {
+    "trajectory_status_ok": true,
+    "frame_count_matches": true,
+    "all_frames_finite": true,
+    "all_frames_in_training_domain": true,
+    "ood_not_stopped": true,
+    "total_energy_drift_within_limit": true,
+    "total_energy_range_within_limit": true,
+    "linear_energy_drift_within_limit": true,
+    "center_of_mass_drift_within_limit": true,
+    "max_force_component_within_limit": true,
+    "adjacent_force_jump_within_limit": true,
+    "total_force_within_limit": true,
+    "total_torque_within_limit": true,
+    "finite_difference_step_refinement": true
+  },
+  "requested_execution": {
+    "classical_actor_target": "gpu",
+    "coordinator_device": "cpu",
+    "force_control_device": "cpu",
+    "mode": "heterogeneous",
+    "quantum_target": "qpu"
+  },
+  "runtime_execution": {
+    "qpu_simulation": {
+      "actual_device": "cpu",
+      "api_version": "1.0",
+      "backend_name": "fusion_qpu_exact_statevector_v1",
+      "basis_identity_source": "QuantumCircuitRequest.measurement_basis with matching circuit_id suffix",
+      "effective_shots": null,
+      "framework": "qiskit+ray_quantum",
+      "measurement_basis_count": 2,
+      "measurement_basis_round_trip_required": true,
+      "measurement_qubits": [
+        0,
+        1,
+        2
+      ],
+      "mode": "exact_probabilities",
+      "num_qubits": 3,
+      "physical_qubits": null,
+      "real_hardware": false,
+      "requested_shots": 3000,
+      "result_bit_order": "q0,q1,q2 left-to-right",
+      "sampling": false,
+      "shots_per_measurement_basis": null,
+      "simulation": true,
+      "simulation_backend": "qiskit_statevector",
+      "supported_observables": [
+        "ZII",
+        "IZI",
+        "IIZ",
+        "ZZI",
+        "ZIZ",
+        "IZZ",
+        "ZZZ",
+        "XII",
+        "IXI",
+        "IIX",
+        "XXI",
+        "XIX",
+        "IXX",
+        "XXX"
+      ],
+      "supports_noise": false,
+      "total_batches": 1003,
+      "total_circuit_evaluations": 19343,
+      "total_measurement_circuit_settings": 38686,
+      "total_physical_executions": 0,
+      "variance_semantics": "zero estimator variance for exact probabilities"
+    },
+    "selections": [
+      {
+        "actual_devices": [
+          "CPU"
+        ],
+        "backend": "torch_cpu",
+        "component_id": "h2o-classical-predict",
+        "effective_resources": {
+          "custom_resources": {},
+          "num_cpus": 0.25,
+          "num_gpus": 0.0
+        },
+        "reason": "hardware_unavailable",
+        "requested_devices": [
+          "GPU"
+        ],
+        "requested_resources": {
+          "custom_resources": {},
+          "num_cpus": 0.25,
+          "num_gpus": 1.0
+        },
+        "simulated": true
+      },
+      {
+        "actual_devices": [
+          "CPU"
+        ],
+        "backend": "qiskit_statevector",
+        "component_id": "qpu-circuits",
+        "effective_resources": {
+          "custom_resources": {},
+          "num_cpus": 1.0,
+          "num_gpus": 0.0
+        },
+        "reason": "hardware_unavailable",
+        "requested_devices": [
+          "QPU"
+        ],
+        "requested_resources": {
+          "custom_resources": {},
+          "num_cpus": 1.0,
+          "num_gpus": 0.0
+        },
+        "simulated": true
+      }
+    ],
+    "simulation_enabled": true
+  },
+  "framework_invocations": {
+    "h2o-classical-predict": 1005,
+    "qpu-circuits": 1003
+  },
+  "persistent_classical_actor_count": 1,
+  "persistent_quantum_actor_count": 1,
+  "metrics": {
+    "simulation": {
+      "status": "ok",
+      "steps": 1000,
+      "recorded_frames": 1001,
+      "time_step_fs": 0.1,
+      "simulated_time_fs": 100.0,
+      "trajectory": "applications/h2o-hybrid-aimd/outputs/integration/sim-qpu-full-20261002/aimd/h2o_aimd.traj",
+      "log": "applications/h2o-hybrid-aimd/outputs/integration/sim-qpu-full-20261002/aimd/md_log.csv",
+      "positions": "applications/h2o-hybrid-aimd/outputs/integration/sim-qpu-full-20261002/aimd/positions.csv",
+      "all_frames_finite": true,
+      "all_frames_in_training_domain": true,
+      "total_energy_initial_eV": 0.44400883031351407,
+      "total_energy_final_eV": 0.44409169373165436,
+      "total_energy_drift_eV": 8.286341814028875e-05,
+      "total_energy_range_eV": 0.00043146757314022066,
+      "linear_total_energy_drift_eV_per_ps": 4.8017217571320916e-05,
+      "center_of_mass_max_displacement_A": 1.4346514024040764e-15,
+      "max_force_component_eV_per_A": 5.209306317314439,
+      "max_adjacent_force_jump_eV_per_A": 0.3411610654958137,
+      "max_total_force_norm_eV_per_A": 1.047382306668854e-15,
+      "max_total_torque_norm_eV": 8.881784197024715e-16,
+      "ood_enabled": true,
+      "ood_stop_reason": null,
+      "ood_stop_geometry": null,
+      "ood_max_nearest_training_distance": 0.12476323505089251
+    },
+    "force_consistency": {
+      "sample_count": 9,
+      "method": "cartesian_central_finite_difference_step_refinement",
+      "production_step_A": 0.001,
+      "refinement_step_A": 0.0005,
+      "rigid_residual_projection": true,
+      "mae_eV_per_A": 2.5663564491104937e-05,
+      "max_abs_error_eV_per_A": 0.0001361864945099711,
+      "threshold_eV_per_A": 0.02
+    },
+    "ood_monitor": {
+      "feature_names": [
+        "mean_oh_length_A",
+        "squared_oh_difference_A2",
+        "cos_hoh_angle"
+      ],
+      "feature_min": [
+        0.75,
+        0.0,
+        -0.6427876096865395
+      ],
+      "feature_max": [
+        1.25,
+        0.2500000000000002,
+        0.17364817766693047
+      ],
+      "scaled_training_features": [
+        [
+          0.0,
+          4.9303806576313194e-32,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.8940609460547494
+        ],
+        [
+          0.0,
+          4.9303806576313194e-32,
+          0.57461889751349
+        ],
+        [
+          0.0,
+          4.9303806576313194e-32,
+          0.470298547089267
+        ],
+        [
+          0.0,
+          0.0,
+          0.3683908410431495
+        ],
+        [
+          0.0,
+          0.0,
+          0.26967135855170365
+        ],
+        [
+          0.0,
+          4.9303806576313194e-32,
+          0.08477234144750777
+        ],
+        [
+          0.0,
+          4.9303806576313194e-32,
+          2.7196824093760446e-16
+        ],
+        [
+          0.10000000000000009,
+          0.039999999999999945,
+          0.9999999999999999
+        ],
+        [
+          0.10000000000000009,
+          0.039999999999999945,
+          0.8940609460547494
+        ],
+        [
+          0.10000000000000009,
+          0.039999999999999945,
+          0.787309448756745
+        ],
+        [
+          0.10000000000000009,
+          0.039999999999999945,
+          0.6805579514587403
+        ],
+        [
+          0.10000000000000009,
+          0.039999999999999945,
+          0.57461889751349
+        ],
+        [
+          0.10000000000000009,
+          0.039999999999999945,
+          0.3683908410431494
+        ],
+        [
+          0.10000000000000009,
+          0.039999999999999945,
+          0.26967135855170365
+        ],
+        [
+          0.09999999999999987,
+          0.03999999999999986,
+          0.1748914144851428
+        ],
+        [
+          0.10000000000000009,
+          0.039999999999999945,
+          0.08477234144750777
+        ],
+        [
+          0.10000000000000009,
+          0.039999999999999945,
+          0.0
+        ],
+        [
+          0.19999999999999996,
+          0.15999999999999978,
+          0.787309448756745
+        ],
+        [
+          0.19999999999999996,
+          0.15999999999999978,
+          0.6805579514587403
+        ],
+        [
+          0.19999999999999973,
+          0.15999999999999961,
+          0.57461889751349
+        ],
+        [
+          0.19999999999999996,
+          0.15999999999999978,
+          0.47029854708926694
+        ],
+        [
+          0.19999999999999996,
+          0.15999999999999978,
+          0.3683908410431494
+        ],
+        [
+          0.19999999999999996,
+          0.15999999999999978,
+          0.26967135855170365
+        ],
+        [
+          0.19999999999999996,
+          0.15999999999999978,
+          0.0847723414475079
+        ],
+        [
+          0.20000000000000018,
+          0.15999999999999998,
+          1.3598412046880223e-16
+        ],
+        [
+          0.2999999999999998,
+          0.35999999999999927,
+          1.0
+        ],
+        [
+          0.30000000000000027,
+          0.3600000000000003,
+          0.8940609460547494
+        ],
+        [
+          0.30000000000000027,
+          0.3600000000000003,
+          0.6805579514587403
+        ],
+        [
+          0.2999999999999998,
+          0.35999999999999927,
+          0.57461889751349
+        ],
+        [
+          0.30000000000000004,
+          0.35999999999999976,
+          0.470298547089267
+        ],
+        [
+          0.30000000000000004,
+          0.35999999999999976,
+          0.36839084104314956
+        ],
+        [
+          0.30000000000000004,
+          0.35999999999999976,
+          0.26967135855170377
+        ],
+        [
+          0.30000000000000004,
+          0.35999999999999976,
+          0.17489141448514295
+        ],
+        [
+          0.30000000000000004,
+          0.35999999999999976,
+          0.0847723414475079
+        ],
+        [
+          0.3999999999999997,
+          0.6399999999999985,
+          0.9999999999999999
+        ],
+        [
+          0.3999999999999999,
+          0.6399999999999991,
+          0.8940609460547494
+        ],
+        [
+          0.3999999999999999,
+          0.6399999999999991,
+          0.787309448756745
+        ],
+        [
+          0.3999999999999997,
+          0.6399999999999985,
+          0.57461889751349
+        ],
+        [
+          0.3999999999999999,
+          0.6399999999999991,
+          0.47029854708926694
+        ],
+        [
+          0.3999999999999999,
+          0.6399999999999991,
+          0.2696713585517037
+        ],
+        [
+          0.3999999999999999,
+          0.6399999999999991,
+          0.1748914144851428
+        ],
+        [
+          0.3999999999999999,
+          0.6399999999999991,
+          0.0847723414475079
+        ],
+        [
+          0.5,
+          0.9999999999999991,
+          0.8940609460547494
+        ],
+        [
+          0.5,
+          0.9999999999999991,
+          0.787309448756745
+        ],
+        [
+          0.4999999999999998,
+          0.9999999999999982,
+          0.57461889751349
+        ],
+        [
+          0.5,
+          1.0,
+          0.36839084104314956
+        ],
+        [
+          0.5,
+          0.9999999999999991,
+          0.2696713585517037
+        ],
+        [
+          0.5,
+          0.9999999999999991,
+          0.1748914144851428
+        ],
+        [
+          0.5,
+          0.9999999999999991,
+          0.0847723414475079
+        ],
+        [
+          0.5,
+          0.9999999999999991,
+          1.3598412046880223e-16
+        ],
+        [
+          0.19999999999999996,
+          0.0,
+          0.9999999999999999
+        ],
+        [
+          0.19999999999999996,
+          0.0,
+          0.8940609460547494
+        ],
+        [
+          0.19999999999999996,
+          0.0,
+          0.787309448756745
+        ],
+        [
+          0.19999999999999996,
+          0.0,
+          0.6805579514587403
+        ],
+        [
+          0.19999999999999996,
+          0.0,
+          0.57461889751349
+        ],
+        [
+          0.20000000000000018,
+          4.9303806576313194e-32,
+          0.470298547089267
+        ],
+        [
+          0.19999999999999996,
+          0.0,
+          0.3683908410431494
+        ],
+        [
+          0.19999999999999996,
+          0.0,
+          0.26967135855170365
+        ],
+        [
+          0.19999999999999996,
+          0.0,
+          0.0
+        ],
+        [
+          0.2999999999999998,
+          0.039999999999999945,
+          0.9999999999999999
+        ],
+        [
+          0.2999999999999998,
+          0.039999999999999945,
+          0.787309448756745
+        ],
+        [
+          0.2999999999999998,
+          0.039999999999999945,
+          0.6805579514587403
+        ],
+        [
+          0.2999999999999998,
+          0.03999999999999986,
+          0.57461889751349
+        ],
+        [
+          0.2999999999999998,
+          0.039999999999999945,
+          0.470298547089267
+        ],
+        [
+          0.2999999999999998,
+          0.039999999999999945,
+          0.2696713585517037
+        ],
+        [
+          0.2999999999999998,
+          0.039999999999999945,
+          0.0847723414475079
+        ],
+        [
+          0.30000000000000004,
+          0.040000000000000036,
+          1.3598412046880223e-16
+        ],
+        [
+          0.3999999999999999,
+          0.15999999999999961,
+          0.9999999999999999
+        ],
+        [
+          0.3999999999999999,
+          0.15999999999999998,
+          0.787309448756745
+        ],
+        [
+          0.40000000000000036,
+          0.16000000000000034,
+          0.6805579514587403
+        ],
+        [
+          0.3999999999999999,
+          0.15999999999999998,
+          0.47029854708926694
+        ],
+        [
+          0.3999999999999999,
+          0.15999999999999998,
+          0.3683908410431495
+        ],
+        [
+          0.3999999999999999,
+          0.15999999999999998,
+          0.2696713585517037
+        ],
+        [
+          0.3999999999999999,
+          0.15999999999999998,
+          0.1748914144851428
+        ],
+        [
+          0.49999999999999956,
+          0.359999999999999,
+          1.0
+        ],
+        [
+          0.5,
+          0.3599999999999995,
+          0.8940609460547494
+        ],
+        [
+          0.5,
+          0.3599999999999995,
+          0.787309448756745
+        ],
+        [
+          0.5,
+          0.3599999999999995,
+          0.6805579514587403
+        ],
+        [
+          0.49999999999999956,
+          0.359999999999999,
+          0.57461889751349
+        ],
+        [
+          0.5,
+          0.3599999999999995,
+          0.47029854708926694
+        ],
+        [
+          0.5,
+          0.3599999999999995,
+          0.3683908410431495
+        ],
+        [
+          0.5,
+          0.3599999999999995,
+          0.2696713585517037
+        ],
+        [
+          0.5,
+          0.3599999999999995,
+          0.1748914144851429
+        ],
+        [
+          0.5,
+          0.3599999999999995,
+          0.08477234144750805
+        ],
+        [
+          0.5,
+          0.3599999999999995,
+          0.0
+        ],
+        [
+          0.5999999999999996,
+          0.6399999999999988,
+          1.0
+        ],
+        [
+          0.6000000000000001,
+          0.6399999999999996,
+          0.8940609460547494
+        ],
+        [
+          0.6000000000000001,
+          0.6399999999999996,
+          0.787309448756745
+        ],
+        [
+          0.6000000000000001,
+          0.6399999999999996,
+          0.6805579514587403
+        ],
+        [
+          0.5999999999999996,
+          0.6399999999999988,
+          0.57461889751349
+        ],
+        [
+          0.6000000000000001,
+          0.6399999999999996,
+          0.2696713585517037
+        ],
+        [
+          0.6000000000000001,
+          0.6399999999999996,
+          0.1748914144851429
+        ],
+        [
+          0.6000000000000001,
+          0.6399999999999996,
+          0.08477234144750805
+        ],
+        [
+          0.6000000000000001,
+          0.6399999999999996,
+          2.7196824093760446e-16
+        ],
+        [
+          0.3999999999999999,
+          0.0,
+          0.9999999999999999
+        ],
+        [
+          0.3999999999999999,
+          0.0,
+          0.8940609460547494
+        ],
+        [
+          0.3999999999999999,
+          0.0,
+          0.787309448756745
+        ],
+        [
+          0.3999999999999999,
+          0.0,
+          0.6805579514587403
+        ],
+        [
+          0.3999999999999999,
+          4.9303806576313194e-32,
+          0.57461889751349
+        ],
+        [
+          0.3999999999999999,
+          0.0,
+          0.470298547089267
+        ],
+        [
+          0.3999999999999999,
+          0.0,
+          0.3683908410431495
+        ],
+        [
+          0.3999999999999999,
+          0.0,
+          0.26967135855170377
+        ],
+        [
+          0.3999999999999999,
+          0.0,
+          0.1748914144851429
+        ],
+        [
+          0.3999999999999999,
+          0.0,
+          0.08477234144750805
+        ],
+        [
+          0.3999999999999999,
+          4.9303806576313194e-32,
+          1.3598412046880223e-16
+        ],
+        [
+          0.4999999999999998,
+          0.03999999999999986,
+          0.9999999999999999
+        ],
+        [
+          0.5,
+          0.040000000000000216,
+          0.8940609460547494
+        ],
+        [
+          0.5,
+          0.040000000000000216,
+          0.6805579514587403
+        ],
+        [
+          0.5,
+          0.040000000000000036,
+          0.47029854708926694
+        ],
+        [
+          0.5,
+          0.040000000000000036,
+          0.3683908410431495
+        ],
+        [
+          0.5,
+          0.040000000000000036,
+          0.2696713585517037
+        ],
+        [
+          0.5,
+          0.040000000000000036,
+          0.1748914144851428
+        ],
+        [
+          0.5,
+          0.040000000000000036,
+          0.08477234144750777
+        ],
+        [
+          0.5,
+          0.040000000000000036,
+          1.3598412046880223e-16
+        ],
+        [
+          0.5999999999999996,
+          0.15999999999999978,
+          0.8940609460547494
+        ],
+        [
+          0.5999999999999996,
+          0.15999999999999945,
+          0.57461889751349
+        ],
+        [
+          0.5999999999999996,
+          0.15999999999999978,
+          0.4702985470892668
+        ],
+        [
+          0.5999999999999996,
+          0.15999999999999978,
+          0.3683908410431494
+        ],
+        [
+          0.5999999999999996,
+          0.15999999999999978,
+          0.1748914144851429
+        ],
+        [
+          0.5999999999999996,
+          0.15999999999999978,
+          0.0847723414475079
+        ],
+        [
+          0.5999999999999996,
+          0.15999999999999978,
+          0.0
+        ],
+        [
+          0.6999999999999997,
+          0.35999999999999927,
+          0.9999999999999999
+        ],
+        [
+          0.7000000000000002,
+          0.35999999999999976,
+          0.8940609460547494
+        ],
+        [
+          0.7000000000000002,
+          0.35999999999999976,
+          0.787309448756745
+        ],
+        [
+          0.7000000000000002,
+          0.35999999999999976,
+          0.6805579514587403
+        ],
+        [
+          0.6999999999999997,
+          0.35999999999999927,
+          0.57461889751349
+        ],
+        [
+          0.7000000000000002,
+          0.35999999999999976,
+          0.47029854708926694
+        ],
+        [
+          0.7000000000000002,
+          0.3600000000000003,
+          0.3683908410431496
+        ],
+        [
+          0.7000000000000002,
+          0.35999999999999976,
+          0.08477234144750805
+        ],
+        [
+          0.7000000000000002,
+          0.35999999999999976,
+          1.3598412046880223e-16
+        ],
+        [
+          0.4144000000000001,
+          0.0,
+          0.4802210776238782
+        ],
+        [
+          0.5999999999999996,
+          1.9721522630525278e-31,
+          1.0
+        ],
+        [
+          0.6000000000000005,
+          1.9721522630525278e-31,
+          0.8940609460547494
+        ],
+        [
+          0.6000000000000001,
+          0.0,
+          0.787309448756745
+        ],
+        [
+          0.6000000000000005,
+          1.9721522630525278e-31,
+          0.6805579514587403
+        ],
+        [
+          0.5999999999999996,
+          1.9721522630525278e-31,
+          0.57461889751349
+        ],
+        [
+          0.6000000000000001,
+          0.0,
+          0.47029854708926694
+        ],
+        [
+          0.6000000000000001,
+          0.0,
+          0.3683908410431495
+        ],
+        [
+          0.6000000000000001,
+          0.0,
+          0.2696713585517037
+        ],
+        [
+          0.6000000000000001,
+          0.0,
+          0.1748914144851429
+        ],
+        [
+          0.6000000000000001,
+          0.0,
+          0.0847723414475079
+        ],
+        [
+          0.6000000000000001,
+          0.0,
+          1.3598412046880223e-16
+        ],
+        [
+          0.6999999999999997,
+          0.03999999999999968,
+          0.9999999999999999
+        ],
+        [
+          0.7000000000000002,
+          0.03999999999999986,
+          0.8940609460547494
+        ],
+        [
+          0.7000000000000002,
+          0.03999999999999986,
+          0.6805579514587403
+        ],
+        [
+          0.6999999999999997,
+          0.03999999999999968,
+          0.57461889751349
+        ],
+        [
+          0.7000000000000002,
+          0.03999999999999986,
+          0.47029854708926694
+        ],
+        [
+          0.7000000000000002,
+          0.03999999999999986,
+          0.3683908410431495
+        ],
+        [
+          0.7000000000000002,
+          0.03999999999999986,
+          0.26967135855170377
+        ],
+        [
+          0.7000000000000002,
+          0.03999999999999986,
+          0.1748914144851428
+        ],
+        [
+          0.7000000000000002,
+          0.03999999999999986,
+          0.0847723414475079
+        ],
+        [
+          0.7999999999999998,
+          0.15999999999999945,
+          0.9999999999999999
+        ],
+        [
+          0.7999999999999998,
+          0.15999999999999978,
+          0.787309448756745
+        ],
+        [
+          0.7999999999999998,
+          0.15999999999999978,
+          0.6805579514587403
+        ],
+        [
+          0.7999999999999998,
+          0.15999999999999945,
+          0.57461889751349
+        ],
+        [
+          0.7999999999999998,
+          0.15999999999999978,
+          0.47029854708926694
+        ],
+        [
+          0.8000000000000003,
+          0.16000000000000014,
+          0.36839084104314956
+        ],
+        [
+          0.7999999999999998,
+          0.15999999999999978,
+          0.26967135855170365
+        ],
+        [
+          0.7999999999999998,
+          1.9721522630525278e-31,
+          0.9999999999999999
+        ],
+        [
+          0.7999999999999998,
+          0.0,
+          0.8940609460547494
+        ],
+        [
+          0.7999999999999998,
+          0.0,
+          0.47029854708926694
+        ],
+        [
+          0.7999999999999998,
+          0.0,
+          0.3683908410431495
+        ],
+        [
+          0.7999999999999998,
+          0.0,
+          0.2696713585517037
+        ],
+        [
+          0.7999999999999998,
+          0.0,
+          0.1748914144851428
+        ],
+        [
+          0.7999999999999998,
+          0.0,
+          0.0847723414475079
+        ],
+        [
+          0.8999999999999999,
+          0.040000000000000036,
+          0.787309448756745
+        ],
+        [
+          0.8999999999999999,
+          0.040000000000000036,
+          0.6805579514587403
+        ],
+        [
+          0.8999999999999995,
+          0.03999999999999986,
+          0.57461889751349
+        ],
+        [
+          0.9000000000000004,
+          0.040000000000000216,
+          0.3683908410431496
+        ],
+        [
+          0.8999999999999999,
+          0.040000000000000036,
+          0.2696713585517037
+        ],
+        [
+          0.8999999999999999,
+          0.040000000000000036,
+          0.1748914144851429
+        ],
+        [
+          0.8999999999999999,
+          0.040000000000000036,
+          0.08477234144750805
+        ],
+        [
+          0.8999999999999999,
+          0.040000000000000036,
+          1.3598412046880223e-16
+        ],
+        [
+          1.0,
+          1.9721522630525278e-31,
+          0.9999999999999999
+        ],
+        [
+          1.0,
+          0.0,
+          0.8940609460547494
+        ],
+        [
+          1.0,
+          0.0,
+          0.787309448756745
+        ],
+        [
+          1.0,
+          0.0,
+          0.6805579514587403
+        ],
+        [
+          1.0,
+          1.9721522630525278e-31,
+          0.57461889751349
+        ],
+        [
+          1.0,
+          0.0,
+          0.47029854708926694
+        ],
+        [
+          1.0,
+          1.9721522630525278e-31,
+          0.36839084104314956
+        ],
+        [
+          1.0,
+          0.0,
+          0.26967135855170365
+        ],
+        [
+          1.0,
+          0.0,
+          0.1748914144851428
+        ],
+        [
+          1.0,
+          0.0,
+          0.0847723414475079
+        ],
+        [
+          1.0,
+          0.0,
+          2.7196824093760446e-16
+        ]
+      ],
+      "distance_threshold": 0.18070573268503304,
+      "threshold_quantile": 0.99,
+      "threshold_multiplier": 1.25,
+      "consecutive_limit": 3,
+      "immediate_multiplier": 2.0
+    },
+    "quantum_execution": {
+      "actual_backend_execution_counters": {
+        "total_batches": 1003,
+        "total_circuit_evaluations": 19343,
+        "total_measurement_circuit_settings": 38686,
+        "total_physical_executions": 0
+      },
+      "measurement_basis_count": 2,
+      "shots_per_measurement_basis": null,
+      "estimated_total_physical_executions": null,
+      "geometries_per_energy_force_call": 19,
+      "interpretation": "exact-statevector CPU sample-family evaluations, not real QPU executions"
+    },
+    "acceptance": {
+      "checks": {
+        "trajectory_status_ok": true,
+        "frame_count_matches": true,
+        "all_frames_finite": true,
+        "all_frames_in_training_domain": true,
+        "ood_not_stopped": true,
+        "total_energy_drift_within_limit": true,
+        "total_energy_range_within_limit": true,
+        "linear_energy_drift_within_limit": true,
+        "center_of_mass_drift_within_limit": true,
+        "max_force_component_within_limit": true,
+        "adjacent_force_jump_within_limit": true,
+        "total_force_within_limit": true,
+        "total_torque_within_limit": true,
+        "finite_difference_step_refinement": true
+      },
+      "metric_applicability": {
+        "linear_energy_drift": {
+          "applicable_as_hard_gate": true,
+          "hard_gate_minimum_steps": 100,
+          "observed_abs_eV_per_ps": 4.8017217571320916e-05,
+          "threshold_eV_per_ps": 0.05,
+          "disposition": "hard_gate"
+        }
+      },
+      "passed": true
+    }
+  },
+  "driver_manifest": {
+    "cleanup": {
+      "actor_cleanup": {
+        "cooperative_failed": 0,
+        "cooperative_succeeded": 2,
+        "cooperative_timed_out": 0,
+        "records": [
+          {
+            "actor_id": null,
+            "actor_name": "ray-quantum-0dbfa6cea93e4e0c98ad4fc1b4d35932-h2o-classical-predict",
+            "component_id": "h2o-classical-predict",
+            "cooperative_close": {
+              "attempt_count": 1,
+              "error_type": null,
+              "state": "succeeded",
+              "timeout_seconds": 5.0
+            },
+            "termination": {
+              "attempt_count": 1,
+              "error_type": null,
+              "mode": "normal_after_close",
+              "state": "requested"
+            }
+          },
+          {
+            "actor_id": null,
+            "actor_name": "ray-quantum-0dbfa6cea93e4e0c98ad4fc1b4d35932-qpu-circuits",
+            "component_id": "qpu-circuits",
+            "cooperative_close": {
+              "attempt_count": 1,
+              "error_type": null,
+              "state": "succeeded",
+              "timeout_seconds": 5.0
+            },
+            "termination": {
+              "attempt_count": 1,
+              "error_type": null,
+              "mode": "normal_after_close",
+              "state": "requested"
+            }
+          }
+        ],
+        "records_complete": true,
+        "termination_failed": 0,
+        "termination_requested": 2,
+        "total": 2
+      },
+      "framework_closed": true,
+      "outcome": "clean",
+      "ray_connection_owned": false,
+      "ray_disconnected": false,
+      "registry_closed": true,
+      "succeeded": true
+    },
+    "exit_code": 0,
+    "failure_type": null,
+    "finished_at": "2026-10-01T16:45:52.920158Z",
+    "namespace": "sim-qpu-full-20261002",
+    "process_id": 3982810,
+    "run_id": "sim-qpu-full-20261002",
+    "runtime_execution": {
+      "selections": [
+        {
+          "actual_devices": [
+            "CPU"
+          ],
+          "backend": "torch_cpu",
+          "component_id": "h2o-classical-predict",
+          "effective_resources": {
+            "custom_resources": {},
+            "num_cpus": 0.25,
+            "num_gpus": 0.0
+          },
+          "reason": "hardware_unavailable",
+          "requested_devices": [
+            "GPU"
+          ],
+          "requested_resources": {
+            "custom_resources": {},
+            "num_cpus": 0.25,
+            "num_gpus": 1.0
+          },
+          "simulated": true
+        },
+        {
+          "actual_devices": [
+            "CPU"
+          ],
+          "backend": "qiskit_statevector",
+          "component_id": "qpu-circuits",
+          "effective_resources": {
+            "custom_resources": {},
+            "num_cpus": 1.0,
+            "num_gpus": 0.0
+          },
+          "reason": "hardware_unavailable",
+          "requested_devices": [
+            "QPU"
+          ],
+          "requested_resources": {
+            "custom_resources": {},
+            "num_cpus": 1.0,
+            "num_gpus": 0.0
+          },
+          "simulated": true
+        }
+      ],
+      "simulation_enabled": true
+    },
+    "schema_version": 2,
+    "started_at": "2026-10-01T16:40:02.466310Z",
+    "status": "succeeded"
+  },
+  "local_ray_shutdown": true,
+  "git_baseline": {
+    "commit": "34b8edd38831ac3b33964144e1352ea616b8b1f3",
+    "branch": "feat/frontend",
+    "status_porcelain": "M README.md\n M packages/qhai-framework/README.md\n M packages/qhai-framework/ray_quantum/executors/local.py\n M packages/qhai-framework/ray_quantum/executors/ray.py\n M packages/qhai-framework/ray_quantum/framework/__init__.py\n M packages/qhai-framework/ray_quantum/framework/facade.py\n M packages/qhai-framework/ray_quantum/framework/registry.py\n M packages/qhai-framework/ray_quantum/jobs/driver.py\n M packages/qhai-framework/ray_quantum/qpu_integration/component.py\n M packages/qhai-framework/ray_quantum/qpu_integration/contracts.py\n M pyproject.toml\n M tests/integration/README.md\n M tests/integration/test_framework_aimd.py\n M uv.lock\n?? packages/qhai-framework/ray_quantum/framework/simulation.py\n?? packages/qhai-framework/ray_quantum/integrations/\n?? packages/qhai-framework/ray_quantum/qpu_integration/simulation.py\n?? packages/qhai-framework/tests/integration/test_h2o_simulation.py\n?? packages/qhai-framework/tests/unit/framework/test_simulation.py\n?? packages/qhai-framework/tests/unit/jobs/test_driver_simulation.py\n?? packages/qhai-framework/tests/unit/test_qpu_simulation.py\n?? tests/integration/evidence/\n?? tests/integration/run_cpu_aimd.py"
+  },
+  "aimd_application_worktree_clean_after_run": true,
+  "source_file_count": 110,
+  "source_sha256": {
+    "applications/h2o-hybrid-aimd/checkpoints/hybrid_model.pt": "560bef3584db36933dfcdf1679912f04503b9339da869f489edfee0a631f2b80",
+    "applications/h2o-hybrid-aimd/configs/h2o_aimd.yaml": "b55a11b974d85080796b7f9f30735c5bab755dd41b21a1f30d2eca5c1f2adb8b",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/__init__.py": "6bf4ded8b849178fcec6bb21ffad75de646c44f2826159fbd116781bf14fb39f",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/adapt/__init__.py": "d8c043b96f848e2ca95ae028281d6121a656559e0626eeb7cd60db49a1052e3d",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/adapt/campaign.py": "5408a5340152546139a66248f71735998d8fa1e28cc683d941b994eeedde44b4",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/adapt/diagnostics.py": "d862c1dd42cab2e4e8682f70ff4da610a0c663addb71439322b1a28d97bb3cdc",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/adapt/training.py": "b49fb09245dd268ac1f96ea817edc5ea6c12045f85928ab7173b88b2ffefd271",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/api/__init__.py": "99c155db73facb304355d5a34b90d15770fb444d8aa8f6d112c9e27bffe8d1a7",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/api/classical.py": "b5a0d085c7c6b254e0158f974a17561d4527f4fd229ca32cd980cd2eadfa2385",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/api/contracts.py": "a88eb15cc716bfed5702846af7c549bf84130e87c7e6cf84730b31b7bcb42b03",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/api/force.py": "6391df6cda99cfc027d6c3e066157f1759a6dd5faa780b02badc776378713f9f",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/api/quantum.py": "ed3e29fd539edd0468de038d8e9d1ed1b96e1525db94c125bf39e331ee3f41bf",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/backends/__init__.py": "6abd109cf8ee7cc3e223c7563a71340f9cac7ad75761b3fa3ab42f212f71f2a4",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/backends/force/__init__.py": "c48a6d6b8fb244c5c63f1a00842f1e160febbe8fcca62a081c2b5c2ae33906f3",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/backends/force/cartesian_central_finite_difference.py": "e2486855bf5a7e81b665819d66ef845c66f21b4cb52fe4f2e975feb282c3a915",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/backends/force/central_finite_difference.py": "e723b8602f786f6b9cb595ce52c042fbfed46a7d6c3e1eeced75de3a6bda7023",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/backends/force/input_angle_parameter_shift.py": "6e47c589dbb8587673db9d7c4ee58c19e2bd8df4b03c47cd3f213d3f38a44424",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/classical/__init__.py": "984c04424a7f1576c92b748f7355435051c8b8628640c772353a78da5b1f5f9e",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/classical/remote_actor.py": "37dfe2d36ab65554c07c8c167e6e0e5e4272aab911c658e3f21b3bc0e1f3127a",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/classical/torch_mlp.py": "71019680a544b161836f01f4ada358dea53b6c06631574bc5fe1d36659dbec44",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/configuration/__init__.py": "d43757f2aba6a77fcd344ac911f6e374700dd0644d7b5392a635bc058567e9fe",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/configuration/loader.py": "c41769cd0d05cdffccba03a43f27f77fd29291facef4c84c1d22bf30314ead03",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/core/__init__.py": "a29c5c0d1e676aa53636fe961c210582afaaa225dad80fba8b63f117dc45f858",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/core/factory.py": "11a9e7e23efd9f39872ed2b0c612a7ca17db51360fa41a640a6fbbb47ff787c6",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/core/joint_training.py": "8ed1cd8aabe84417f54feb37cffc9033dea94fef998d08f626ff33d16b69db6d",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/core/potential.py": "7ce8a7e001a642565980e18d67e7d31aa0269865ce0be2ce62f970b4e8284401",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/core/scheduled_potential.py": "1f4fa23490a72b565dd00cd81465d51ba366ffaf66b9b31b842c8b15d685d9dc",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/core/training.py": "4b4e6a04895e26c91429e2a21774efa945b0f4fe38c3c92d0d55e63129b01b27",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/data/__init__.py": "b9cc48a91d50388eefd81bba60c6f19c1acafb0264e30ab712d25cb86a8c5474",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/data/datasets.py": "8057442a588a04f1c6aee2f6a6521f6217463959cfcfe9e845d79b8f72b2397c",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/data/expansion.py": "8fa4759f1cdb2af9eef6d9cda986bde890c49a76f381babae29fbebb4faa205c",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/evaluation/__init__.py": "42dd99a650f4002b66612931ce8126bfc892824cde4bb0224e293d6771f13e6a",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/evaluation/metrics.py": "0d782321c16a04373b7c538bc15c99af884fef19c58dd3ff2d712fe362fa9a4c",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/evaluation/plotting.py": "2f21560ba6504afcbcdf7bdfc850c92c921e83c8212af5922c0bb036708325b8",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/execution/__init__.py": "cf0545ac18bc13a55aee7574dc47d3440b8a8ba2465e1bb132a956545d25e86b",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/execution/aimd_worker.py": "67ae1c0b27065a2dca8263abfb172687f6fc09afcac37f2499f193a26b467aba",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/execution/classical_actor.py": "f91a86171a6c41f6179a3dea954cfa66c714a3f6eb69f9205dfcfada966cc491",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/execution/client.py": "9199e83112b2b770adda9b6d849a344af7e2168d3ca49ad5d9c1db6b7f240dbd",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/execution/contracts.py": "f56f2d79f5d92e3d36313018370a6bacae8b24de2f5c80355e9978d1d17c1e60",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/execution/qpu_worker.py": "936ee9c211e4e25dd61fc80647888e2b1818d5f2a1bf310aaa3e0c87bb68777b",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/execution/quantum_worker.py": "c04733707818b6537fdc9e1d67bd1330b18d51159ab01837c906066ad569d71b",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/integration/__init__.py": "a1071102b32aafdcdd6646dc5d5b7c78cafc7e0a678593b34816972693279bc5",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/integration/fusion_framework/__init__.py": "332d09b676ac274cc3afc5ba2280eb712735cc672b8da568d82ab9ddc4b059fa",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/integration/fusion_framework/components.py": "ff3ae803086188718b8fd6421828ad5bfb0e2e8839c9b6492a9d717f301a4745",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/integration/fusion_framework/fusion_client.py": "ef18effc761c7fdc90342328021b7a329a2374a2b4886899239ed1a7df189e3d",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/integration/fusion_framework/qpu_circuit_adapter.py": "d16f68ce08eb36fc5c3877ab63ab2469073aabb3ab0bdd1e5dc3640345d53a05",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/integration/fusion_framework/registration.py": "fb916fddfcc64aa0c250efce129e4eee4ed51cf4374e156725ee96865ddab5ef",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/integration/fusion_framework/runner.py": "89078b669cc1b844bae7f49e9dec7e523479286a22c1d564af2900a0da1cbda1",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/integration/fusion_framework/submit_job.py": "6cea340531b58f20d24ba7da149056d825431a318b23647709f38fc112f62529",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/quantum/__init__.py": "282a67932b2e028088f72cdf9584393008097664dc4f6fbe4e110db15d5d00f9",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/quantum/adapt_water_density_matrix.py": "a05d059cc22583ff9a0e57385a2b91e51246c025d9ef3ff2085e675276cb2346",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/quantum/adapt_water_statevector.py": "c75b53557fafe3a5373b334239366e1e777a2eedfb2bf428fab0cd24caea0142",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/quantum/qiskit_f2.py": "7e01c070e9c4d2be9ac0149863cb10f18014805484f0c3002d025aa30824b31d",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/quantum/remote_execution.py": "8e85f0567f6462a39425078bafd4341b7dc5afb7e110f5dc8f3655ca56fa1bcb",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/simulation/__init__.py": "be8232becbea1f4fb89296343189481b480bb5d915d150f3c1fbe91ddb4ebfd2",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/simulation/aimd.py": "2bc7f0dc74ac4ca74e6523019e81dde42a0250cc7db60ddb6c58cab569cda344",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/simulation/ase_adapter.py": "0a9b569f055f3bab81c84f3c7fcb26f236a9fe9f1b39c1506b2c200b6bcc1e02",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/simulation/ood.py": "09ac21b7b305d5bc0899eda1386c288e350c921454788f642a331d48612590f9",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/workflows/__init__.py": "31d818f73063fab3cd92b2897c07eb47042296cdd0b3dfd834c430b428e45c66",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/workflows/data_force_campaign.py": "2a343248f57ae23a08426fa7df46ffe82ccba387a0fd4dc907dda456796ec23c",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/workflows/evaluate.py": "64feb85e2a67232691e093046486724b32fb3858134a095258349107a312a373",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/workflows/finite_shot_robustness.py": "f9fcd2d15174a5490cf31ee09f67ecefe742c562fe47fbb2e4b000abe3ab4fb9",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/workflows/noise_experiment.py": "479ca0b3833ea138ca071deda138feddb9fc4452671333424cc8b1e92659d39b",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/workflows/qpu_force_campaign.py": "e8632431a2d780d5a520ede11d7e97f65c8bc662cede2c08e0d234c417d2d8b5",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/workflows/readout_pruning_campaign.py": "bcd7ad7011bdaee693367f0e30fbf7cd19b6f1f758fbc311c7fd19719c1e8357",
+    "applications/h2o-hybrid-aimd/single_h20_aimd/workflows/run_aimd.py": "c59c41591275c9d36e76a100437ee4c071937fcd19a64074af087a4fc32c99dc",
+    "packages/qhai-framework/ray_quantum/__init__.py": "0b2cdde4e5805c9ae4e65f4d6e81cfce6a833ca1694ecd18ea9d2c5d8367e049",
+    "packages/qhai-framework/ray_quantum/errors.py": "19e97a7aed250fa8743f53193f16d8efd31b9a7d16f059ac1d871e8ddf326f34",
+    "packages/qhai-framework/ray_quantum/executors/__init__.py": "771f2d2b6fb7ddf1be7e84f3f0a0140a97d364bc7bc50645999e1320578b0baa",
+    "packages/qhai-framework/ray_quantum/executors/base.py": "7c24726f2e40a265f5bf8da867208563145c6922e8b15a6438b4ae4563d7344d",
+    "packages/qhai-framework/ray_quantum/executors/cleanup.py": "0b0e786d3b93608b58800fad5b6d1325babe1ec53d8e65929d198f097d63c028",
+    "packages/qhai-framework/ray_quantum/executors/local.py": "cf927a41a348af4a8b274435303ab0a3458b04f1aa6245422f90ae4e03522540",
+    "packages/qhai-framework/ray_quantum/executors/ray.py": "67618039add79b7f9d50328a39412c07dd15282c21aaaef83e89693ca2ffe765",
+    "packages/qhai-framework/ray_quantum/framework/__init__.py": "d7f06f4aebd0d6995ff51d34023e4cdba78a3ccbf8ce31095a4051d1b260a6ec",
+    "packages/qhai-framework/ray_quantum/framework/component.py": "be6fd844b6102b76d005efa374ac6110f87cdaf491cd6e78f46c2244a2360415",
+    "packages/qhai-framework/ray_quantum/framework/facade.py": "34e932a5e32c00a98cda7aef7dc86470bab479dc142778220d76b74eac87b523",
+    "packages/qhai-framework/ray_quantum/framework/graph.py": "33a43c16c3c2dcfa28e45cd025c2af9b880aacce6ecd91ebff22c1efaa51cfd7",
+    "packages/qhai-framework/ray_quantum/framework/models.py": "9562f831472174478e3316e6b8371d3ee493c10d72a3c8b641b8b78dfbd3df0c",
+    "packages/qhai-framework/ray_quantum/framework/registry.py": "ddd8861e1c7c9314ff617fdb641d3e85ac65f4549f923e7ef7fdd3d1fdd81d10",
+    "packages/qhai-framework/ray_quantum/framework/resources.py": "90e26ae23db86bd3cd4f784e828aa78de34a73b0514da50a66bb92219fa6d100",
+    "packages/qhai-framework/ray_quantum/framework/simulation.py": "9276413c1cdc985cb755f684681bea90a2f6b31f4e91bc68d2ca258cd9eace6c",
+    "packages/qhai-framework/ray_quantum/integrations/__init__.py": "84e93c7c7356fa300ca896746e734aca8d578fcde43e0cfc41eb6766cde057be",
+    "packages/qhai-framework/ray_quantum/integrations/h2o/__init__.py": "1bd8029deff4eefdc6d6f6ec71940ee5fa7f18975db47346280891d4b95f82eb",
+    "packages/qhai-framework/ray_quantum/integrations/h2o/adapters.py": "819acd03e281a9737af9964964f3a486a8d8573bcd26410c67a510eb8672e40b",
+    "packages/qhai-framework/ray_quantum/integrations/h2o/bridge.py": "675ce6cffbff6a2acefb68125755d895e193364c66931b730c9175439af70464",
+    "packages/qhai-framework/ray_quantum/jobs/__init__.py": "875eac5ab517ed80ca17c39b8d37e55c181e4e23be7e0714e67a3da0fd0503af",
+    "packages/qhai-framework/ray_quantum/jobs/client.py": "e39d98c3b22c0fd75575aa7a6505f7d783da2f3b67cda3cca50c1665683e772d",
+    "packages/qhai-framework/ray_quantum/jobs/driver.py": "03b34cfe7f23af3e694d27197d0d57f518ca0d15f209d8d77dbf3325231575c3",
+    "packages/qhai-framework/ray_quantum/jobs/errors.py": "337579d60a8ad6a6938c1fcdd6ca13970e65001f481a754de10a3a4755fc9c81",
+    "packages/qhai-framework/ray_quantum/jobs/models.py": "1eec0d9328fdca8f59e8eac59cf413c31211a20c6c9e847cdbc069107bd49fbd",
+    "packages/qhai-framework/ray_quantum/local_timing.py": "45bb0fa655d97352eef37e84bfede1105409a048608c9327771a2ced8a88ee43",
+    "packages/qhai-framework/ray_quantum/models.py": "d41a4a53ba9447453a43730317a72dcac7bc79846b081729dcf8f475b422f74b",
+    "packages/qhai-framework/ray_quantum/observability/__init__.py": "573799c7c68e9fcc985e322545b82f5a26c6b5a52a52c11094f68eb4895c22ea",
+    "packages/qhai-framework/ray_quantum/observability/events.py": "a339bf9d41ee23fc26308c8e2f815cb0496051e02eac22c2a651c446c224b0c4",
+    "packages/qhai-framework/ray_quantum/observability/exporters.py": "ca1cdd0ca2d477a5a8bdc0b0c1f7f7697d51fa811598711efb211fc04c97e5e5",
+    "packages/qhai-framework/ray_quantum/observability/trace.py": "6dc783673128252daf1a7ec891f7470646425c74e1b5ef9f36164d4f31ad2b2d",
+    "packages/qhai-framework/ray_quantum/qpu_integration/__init__.py": "52b5170f44093b45b523f296687878cc75b77ae45efebbb6f8fca79560ffc560",
+    "packages/qhai-framework/ray_quantum/qpu_integration/component.py": "369970e75ae373f017933f38f8fe636a28156670bf97490ff5bea3df5f797a8c",
+    "packages/qhai-framework/ray_quantum/qpu_integration/contracts.py": "b6ad781993e70db6cdf5cd047ac4cecb9b4f5c22e89aaf2aca11372ec35ea38f",
+    "packages/qhai-framework/ray_quantum/qpu_integration/device_adapter.py": "f2db7c6d67a256f44399501b8d612a62a54d447ca38e630a65bdcbf9c51edd45",
+    "packages/qhai-framework/ray_quantum/qpu_integration/device_timing.py": "140bcce688e0fe37a7f64d82a2c3a69ad2a9fc4ad04d04fba129a850d1eb2f99",
+    "packages/qhai-framework/ray_quantum/qpu_integration/job_journal.py": "19107b6b6a25c230d6234b8b656eb2469418884f747e4fe321360fca734f0338",
+    "packages/qhai-framework/ray_quantum/qpu_integration/qasm3_export.py": "9f588ccc838c85ca506ade3b57a0b136cbd78f5a8bcb9bcf6ba6604ef9435144",
+    "packages/qhai-framework/ray_quantum/qpu_integration/registration.py": "69ec322a0cfe5429dfecec999ede77ad4da782205605934fe36636e9da4a61ac",
+    "packages/qhai-framework/ray_quantum/qpu_integration/service.py": "1c61bf07053125916fb54f16604968b6728e0953a2d8682cc1e8b4bb250ddaef",
+    "packages/qhai-framework/ray_quantum/qpu_integration/simulation.py": "5388a6fa6d3b4cefae4c54e2635226118804b51491716bd9c8d41f2fd3c0b20b",
+    "packages/qhai-framework/ray_quantum/qpu_integration/submit_job.py": "1198de941da4c701a6d6aa0c7fdc7e716e0396191d979414308828b85434ce34",
+    "pyproject.toml": "101af2eacea4080a9f8e1721cd7eb74dade2d3c8c8006fb0388d9972a9d87f17",
+    "tests/integration/run_cpu_aimd.py": "b17532bf294285f7737121a48d472e07624a5e463811ee607d866a59fe91d9a0",
+    "uv.lock": "a69383badea6a6ebe9833688e92b364cbde2df091fc040e3c8f94070f5bfe40e"
+  },
+  "source_changes": {},
+  "artifact_sha256": {
+    "validation.json": "fbc35e553576d8c0d5ced626ba3f2acf13944385840dd105d66b91b8adda249a",
+    "sim-qpu-full-20261002.manifest.json": "3d62c55549d08fcf245bd3d81db4d20d1f69210421c3103457f6ab6b28bdf57c",
+    "sim-qpu-full-20261002.aimd-result.json": "82b487555f347a7a96fe0c61b3023a31d141129c6484f5c79f9d017198ffbcdc",
+    "sim-qpu-full-20261002.trace.jsonl": "cf72c4970731b1cdad3bc34872706c6494bcddc662d8be2eb3539d6f750103ed",
+    "artifact_manifest.json": "1fe4e78c8ce7d3f32584700897393f9481c6fb7d523b092e50af460a9d21c514",
+    "sim-qpu-full-20261002-aimd-results.tar.gz": "b71e28c7961e5eaccab065a373294f5ffb5a37d4f35099823abb98c0871d81fe",
+    "aimd/metrics.json": "31d21394fdc00df80f89eb580114acdd0b0baaf333bcffc0bb38b19c4cb62193",
+    "aimd/run_summary.json": "3ad5aded90298a175801f96a7209b8f674866fad828a363a23b7b38a2666017d",
+    "aimd/resolved_config.yaml": "2657341f445e7d815e2ecca2eaa1ec3101934abb9d1a8beed4d53d8a3c73a5f0",
+    "aimd/h2o_aimd.traj": "a5aa32d7c31ae2da86fb7cb72260f0adf8c51e2750248d7cc56187e4b8554222",
+    "aimd/md_log.csv": "7bebb9a0fd8ffc232529f790030053405ad228b569c1c14ad237f24682b11adf",
+    "aimd/positions.csv": "ec74c37e81285c4630eb46fc974aa1da27bf7c425108634924680655d84e7272"
+  },
+  "smoke_runs": [
+    {
+      "run_id": "sim-qpu-smoke-20261002",
+      "steps": 10,
+      "passed": true,
+      "integration_checks_passed": 18,
+      "scientific_checks_passed": 14,
+      "source_manifest_collected": false,
+      "source_file_count": 0,
+      "source_manifest_unchanged": null,
+      "requested_execution": {
+        "classical_actor_target": "gpu",
+        "coordinator_device": "cpu",
+        "force_control_device": "cpu",
+        "mode": "heterogeneous",
+        "quantum_target": "qpu"
+      },
+      "framework_invocations": {
+        "h2o-classical-predict": 15,
+        "qpu-circuits": 13
+      },
+      "validation_path": "applications/h2o-hybrid-aimd/outputs/integration/sim-qpu-smoke-20261002/validation.json",
+      "validation_sha256": "c3736331c7448651f0363f0fdd5063928f5a919a691f7a322f0261e1075df8d9"
+    },
+    {
+      "run_id": "sim-gpu-smoke-final-20261002",
+      "steps": 10,
+      "passed": true,
+      "integration_checks_passed": 17,
+      "scientific_checks_passed": 14,
+      "source_manifest_collected": true,
+      "source_file_count": 110,
+      "source_manifest_unchanged": true,
+      "requested_execution": {
+        "classical_actor_target": "gpu",
+        "coordinator_device": "cpu",
+        "force_control_device": "cpu",
+        "mode": "heterogeneous",
+        "quantum_target": "gpu"
+      },
+      "framework_invocations": {
+        "h2o-classical-predict": 15,
+        "h2o-f2-quantum-features-gpu": 13
+      },
+      "validation_path": "applications/h2o-hybrid-aimd/outputs/integration/sim-gpu-smoke-final-20261002/validation.json",
+      "validation_sha256": "a74b0d40058a57b73820e09538cd57570021632b95628bcc76f0765e467a33e0"
+    }
+  ],
+  "validation_suites": {
+    "framework_unit_final": {
+      "passed": 303,
+      "failed": 29,
+      "skipped": 3,
+      "subtests_passed": 140,
+      "baseline_failure_disposition": "The same 29 failures were observed on the isolated starting Git HEAD.",
+      "failed_test_nodes": [
+        "tests/unit/test_qasm_client_adapter.py::test_upload_wait_preserves_files_and_native_context",
+        "tests/unit/test_qasm_client_adapter.py::test_result_decoder_is_explicitly_pending_after_one_exchange",
+        "tests/unit/test_qasm_client_adapter.py::test_explicit_config_takes_precedence_over_environment",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_config_never_constructs_client[None-QPU_DEVICE_URL]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_config_never_constructs_client[None-QPU_DEVICE_API_KEY]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_config_never_constructs_client[-QPU_DEVICE_URL]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_config_never_constructs_client[-QPU_DEVICE_API_KEY]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_config_never_constructs_client[   -QPU_DEVICE_URL]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_config_never_constructs_client[   -QPU_DEVICE_API_KEY]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_sdk_reports_provider_dependency",
+        "tests/unit/test_qasm_client_adapter.py::test_sdk_failures_cleanup_without_retry_or_payload_leak[enter]",
+        "tests/unit/test_qasm_client_adapter.py::test_sdk_failures_cleanup_without_retry_or_payload_leak[submit]",
+        "tests/unit/test_qasm_client_adapter.py::test_sdk_failures_cleanup_without_retry_or_payload_leak[wait]",
+        "tests/unit/test_qasm_client_adapter.py::test_sdk_failures_cleanup_without_retry_or_payload_leak[exit]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_task_id_is_uncertain_and_never_resubmitted[None]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_task_id_is_uncertain_and_never_resubmitted[job1]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_task_id_is_uncertain_and_never_resubmitted[job2]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_task_id_is_uncertain_and_never_resubmitted[job3]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_task_id_is_uncertain_and_never_resubmitted[job4]",
+        "tests/unit/test_qasm_client_adapter.py::test_unconfirmed_success_never_reaches_decoder[None]",
+        "tests/unit/test_qasm_client_adapter.py::test_unconfirmed_success_never_reaches_decoder[result1]",
+        "tests/unit/test_qasm_client_adapter.py::test_unconfirmed_success_never_reaches_decoder[result2]",
+        "tests/unit/test_qasm_client_adapter.py::test_unconfirmed_success_never_reaches_decoder[result3]",
+        "tests/unit/test_qasm_client_adapter.py::test_suppressed_sdk_exception_still_cannot_become_success",
+        "tests/unit/test_qasm_client_adapter.py::test_upload_names_cannot_escape_directory[../escape.qasm]",
+        "tests/unit/test_qasm_client_adapter.py::test_upload_names_cannot_escape_directory[..\\\\escape.qasm]",
+        "tests/unit/test_qasm_client_adapter.py::test_upload_names_cannot_escape_directory[D:escape.qasm]",
+        "tests/unit/test_qasm_client_adapter.py::test_upload_names_cannot_escape_directory[]",
+        "tests/unit/test_qasm_client_adapter.py::test_duplicate_upload_names_fail_before_client"
+      ],
+      "failure_nodes_match_isolated_head": true
+    },
+    "framework_unit_git_head_baseline": {
+      "git_commit": "34b8edd38831ac3b33964144e1352ea616b8b1f3",
+      "passed": 266,
+      "failed": 29,
+      "skipped": 3,
+      "evidence_kind": "Tool-output transcription; original raw baseline pytest log was not saved.",
+      "failed_test_nodes": [
+        "tests/unit/test_qasm_client_adapter.py::test_upload_wait_preserves_files_and_native_context",
+        "tests/unit/test_qasm_client_adapter.py::test_result_decoder_is_explicitly_pending_after_one_exchange",
+        "tests/unit/test_qasm_client_adapter.py::test_explicit_config_takes_precedence_over_environment",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_config_never_constructs_client[None-QPU_DEVICE_URL]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_config_never_constructs_client[None-QPU_DEVICE_API_KEY]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_config_never_constructs_client[-QPU_DEVICE_URL]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_config_never_constructs_client[-QPU_DEVICE_API_KEY]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_config_never_constructs_client[   -QPU_DEVICE_URL]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_config_never_constructs_client[   -QPU_DEVICE_API_KEY]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_sdk_reports_provider_dependency",
+        "tests/unit/test_qasm_client_adapter.py::test_sdk_failures_cleanup_without_retry_or_payload_leak[enter]",
+        "tests/unit/test_qasm_client_adapter.py::test_sdk_failures_cleanup_without_retry_or_payload_leak[submit]",
+        "tests/unit/test_qasm_client_adapter.py::test_sdk_failures_cleanup_without_retry_or_payload_leak[wait]",
+        "tests/unit/test_qasm_client_adapter.py::test_sdk_failures_cleanup_without_retry_or_payload_leak[exit]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_task_id_is_uncertain_and_never_resubmitted[None]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_task_id_is_uncertain_and_never_resubmitted[job1]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_task_id_is_uncertain_and_never_resubmitted[job2]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_task_id_is_uncertain_and_never_resubmitted[job3]",
+        "tests/unit/test_qasm_client_adapter.py::test_missing_task_id_is_uncertain_and_never_resubmitted[job4]",
+        "tests/unit/test_qasm_client_adapter.py::test_unconfirmed_success_never_reaches_decoder[None]",
+        "tests/unit/test_qasm_client_adapter.py::test_unconfirmed_success_never_reaches_decoder[result1]",
+        "tests/unit/test_qasm_client_adapter.py::test_unconfirmed_success_never_reaches_decoder[result2]",
+        "tests/unit/test_qasm_client_adapter.py::test_unconfirmed_success_never_reaches_decoder[result3]",
+        "tests/unit/test_qasm_client_adapter.py::test_suppressed_sdk_exception_still_cannot_become_success",
+        "tests/unit/test_qasm_client_adapter.py::test_upload_names_cannot_escape_directory[../escape.qasm]",
+        "tests/unit/test_qasm_client_adapter.py::test_upload_names_cannot_escape_directory[..\\\\escape.qasm]",
+        "tests/unit/test_qasm_client_adapter.py::test_upload_names_cannot_escape_directory[D:escape.qasm]",
+        "tests/unit/test_qasm_client_adapter.py::test_upload_names_cannot_escape_directory[]",
+        "tests/unit/test_qasm_client_adapter.py::test_duplicate_upload_names_fail_before_client"
+      ]
+    },
+    "h2o_simulation_parity": {
+      "passed": 4,
+      "failed": 0
+    },
+    "original_aimd_unittest": {
+      "passed": 47,
+      "errors": 4,
+      "total": 51,
+      "failure_disposition": "Unmodified application fake-framework tests call dict(StringMetadata), raising TypeError; the application and its tests were not modified."
+    },
+    "root_framework_aimd_integration": {
+      "passed": 1,
+      "failed": 0
+    },
+    "uv_pip_check": "passed",
+    "uv_lock_check": "passed",
+    "h2o_bridge_import_does_not_eagerly_import_application": "passed"
+  },
+  "test_log_artifacts": {
+    "original_aimd_unittest": {
+      "path": "/tmp/qhai-original-aimd-tests.log",
+      "sha256": "12ecebde5be48e362b6962c18ac5dc140fcd7aab7a339f8303568bfdcfb17154",
+      "kind": "raw_test_log"
+    },
+    "root_framework_aimd_integration": {
+      "path": "/tmp/qhai-root-integration-test.log",
+      "sha256": "445bf22a0fd875cd6de7956eec548fa7b661d3c69aa85e9d26b6bfbf331b125a",
+      "kind": "raw_test_log"
+    },
+    "framework_unit_final": {
+      "path": "/tmp/qhai-framework-unit-final.log",
+      "sha256": "1177a894c5e1eaba117c7468685eb15a8032001ec72571508139144ac33f6cba",
+      "kind": "raw_test_log"
+    },
+    "h2o_simulation_parity_final": {
+      "path": "/tmp/qhai-h2o-simulation-parity-final.log",
+      "sha256": "389da44a775a7fe7a55122128de91e9848f934eadf987dda66580eff6ce4300a",
+      "kind": "raw_test_log"
+    },
+    "framework_unit_git_head_baseline": {
+      "path": "tests/integration/evidence/framework-unit-verification.md",
+      "sha256": "0f6901a552456a238a8976d73a2d543cee1f6a7f661bbce89aa5b7a041e5d50d",
+      "kind": "transcribed_tool_output"
+    }
+  },
+  "limitations": [
+    "Exact noiseless CPU probabilities; no finite-shot sampling, real QPU or CUDA execution.",
+    "The requested QPU shot count is retained only as request metadata; physical hardware executions are zero.",
+    "Frozen model inference and NVE trajectory; no retraining or new ab initio dataset generation.",
+    "Ray Jobs HTTP submission, frontend/backend services and the performance simulator were not exercised.",
+    "The full existing test suites are not entirely green; baseline failures and their counts are retained above.",
+    "The initial QPU smoke run predates source-manifest collection and must not be described as source-hash checked."
+  ],
+  "independent_read_back_review": {
+    "evidence_kind": "Independent reviewer report supplied to coordinating task after reading generated outputs; no separate raw log saved.",
+    "trajectory_frames": 1001,
+    "trajectory_time_fs": 100.0,
+    "linear_drift_hard_gate_applied": true,
+    "scientific_checks_passed": 14,
+    "integration_checks_passed": 19,
+    "source_hashes_verified": 110,
+    "artifact_hashes_verified": 8,
+    "archive_hash_and_members_verified": true,
+    "actors_cleaned": 2,
+    "quantum_geometries_including_preflight": 19343,
+    "measurement_circuit_settings_including_preflight": 38686,
+    "physical_qpu_executions": 0,
+    "historical_cpu_trajectory_comparison": {
+      "reference_run_id": "cpu-fusion-20261001",
+      "reference_evidence_status": "historical_superseded_implementation",
+      "max_absolute_coordinate_difference_A": 3.4861e-14,
+      "interpretation": "Additional numerical consistency check; it does not change the historical implementation scope of the reference run."
+    }
+  },
+  "git_baseline_scope": "The saved Git status is the snapshot captured before this run. It is not an attribution of every workspace change to this task; source_sha256 defines the audited execution inputs."
+}

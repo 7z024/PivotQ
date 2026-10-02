@@ -1,0 +1,219 @@
+{
+  "report_archive": {
+    "status": "moved_out_of_public_repository",
+    "location": "external archive qhai-2026-revision-archive-20261002",
+    "original_path": "reports/H2O_READOUT_SHOT_ROBUSTNESS_FAILURE.md",
+    "hashes_preserved": true
+  },
+  "experiment": "h2o_f2a2_readout_pruning_shot_robustness",
+  "completed_at": "2026-08-29T15:16:17+08:00",
+  "status": "completed_with_readout_shot_robustness_failure",
+  "material_passport": {
+    "type": "Experiment Result / Reproducibility Validation",
+    "verification_status": "VERIFIED",
+    "protocol_sha256": "2aba65f1e5ccbc33f30a20f6e8ec868c37d48aba6b205c60cee4af5af3cfa387",
+    "selection_data": "frozen development validation only",
+    "locked_tests_opened_after_selection": true,
+    "plot_backend": "matplotlib",
+    "nature_figure_used": false
+  },
+  "formal_runtime": {
+    "host": "109-32cpu",
+    "conda_environment": "ase-aimd-gpaw",
+    "python": "/data/hzhang/conda/envs/ase-aimd-gpaw/bin/python",
+    "remote_project": "/data/hzhang/tmp/lcz_hybrid_v1/single_h20_aimd"
+  },
+  "verification": {
+    "unit_tests_passed": 44,
+    "unit_tests_failed": 0,
+    "locked_test_hashes_unchanged": true,
+    "quantum_circuit_changed": false
+  },
+  "configuration": {
+    "path": "configs/readout_pruning_campaign.yaml",
+    "sha256": "59f7b23f9a25515edde773091e9fe332151f162acbbfd31a5ac3fccabf94e9c6",
+    "bytes": 4405
+  },
+  "datasets": {
+    "energy": {
+      "path": "data/h2o_pyscf_sto3g_fci_energy_development_v2.csv",
+      "sha256": "18361f86f91c9e1091bce61f0ed442dbc2038622b50b2b66161899b05bf038af",
+      "bytes": 223096
+    },
+    "force": {
+      "path": "data/h2o_pyscf_sto3g_fci_force_development_v2.csv",
+      "sha256": "39bf334bf55486e3ba073bfd1c0732999886d0cee7786d4670f4654a00ee9a92",
+      "bytes": 438050
+    },
+    "energy_split_counts": {
+      "train": 800,
+      "validation": 100,
+      "test": 100
+    },
+    "force_split_counts": {
+      "train": 280,
+      "validation": 40,
+      "test": 30
+    }
+  },
+  "parent_checkpoint": {
+    "path": "checkpoints/hybrid_model_finite_shot_robust.pt",
+    "sha256": "c710e0f2867aace58d2c10f0f8c9a7386554028648d9fe9a381370d9e5acd985",
+    "bytes": 36613
+  },
+  "selected_model": {
+    "candidate_id": "R1_DROP_XXX_MLP_ONLY",
+    "checkpoint": {
+      "path": "checkpoints/hybrid_model_readout_pruned_shot_robust.pt",
+      "sha256": "21ba3e8be89ed141fd05d384b0cf6a0d4f054a170aebef14ff028639a706b6ac",
+      "bytes": 36613
+    },
+    "active_features": [
+      "ZII",
+      "IZI",
+      "IIZ",
+      "ZZI",
+      "ZIZ",
+      "IZZ",
+      "ZZZ",
+      "XII",
+      "IXI",
+      "IIX",
+      "XXI",
+      "XIX"
+    ],
+    "dropped_features": [
+      "IXX",
+      "XXX"
+    ],
+    "feature_count": 12,
+    "measurement_basis_count": 2,
+    "recommended_shots_per_basis": [],
+    "practical_shot_gate_passed": false,
+    "validation": {
+      "exact_energy_rmse_eV": 0.05770708471422843,
+      "exact_force_rmse_eV_per_A": 1.1234477340955138,
+      "variance_concentration_c_max": 0.36554038669189914
+    },
+    "locked": {
+      "exact_energy_rmse_eV": 0.0504909086526395,
+      "exact_offgrid_energy_rmse_eV": 0.047626858475568086,
+      "exact_force_rmse_eV_per_A": 0.7363720478315657
+    }
+  },
+  "conditional_stages": {
+    "joint_fine_tuning": "not_run_not_required",
+    "xxx_drop_accepted_in_energy_only_stage": false,
+    "shot_augmentation_accepted": true,
+    "sensitivity_regularization": "not_run_not_required"
+  },
+  "aimd": {
+    "status": "stopped_by_dynamics_gate",
+    "shots_per_basis": 10000,
+    "used_fallback_shots": true,
+    "completed_steps": [
+      1,
+      10,
+      100
+    ],
+    "trajectory_dynamics_stable": false,
+    "measured_energy_conservation_unresolved": false,
+    "stages": [
+      {
+        "steps": 1,
+        "measured_energy_pass_rate": 1.0,
+        "diagnostic_energy_pass_rate": 1.0,
+        "force_stability_pass_rate": 1.0,
+        "geometry_stability_pass_rate": 1.0,
+        "failure_class_counts": {
+          "passed": 5,
+          "measurement_failure": 0,
+          "dynamics_failure": 0,
+          "mixed_failure": 0
+        },
+        "continuation_gate_passed": true
+      },
+      {
+        "steps": 10,
+        "measured_energy_pass_rate": 0.0,
+        "diagnostic_energy_pass_rate": 1.0,
+        "force_stability_pass_rate": 1.0,
+        "geometry_stability_pass_rate": 1.0,
+        "failure_class_counts": {
+          "passed": 0,
+          "measurement_failure": 5,
+          "dynamics_failure": 0,
+          "mixed_failure": 0
+        },
+        "continuation_gate_passed": true
+      },
+      {
+        "steps": 100,
+        "measured_energy_pass_rate": 0.0,
+        "diagnostic_energy_pass_rate": 0.2,
+        "force_stability_pass_rate": 1.0,
+        "geometry_stability_pass_rate": 1.0,
+        "failure_class_counts": {
+          "passed": 0,
+          "measurement_failure": 1,
+          "dynamics_failure": 0,
+          "mixed_failure": 4
+        },
+        "continuation_gate_passed": false
+      }
+    ],
+    "qpu_ready": false
+  },
+  "artifacts": {
+    "start_manifest": {
+      "path": "provenance/readout_pruning_campaign_start_manifest.json",
+      "sha256": "69a2165c2c379087cb4ab78557d9967c4d5b7d47b02c976df84353f305a777f5",
+      "bytes": 1874
+    },
+    "source_git_state": {
+      "path": "provenance/readout_pruning_campaign_source_git_state.json",
+      "sha256": "14095ec8b31d79819130fcf47f6995b8ad06824f0f3c75c8f5c4aa843baea5c5",
+      "bytes": 511
+    },
+    "baseline": {
+      "path": "outputs/readout_pruning_campaign/00_baseline_13F/stage_summary.json",
+      "sha256": "c3b11cfb12238e6c270609a2ab8cc5db148139539dce6e938418d09f3117ae4c",
+      "bytes": 13593
+    },
+    "pruning": {
+      "path": "outputs/readout_pruning_campaign/pruning_summary.json",
+      "sha256": "d12343e39985cca10a73b35bfc5307c8e0a935fa9067c5fa2d4437ed13ece806",
+      "bytes": 151504
+    },
+    "force_validation": {
+      "path": "outputs/readout_pruning_campaign/06_force_shot_scan/summary.json",
+      "sha256": "9ec2b94ce3b9f5ff0e48cc0ab2c1173ffda4e3f84dc486a37d89415a000bafcf",
+      "bytes": 170340
+    },
+    "locked_evaluation": {
+      "path": "outputs/readout_pruning_campaign/final_selection/summary.json",
+      "sha256": "7385b695fee26a9b6a90ac38c874dabc533165a1433729dd9dfb4c4e9f43295f",
+      "bytes": 15484
+    },
+    "aimd": {
+      "path": "outputs/readout_pruning_campaign/07_aimd_diagnostic_separation/summary.json",
+      "sha256": "d185a627778158675487ba84ee997c66e41cdb7a72c5dcb8cee3e5c246c596e6",
+      "bytes": 70822
+    },
+    "figures": {
+      "path": "outputs/readout_pruning_campaign/figures/figure_manifest.json",
+      "sha256": "116986acdef8e1e2540ba372612540f75c49f30a8e5623ba48e3a910448f369c",
+      "bytes": 1360
+    },
+    "report": {
+      "path": "reports/H2O_READOUT_SHOT_ROBUSTNESS_FAILURE.md",
+      "sha256": "b9f8daf6fb6e632b30c5f7e4be0242198d8280b298d7d304321ad1cea4d781fb",
+      "bytes": 9181
+    },
+    "current_experiment": {
+      "path": "configs/current_experiment.yaml",
+      "sha256": "d1e596e091874483b728ced140daf49b30454a1bf28a83362f311bb16ae5f1b3",
+      "bytes": 21619
+    }
+  }
+}

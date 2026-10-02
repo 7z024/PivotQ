@@ -1,0 +1,219 @@
+{
+  "schema_version": "1.0",
+  "created_at": "2026-09-01T00:00:00+08:00",
+  "updated_at": "2026-09-10T15:57:00.074802+08:00",
+  "status": "preparation_only",
+  "archived_sources_note": "历史来源名称保留用于追溯；对应旧路线交付材料已移出公开仓库并归档，不再作为当前仓库入口。",
+  "framework": {
+    "source_directory": "D:/learn/quantum_work/ray/ray-quantum",
+    "git_branch": "main",
+    "git_head": "97462b5211604c96f58462d497a6797f7c740207",
+    "remote_configured": false,
+    "validated_archive": "tmp/remote-aimd-ideal1000-20260831T213018+0800/staging/ray-quantum-active.tar.gz",
+    "validated_archive_sha256": "a3e34a898fd99f99ae00d65d33e3bfec28aa0ab3c34f8b877df6063a07e3906e",
+    "active_source_root": "src/ray_quantum",
+    "current_runtime": {
+      "python": ">=3.12,<3.13",
+      "ray": "2.31.0"
+    },
+    "packaged_qos_helper": {
+      "source_path": "D:/learn/quantum_work/ray/task_description/QOS接口说明/qiskit_to_qcis.py",
+      "module": "ray_quantum.qpu_integration.qiskit_to_qcis",
+      "sha256": "5da9d901e522bcaeb43408dc66207835eb5d843e146018aa9f9bfd9149f733f1"
+    },
+    "excluded": [
+      "src/ray_quantum_ir",
+      "docs/codex",
+      "docs/handoffs",
+      "progress and historical route documents",
+      "IR/source examples",
+      "existing outputs and caches"
+    ],
+    "source_kind": "current_working_tree_including_uncommitted_and_untracked_active_code",
+    "validated_archive_scope": "historical_20260831_fake_run_archive_not_the_current_package_snapshot",
+    "source_files_sha256": {
+      "__init__.py": "0b2cdde4e5805c9ae4e65f4d6e81cfce6a833ca1694ecd18ea9d2c5d8367e049",
+      "errors.py": "19e97a7aed250fa8743f53193f16d8efd31b9a7d16f059ac1d871e8ddf326f34",
+      "executors/__init__.py": "771f2d2b6fb7ddf1be7e84f3f0a0140a97d364bc7bc50645999e1320578b0baa",
+      "executors/base.py": "7c24726f2e40a265f5bf8da867208563145c6922e8b15a6438b4ae4563d7344d",
+      "executors/cleanup.py": "0b0e786d3b93608b58800fad5b6d1325babe1ec53d8e65929d198f097d63c028",
+      "executors/local.py": "b59e17e3c01553a825f645ae970812843116472c32bedb84431da0fd5b436ed4",
+      "executors/ray.py": "4656a299ad1cc85d4f5233b8a0cd704244e3ea58ce9b3b902131f16dc5bc507c",
+      "framework/__init__.py": "c1c76d60759e0e25c2e664c795d6dbb569c36b85ce659d90bc5e276caf735c47",
+      "framework/component.py": "be6fd844b6102b76d005efa374ac6110f87cdaf491cd6e78f46c2244a2360415",
+      "framework/facade.py": "be5f4040ef7e855b40e4f3a2a9d02fa8d72ab11f6b9deaed0efb87fc51abc698",
+      "framework/graph.py": "33a43c16c3c2dcfa28e45cd025c2af9b880aacce6ecd91ebff22c1efaa51cfd7",
+      "framework/models.py": "9562f831472174478e3316e6b8371d3ee493c10d72a3c8b641b8b78dfbd3df0c",
+      "framework/registry.py": "47318c3f9f3980855ea5d92d0aa302a034a712a0982fd0dcc8491b7cbb688bfb",
+      "framework/resources.py": "90e26ae23db86bd3cd4f784e828aa78de34a73b0514da50a66bb92219fa6d100",
+      "jobs/__init__.py": "875eac5ab517ed80ca17c39b8d37e55c181e4e23be7e0714e67a3da0fd0503af",
+      "jobs/client.py": "e39d98c3b22c0fd75575aa7a6505f7d783da2f3b67cda3cca50c1665683e772d",
+      "jobs/driver.py": "f747967ed5a088f9c6b9afc0f4b3444b8c8e67d9bf087a05ac4b86c01819592d",
+      "jobs/errors.py": "337579d60a8ad6a6938c1fcdd6ca13970e65001f481a754de10a3a4755fc9c81",
+      "jobs/models.py": "1eec0d9328fdca8f59e8eac59cf413c31211a20c6c9e847cdbc069107bd49fbd",
+      "models.py": "d41a4a53ba9447453a43730317a72dcac7bc79846b081729dcf8f475b422f74b",
+      "observability/__init__.py": "573799c7c68e9fcc985e322545b82f5a26c6b5a52a52c11094f68eb4895c22ea",
+      "observability/events.py": "a339bf9d41ee23fc26308c8e2f815cb0496051e02eac22c2a651c446c224b0c4",
+      "observability/exporters.py": "ca1cdd0ca2d477a5a8bdc0b0c1f7f7697d51fa811598711efb211fc04c97e5e5",
+      "observability/trace.py": "6dc783673128252daf1a7ec891f7470646425c74e1b5ef9f36164d4f31ad2b2d",
+      "qpu_integration/README.md": "3007a7b346a211159061a860392030f178e010286812aa4e3086c85ad04b4a5b",
+      "qpu_integration/__init__.py": "52b5170f44093b45b523f296687878cc75b77ae45efebbb6f8fca79560ffc560",
+      "qpu_integration/_backend.py": "d6088cc28b78dfcebd979647a9c6f1012856fc6e9214fa61b5efb29626d06c74",
+      "qpu_integration/_conversion.py": "93ff3d44dc307870a34ab110816028ebcb519f0472740f79562573656081f5a0",
+      "qpu_integration/component.py": "e2f69d78a2925d553177d04a5b4f95daa7ac87536282486a6fcbc35aea68fe6b",
+      "qpu_integration/contracts.py": "b36795c6302062dceffbc6452821e8b7065a3844b888c389f069275ad01792f9",
+      "qpu_integration/qcontrol_backend.py": "4a8805903845be40e8fd0e6e9afcb5215d2a06bd48d6431e199835e269dd2c7e",
+      "qpu_integration/qcontrol_smoke.py": "71906d234603f31ad34c615902ff2a525b17bc4fbedcd8d4cb56d3d6a36db878",
+      "qpu_integration/qiskit_to_qcis.py": "5da9d901e522bcaeb43408dc66207835eb5d843e146018aa9f9bfd9149f733f1",
+      "qpu_integration/registration.py": "d86d230f636973ed9e0d8eb134df1b9143ccf191c642d09a8a8545048391bcd8",
+      "qpu_integration/service.py": "9da36bed779010fb41107b5db44dbbcc5debb7c78e2bb896307baf5ba7012788",
+      "qpu_integration/submit_job.py": "bf5241addcf71aa15fc86c6e71d2d1c900043f82d9602816d86ec2a5eb154127"
+    },
+    "sync": {
+      "date": "2026-09-10",
+      "step": "REAL-QPU-PACKAGE-SYNC-20260910",
+      "active_source_files": 34,
+      "active_source_matches_main": false,
+      "driver_manifest_schema_version": 2,
+      "synchronized_files": [
+        "src/ray_quantum/executors/cleanup.py",
+        "src/ray_quantum/executors/ray.py",
+        "src/ray_quantum/jobs/driver.py",
+        "tests/unit/executors/test_ray_cleanup.py",
+        "tests/unit/jobs/test_driver.py",
+        "tests/unit/jobs/test_driver_cleanup_signals.py",
+        "tests/unit/jobs/test_driver_cleanup_v2.py"
+      ],
+      "unchanged_dependencies": [
+        "pyproject.toml",
+        "requirements-framework-py312-linux.txt"
+      ],
+      "retained_package_overrides": {
+        "scripts/hybrid_experiments/start_head.sh": "Head has no QPU; CPU/GPU auto-detected",
+        "scripts/hybrid_experiments/start_worker.sh": "Explicit compute/qpu roles; CPU/GPU auto-detected",
+        "scripts/hybrid_experiments/check_cluster.sh": "Check distinct Head and single laboratory QPU Worker",
+        "scripts/hybrid_experiments/install_compute_dependencies.sh": "Existing cp312 wheel URL retained; documented install uses requirements files",
+        "tests/integration/test_clean_core_package.py": "Historical IR directory is optional and omitted from package",
+        "tests/integration/test_ray_smoke.py": "Retain Python 3.12 assertion",
+        "README.md": "Deployment instructions without missing progress/handoff links"
+      },
+      "validation": {
+        "environment": "WSL Ubuntu, CPython 3.12.14, Ray 2.31.0, Qiskit 2.5.1, pytest 9.1.1",
+        "framework_unit": {
+          "passed": 200,
+          "skipped": 3,
+          "subtests_passed": 169
+        },
+        "offline_wheel_and_cold_import": "1 passed",
+        "aimd_1_and_1000_step_jobspec_without_submission": "passed",
+        "shell_syntax_files": 5,
+        "ray_cluster_started": false,
+        "remote_connection": false,
+        "qos_or_qpu_called": false,
+        "local_audit_directory": "tmp/real-qpu-sync-20260910"
+      }
+    }
+  },
+  "aimd": {
+    "source_directory": "D:/learn/quantum_work/ray/task_description/h2o-hybrid-aimd",
+    "git_repository": false,
+    "validated_archive": "tmp/remote-aimd-ideal1000-20260831T213018+0800/staging/h2o-hybrid-aimd-active.tar.gz",
+    "validated_archive_sha256": "4c1061ba2f22a9cac2767605a8cc8ef9c4fed2932ae731ad49f641109652cb43",
+    "config_sha256": "b577fdc6ba058ad1ccdb79616c14e1f60fee07a1129ba9fe9de4682fcb6bdb08",
+    "checkpoint_sha256": "560bef3584db36933dfcdf1679912f04503b9339da869f489edfee0a631f2b80",
+    "excluded": [
+      "outputs",
+      "reports",
+      "deliverables",
+      "provenance history",
+      "presentation and progress documents",
+      "Python caches"
+    ]
+  },
+  "evidence_boundary": {
+    "ideal_fake_qos_1000_step_completed": true,
+    "laboratory_qos_validated": false,
+    "real_qpu_validated": false
+  },
+  "package_adjustments": [
+    "The target runtime is CPython 3.12 with Ray 2.31.0 on every Ray node.",
+    "A non-laboratory machine is the Ray head and does not advertise a QPU resource.",
+    "The laboratory QPU machine is a Ray worker and is the only node advertising QPU:1.",
+    "Ray auto-detects CPU and GPU resources on the head and every worker.",
+    "Other compute workers do not advertise a QPU resource.",
+    "The cluster check validates the separate head and QPU-worker placement without fixed CPU or GPU counts.",
+    "The QPU worker requires framework, Qiskit, and laboratory QOS dependencies but not AIMD or PyTorch.",
+    "The QPU helper is packaged as ray_quantum.qpu_integration.qiskit_to_qcis; no .pth or --qos-helper-module is required for the documented runs.",
+    "The DataTree import target remains mandatory and pyqos remains an external laboratory dependency.",
+    "Trace v2 lifecycle events are disabled by default and are enabled only by an explicit positive --trace-event-max-records value; the documented runs use 10000.",
+    "Trace v2 is a payload-free framework event journal and is not authoritative QOS, provider, or QPU telemetry.",
+    "All 34 active framework source files match the 2026-09-10 main working tree byte for byte; only relevant deployment tests are included.",
+    "Driver manifest schema 2 includes connection ownership, cleanup outcome and bounded Actor cleanup records; Trace schemas and the three-qubit QPU contract are unchanged.",
+    "The existing AIMD application, configuration, checkpoints and data are unchanged by this synchronization.",
+    "Driver cleanup success is not evidence of QOS hardware cancellation; raw P01 and provider records require separate laboratory capture.",
+    "2026-09-10 follow-up: optional qcontrol QASM/QDataset backend supersedes the historical byte-for-byte source match claim; see qcontrol_adapter_update."
+  ],
+  "qcontrol_adapter_update": {
+    "date": "2026-09-10",
+    "reference": "../run_circuit_reference.ipynb",
+    "reference_sha256": "19d0f5a9a30790adf8862113e3c6bfef2ad3bc7e2babc33b347d87a547f6640d",
+    "scope": "packaged framework and AIMD submitter only; shared repository framework not modified",
+    "status": "offline_adapter_validated_not_hardware_validated",
+    "entrypoint": "qcontrol.experiment.circuits.run_circuit",
+    "cli": "--qpu-backend qcontrol --qcontrol-config <absolute_worker_json_path>",
+    "validation": {
+      "framework_tests_passed": 28,
+      "framework_subtests_passed": 29,
+      "aimd_tests_passed": 15,
+      "dry_run_passed": true,
+      "python": "3.13",
+      "qiskit": "2.5.2",
+      "platform": "macOS",
+      "ray_started": false,
+      "hardware_called": false
+    },
+    "pending": [
+      "laboratory theta callback correction",
+      "device/qubit/coupler calibration and mapping",
+      "qcontrol and Ray OS/runtime compatibility",
+      "real QPU and full AIMD validation"
+    ],
+    "notes": [
+      "Historical sync evidence is retained and does not validate this modified package.",
+      "The legacy test double now accepts StringMetadata.as_dict()."
+    ]
+  },
+  "qcontrol_training_aimd_update": {
+    "date": "2026-09-10",
+    "entrypoint": "run_qcontrol.py",
+    "execution": "single machine qcontrol + CPU; existing Ray route retained",
+    "initialization": "random quantum and MLP parameters; no pretrained checkpoint",
+    "selection": "minimum validation energy RMSE, without a quality gate before AIMD",
+    "training_science_source": "H2O_F2A2_QPU_TRAIN_FROM_SCRATCH_20260901",
+    "vendored_inputs": {
+      "src/h2o_qpu_train/core.py": "4d5d1681dd8e6bad7f46648d554970549d4e87b71c28ee3e1e0078effc473a6e",
+      "config.json": "839ea94558767a213b8663cdaa1804739a30cfac763d4162e8c9f04e22f49182",
+      "data/angles.csv": "16d72bb90ae5510a9ac13981aa2eb46d622a00bf12f869d995f3d584b4c4f2fe"
+    },
+    "notes": [
+      "Subset of existing core data/MLP definitions copied into qcontrol_training_core.py; runtime is self-contained.",
+      "Preserves frozen training data split/angles, raw first 12 of 14 features, 32/32 SiLU MLP and train-only energy normalization.",
+      "Best selection uses strictly lowest observed validation RMSE; patience can end training, with no accuracy requirement.",
+      "Native adapt-1.0 export supports existing AIMD loaders. quantum_backend identifies the circuit family; checkpoint_metadata records qcontrol execution.",
+      "Production Cartesian finite difference retained. Existing runtime OOD stopping and hardware/numerical errors retained.",
+      "Plots fixed for one/two-frame diagnostics and to avoid clipping out-of-domain geometry."
+    ],
+    "validation": {
+      "aimd_training_bridge_tests_passed": 19,
+      "framework_tests_passed": 28,
+      "framework_subtests_passed": 29,
+      "deliberately_bad_validation_still_started_aimd": true,
+      "quantum_gradient_numerical_check": true,
+      "native_checkpoint_prediction_roundtrip": true,
+      "plots_cli_without_hardware": true,
+      "environment": "macOS Python 3.13, Qiskit 2.5.2; target laboratory Python 3.12 still requires validation",
+      "qpu_called": false,
+      "ray_started": false
+    }
+  }
+}

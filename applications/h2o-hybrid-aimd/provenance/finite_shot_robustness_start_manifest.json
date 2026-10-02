@@ -1,0 +1,52 @@
+{
+  "experiment": "h2o_f2a2_finite_shot_robustness",
+  "recorded_at": "2026-08-29T14:31:36+08:00",
+  "protocol": {
+    "path": "/Users/zhanghao/Downloads/H2O_F2A2_Finite_Shot_Robustness_Codex_Plan.md",
+    "sha256": "6596fcce2a19e06ae132522af64e7d83f5700a791bb4cfcc416cad2976484415"
+  },
+  "config": {
+    "path": "configs/finite_shot_robustness_campaign.yaml",
+    "sha256": "bddad18f16b8a8cba3d5f1c956515b1d9d22eb2eb33dc9b7692023fe00fbefa3",
+    "bytes": 4134
+  },
+  "parent_checkpoint": {
+    "path": "outputs/data_force_campaign/08_noisy_adaptation/03_noise_adaptation/checkpoints/mlp_only_noise_aware.pt",
+    "sha256": "81d7bc95fdbe96b2ef136854fc903ae09a5dc0038175dd98ac707d423b8e9f9a",
+    "bytes": 24725
+  },
+  "datasets": {
+    "energy": {
+      "path": "data/h2o_pyscf_sto3g_fci_energy_development_v2.csv",
+      "sha256": "18361f86f91c9e1091bce61f0ed442dbc2038622b50b2b66161899b05bf038af",
+      "bytes": 223096
+    },
+    "force": {
+      "path": "data/h2o_pyscf_sto3g_fci_force_development_v2.csv",
+      "sha256": "39bf334bf55486e3ba073bfd1c0732999886d0cee7786d4670f4654a00ee9a92",
+      "bytes": 438050
+    }
+  },
+  "historical_locked_tests": {
+    "final_energy": {
+      "path": "data/h2o_pyscf_sto3g_fci_test_final_v2.csv",
+      "sha256": "ded025a3757703df0dbf09b5d286e094b45c26801914e45e56fae4d04f8b8f91",
+      "bytes": 4871
+    },
+    "offgrid_energy": {
+      "path": "data/h2o_pyscf_sto3g_fci_offgrid_final_v2.csv",
+      "sha256": "453de86bc4b670257f192ffcc8b3b8cb5605b28b34b69f97ae1f81dc02227d42",
+      "bytes": 10715
+    },
+    "force": {
+      "path": "data/h2o_pyscf_sto3g_fci_reference_force_final_v2.csv",
+      "sha256": "45a1a9a2dfecae1dcabd29c29392ca61628953e5baf619aa1269c52437a3471a",
+      "bytes": 321446
+    }
+  },
+  "selection_contract": {
+    "split": "frozen development validation only",
+    "historical_locked_tests_allowed": false,
+    "circuit_change_allowed": false
+  }
+}

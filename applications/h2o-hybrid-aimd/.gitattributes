@@ -1,0 +1,6 @@
+# Preserve byte-level hashes for experiment datasets and handoff CSV artifacts.
+data/h2o_pyscf_sto3g_fci_energy_development_v2.csv -text
+data/h2o_pyscf_sto3g_fci_force_development_v2.csv -text
+data/sources/h2o_exact_noisy_1000step_positions.csv -text
+deliverables/**/*.csv -text
+融合框架对接/**/*.csv -text

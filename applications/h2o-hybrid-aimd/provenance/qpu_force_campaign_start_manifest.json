@@ -1,0 +1,41 @@
+{
+  "experiment": "qpu_force_input_angle_parameter_shift_campaign",
+  "started_at": "2026-08-28T16:13:24+08:00",
+  "protocol": {
+    "path": "最新实验指导文档/828 缓解噪声001.md",
+    "sha256": "1b0083ee9a84f3cda4533eeb7722dc8a20b3528324101d3c1ff17d64ac81ee71"
+  },
+  "project_snapshot_before_changes": {
+    "sort_locale": "LC_ALL=C",
+    "file_count_excluding_python_bytecode": 380,
+    "sorted_manifest_sha256": "c2e5772e2d0c157b489f2c18ed4c8e70e2b8e69d27a102a35ea4fb993bb348f8"
+  },
+  "locked_checkpoints": {
+    "noise_aware_exact": {
+      "path": "checkpoints/hybrid_model_noise_aware_exact.pt",
+      "sha256": "d43c6a4ccf0681963aa25fda51901d3349c1d6d946b18f618ac5c551315b7baa"
+    },
+    "noiseless_reference": {
+      "path": "checkpoints/hybrid_model.pt",
+      "sha256": "560bef3584db36933dfcdf1679912f04503b9339da869f489edfee0a631f2b80"
+    }
+  },
+  "starting_config": {
+    "path": "configs/current_experiment.yaml",
+    "sha256": "97465c4694d7ada44a3a6dd77349cb0506d9a9a667656e8a9915b90dfbf558b2"
+  },
+  "protected_source_project": {
+    "path": "/Users/zhanghao/code/LCZ/september_launch_event",
+    "file_count_excluding_python_bytecode": 963,
+    "sorted_manifest_sha256": "6f4696a7ccddc10dbf0c7093256c38aa5c2dc1919e8cd390b0c01d111597b51a"
+  },
+  "frozen_constraints": {
+    "circuit": "F2/A2",
+    "readout": "7Z+7X",
+    "trainable_quantum_parameters": 11,
+    "candidate_force": "input_angle_parameter_shift_chain_rule",
+    "production_force": "cartesian_centered_finite_difference",
+    "production_force_step_A": 0.001,
+    "finite_shot_common_random_numbers": false
+  }
+}

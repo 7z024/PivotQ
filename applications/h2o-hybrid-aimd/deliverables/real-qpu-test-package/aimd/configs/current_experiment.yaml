@@ -1,0 +1,563 @@
+# 828 物理噪声与自适应 shots 正式实验；无噪声基线保持锁定。
+
+deployment:
+  purpose: h2o_f2_physical_noise_adaptive_shots_force_nve
+  inference_uses_frozen_checkpoint: true
+  coordinate_force_method: cartesian_central_finite_difference
+  training_gradient_method: noisy_density_matrix_parameter_shift_and_classical_backprop
+  result_scope: calibrated hardware proxy; not real-QPU evidence
+
+project:
+  name: h2o_adapt_finalist_F2_noise_828
+  seed: 20260829
+  data_path: data/h2o_pyscf_sto3g_fci_v1.csv
+  output_root: outputs/828_noise_experiment
+  run_name: h2o_f2_physical_noise
+
+dataset:
+  molecule: H2O
+  atom_symbols: [O, H, H]
+  atomic_numbers: [8, 1, 1]
+  charge: 0
+  multiplicity: 1
+  geometry_representation: water_internal_coordinates
+  use_relative_energy: true
+  valid_geometry_domain:
+    oh_length_A: [0.75, 1.25]
+    hoh_angle_deg: [80.0, 130.0]
+  required_splits: [train, validation]
+  metadata_path: data/h2o_pyscf_sto3g_fci_v1_metadata.json
+  final_energy_path: data/h2o_pyscf_sto3g_fci_test_final_v2.csv
+  offgrid_final_path: data/h2o_pyscf_sto3g_fci_offgrid_final_v2.csv
+  reference_force_final_path: data/h2o_pyscf_sto3g_fci_reference_force_final_v2.csv
+  reference_method: FCI
+  basis: STO-3G
+  has_force_labels: false
+
+hardware_constraints:
+  source: frozen_authority_proxy_without_provider_calibration_id
+  calibration_id: null
+  calibration_timestamp: null
+  num_qubits: 3
+  connectivity: [[0, 1], [1, 2]]
+  native_single_qubit_gates: [ry, rz]
+  native_two_qubit_gate: cz
+  cnot_allowed: false
+  T1_us_range: [30.0, 40.0]
+  T2_us_range: [3.0, 4.0]
+  nominal_T1_us: 35.0
+  nominal_T2_us: 3.5
+  single_qubit_fidelity: 0.998
+  cz_fidelity: 0.992
+  ry_gate_duration_ns: 56.0
+  rz_gate_duration_ns: 0.0
+  cz_gate_duration_ns: 34.0
+  readout_duration_ns: 1000.0
+  rz_implementation: virtual_frame_update
+  readout_assignment_error: null
+
+quantum:
+  backend: adapt_water_density_matrix
+  encoding:
+    atomic_numbers: [8, 1, 1]
+    template: one_to_one
+    mapping: affine
+    invariant_mean: [2.000077837837838, 0.04827027027027026, -0.25122480774613504]
+    invariant_scale: [0.2584499140053624, 0.06534095551409179, 0.2567215495625882]
+    offset: [1.5707963267948966, 1.5707963267948966, 1.5707963267948966]
+    angle_scale: [0.7853981633974483, 0.39269908169872414, 0.7853981633974483]
+    one_to_one_axis: ry
+    multi_axis_axes: [ry, rz]
+  observables: [ZII, IZI, IIZ, ZZI, ZIZ, IZZ, ZZZ, XII, IXI, IIX, XXI, XIX, IXX, XXX]
+  circuit:
+    num_qubits: 3
+    seed: native
+    connectivity: [[0, 1], [1, 2]]
+    entangler_gate: cz
+    data_reuploading: false
+    seed_parameters:
+      [0.1887169726203465, -0.16610493972706575, -0.06556470871437482,
+       0.06819523802826741, -0.6384290292144779, -0.28951789889959006]
+    selected_operators: [IYZ, YII, YZI, IIX, YII]
+    adapt_parameters:
+      [0.320517432886528, -0.04629778056154185, 0.16421749065261415,
+       0.05754179225620465, -0.023529718740523457]
+  execution:
+    mode: density_matrix_exact_expectation
+    device: cpu
+    shots: null
+    sampling_seed: 20260828
+    noise: true
+    gradient_method: parameter_shift
+    noise_model:
+      T1_us: 35.0
+      T2_us: 3.5
+      ry_fidelity: 0.998
+      cz_fidelity: 0.992
+      ry_duration_ns: 56.0
+      cz_duration_ns: 34.0
+      readout_duration_ns: 1000.0
+      idle_relaxation: true
+      rz_virtual: true
+      readout_assignment_error: null
+  training:
+    optimizer: {name: adam}
+    learning_rate: 0.001
+    gradient_clip_norm: 5.0
+    classical_warmup_epochs: 0
+    learning_rate_scheduler: {name: none}
+    l2: 0.0
+
+classical:
+  backend: torch_mlp
+  device: cpu
+  dtype: float64
+  feature_transform: {name: identity}
+  linear_initialization: {name: random}
+  noise_feature_correction: {enabled: false}
+  hidden_dims: [32, 32]
+  activation: silu
+  epochs: 100
+  optimizer: {name: adam}
+  learning_rate: 0.001
+  learning_rate_scheduler: {name: none}
+  l2: 0.0
+  seed: 20260829
+  early_stopping:
+    enabled: true
+    patience: 20
+    min_delta_eV2: 1.0e-10
+  history_interval: 1
+  stability_guard: {}
+
+force:
+  backend: cartesian_central_finite_difference
+  step_A: 0.001
+  project_rigid_body_residuals: true
+  production_method: cartesian_centered_finite_difference
+  candidate_method: input_angle_parameter_shift_chain_rule
+  candidate:
+    input_shift: pi/2
+    quantum_derivative: parameter_shift
+    classical_feature_gradient: pytorch_backprop
+    geometry_jacobian: pytorch_autograd
+    state_preparations_per_geometry: 7
+    measurement_bases: [Z, X]
+    common_random_numbers: false
+  validation:
+    status: stopped_after_10step_finite_shot_energy_gate
+    exact_consistency_pass: true
+    noisy_exact_consistency_pass: true
+    finite_shot_pass: true
+    aimd_pass: false
+
+shots:
+  policy: adaptive_force_knee_search
+  fixed: false
+  primary_scan: [1000, 3000, 5000, 10000, 30000]
+  force:
+    selected: {shots_Z: 131072, shots_X: 131072}
+    scan_history:
+      - {shots_Z: 512, shots_X: 512, angle_ps_sampling_rmse_eV_per_A: 0.98020348, cartesian_fd_sampling_rmse_eV_per_A: 123.21559173}
+      - {shots_Z: 2048, shots_X: 2048, angle_ps_sampling_rmse_eV_per_A: 0.47149861, cartesian_fd_sampling_rmse_eV_per_A: 56.84341954}
+      - {shots_Z: 8192, shots_X: 8192, angle_ps_sampling_rmse_eV_per_A: 0.23988523, cartesian_fd_sampling_rmse_eV_per_A: 32.07543804}
+      - {shots_Z: 32768, shots_X: 32768, angle_ps_sampling_rmse_eV_per_A: 0.11813217, cartesian_fd_sampling_rmse_eV_per_A: 14.94981735}
+      - {shots_Z: 131072, shots_X: 131072, angle_ps_sampling_rmse_eV_per_A: 0.06289531, cartesian_fd_sampling_rmse_eV_per_A: 7.42939251}
+
+backend:
+  Rz:
+    implementation: virtual
+    duration_ns: 0
+    physical_error: 0.0
+
+qpu_force_campaign:
+  output_root: outputs/qpu_force_campaign
+  checkpoint: checkpoints/hybrid_model_noise_aware_exact.pt
+  reference_force_subset_size: 48
+  subset_selection: deterministic_farthest_point_in_standardized_internal_coordinates
+  exact_consistency_thresholds:
+    mae_eV_per_A: 0.001
+    max_abs_error_eV_per_A: 0.01
+  finite_shot_pilot:
+    shots_per_basis: [512, 2048, 8192, 32768, 131072]
+    repeat_seeds: [20260827, 20260828, 20260829, 20260830, 20260831]
+    maximum_sampling_rmse_eV_per_A: 0.10
+    maximum_sampling_p95_eV_per_A: 0.20
+    require_lower_sampling_rmse_than_cartesian_fd: true
+    maximum_total_measurement_shots_per_force: 1835008
+  shot_allocation:
+    enabled_after_superiority_gate: true
+    z_fractions: [0.25, 0.50, 0.75]
+  completed_result:
+    status: stopped_after_10step_finite_shot_energy_gate
+    exact_angle_ps_vs_autograd_mae_eV_per_A: 2.671393841732247e-15
+    noisy_exact_angle_ps_vs_autograd_mae_eV_per_A: 3.5116023386452912e-15
+    selected_shots_Z: 131072
+    selected_shots_X: 131072
+    selected_sampling_force_rmse_eV_per_A: 0.06289530767308418
+    selected_total_force_rmse_eV_per_A: 0.9243710241949991
+    selected_total_measurement_shots_per_force: 1835008
+    cartesian_fd_same_shots_sampling_force_rmse_eV_per_A: 7.4293925146979305
+    one_step_aimd_pass: true
+    ten_step_finite_shot_pass_count: 0
+    ten_step_finite_shot_run_count: 5
+    ten_step_failure_reason: measured_energy_drift_and_range
+    hundred_step_aimd_run: false
+    thousand_step_aimd_run: false
+  exploratory_aimd:
+    purpose: user_accepted_trajectory_stability_check_after_strict_energy_readout_gate
+    steps: 100
+    shot_seeds: [20260827, 20260828, 20260829, 20260830, 20260831]
+    sampled_energy_readout: informational_only
+    latent_energy_source: exact_noisy_pes_evaluated_along_finite_shot_force_trajectory
+    acceptance:
+      max_latent_total_energy_drift_eV: 0.01
+      max_latent_total_energy_range_eV: 0.02
+      max_abs_latent_linear_drift_eV_per_ps: 0.10
+      max_oh_rmse_vs_exact_A: 0.02
+      max_hoh_angle_rmse_vs_exact_deg: 2.0
+      max_force_component_eV_per_A: 20.0
+      max_adjacent_force_jump_eV_per_A: 3.0
+    completed_result:
+      status: acceptable_trajectory_with_short_window_linear_drift_caveat
+      formal_predeclared_pass_count: 3
+      finite_shot_run_count: 5
+      full_length_trajectory_count: 5
+      all_finite_and_in_domain_count: 5
+      latent_total_energy_range_eV: {min: 0.0020418227849903214, max: 0.0034308373335537046}
+      sampled_total_energy_range_eV: {min: 0.044120588531754934, max: 0.06338486965345147}
+      oh_rmse_vs_exact_A: {mean: 0.0001569197914414291, max: 0.00028907419480877946}
+      hoh_angle_rmse_vs_exact_deg: {mean: 0.023513789059884202, max: 0.028627285159492394}
+      max_force_component_eV_per_A: 4.414505273190989
+      max_adjacent_force_jump_eV_per_A: 0.41771785262942096
+      failed_seed_details:
+        - {shot_seed: 20260827, failed_check: latent_linear_drift, value_eV_per_ps: -0.12618785477384836}
+        - {shot_seed: 20260829, failed_check: latent_linear_drift, value_eV_per_ps: 0.28010408921160046}
+      exact_noisy_total_energy_range_eV: 0.0003225641465079976
+      strict_10step_measured_energy_result_unchanged: true
+      thousand_step_aimd_not_run: true
+  exploratory_aimd_1000:
+    purpose: user_requested_long_trajectory_stability_check_before_hardware_submission
+    steps: 1000
+    shot_seeds: [20260827, 20260828, 20260829, 20260830, 20260831]
+    sampled_energy_readout: informational_only
+    latent_energy_source: exact_noisy_pes_evaluated_along_finite_shot_force_trajectory
+    acceptance:
+      max_latent_total_energy_drift_eV: 0.02
+      max_latent_total_energy_range_eV: 0.05
+      max_abs_latent_linear_drift_eV_per_ps: 0.10
+      max_oh_rmse_vs_exact_A: 0.05
+      max_hoh_angle_rmse_vs_exact_deg: 5.0
+      max_force_component_eV_per_A: 20.0
+      max_adjacent_force_jump_eV_per_A: 3.0
+    completed_result:
+      status: acceptable_long_trajectory_with_one_linear_drift_caveat
+      formal_predeclared_pass_count: 4
+      finite_shot_run_count: 5
+      full_length_trajectory_count: 5
+      all_finite_and_in_domain_count: 5
+      latent_total_energy_range_eV: {min: 0.006641535046843894, max: 0.016902419733679896}
+      latent_total_energy_drift_eV: {min: -0.013374224964321113, max: 0.00751257569464675}
+      sampled_total_energy_range_eV: {min: 0.06039291407671288, max: 0.07546803781377487}
+      oh_rmse_vs_exact_A: {mean: 0.000496279907957561, max: 0.0008615805504725541}
+      hoh_angle_rmse_vs_exact_deg: {mean: 0.1229222694024025, max: 0.16716813244176987}
+      max_force_component_eV_per_A: 5.88709695609301
+      max_adjacent_force_jump_eV_per_A: 0.4905560873618562
+      failed_seed_details:
+        - {shot_seed: 20260829, failed_check: latent_linear_drift, value_eV_per_ps: -0.16575832479434327}
+      exact_noisy_total_energy_range_eV: 0.00042771372386518625
+      estimated_total_measurement_shots_five_seeds: 9184215040
+      strict_10step_measured_energy_result_unchanged: true
+      real_qpu_execution: false
+
+evaluation:
+  evaluate_forces: true
+  accuracy_policy: staged_noise_adaptation_and_shot_selection
+  noiseless_reference:
+    test_energy_rmse_eV: 0.03895556
+    offgrid_energy_rmse_eV: 0.04428573
+    force_rmse_eV_per_A: 0.584965
+  adaptation_trigger:
+    relative_test_energy_rmse_increase: 0.05
+    absolute_test_energy_rmse_increase_eV: 0.005
+  mlp_only_success:
+    maximum_relative_test_energy_rmse_vs_noiseless: 1.10
+    maximum_relative_force_rmse_vs_noiseless: 1.10
+  shot_acceptance:
+    energy_rmse_relative_to_exact_noisy: 1.05
+    force_rmse_relative_to_exact_noisy: 1.10
+
+noise_experiment:
+  completed_result:
+    status: stopped_by_finite_shot_force_gate
+    final_exact_noisy_checkpoint: checkpoints/hybrid_model_noise_aware_exact.pt
+    final_exact_noisy_checkpoint_sha256: d43c6a4ccf0681963aa25fda51901d3349c1d6d946b18f618ac5c551315b7baa
+    energy_knee_shots_per_basis: 5931642
+    common_energy_force_aimd_shots: null
+    finite_shot_aimd_run: false
+  strict_stage_order:
+    [noiseless_exact, physical_noise_exact, noise_aware_fine_tuning,
+     final_circuit_readout, finite_shot_scan, shot_selection, force, nve_aimd]
+  sensitivity_points:
+    - {name: pessimistic, T1_us: 30.0, T2_us: 3.0}
+    - {name: nominal, T1_us: 35.0, T2_us: 3.5}
+    - {name: optimistic, T1_us: 40.0, T2_us: 4.0}
+  adaptation_order: [mlp_only_warm_start, quantum_and_mlp_parameter_shift_warm_start]
+  fine_tuning:
+    mlp_only_epochs: 100
+    quantum_mlp_epochs: 50
+    patience: 10
+    mlp_learning_rate: 0.001
+    quantum_learning_rate: 0.001
+  finite_shots:
+    policy: data_driven_geometric_knee_then_local_refinement
+    experience_reference: 3000
+    minimum: 128
+    maximum: 16777216
+    coarse_levels: 5
+    fine_neighbors: 2
+    repeat_seeds: [20260827, 20260828, 20260829, 20260830, 20260831]
+    allow_task_specific_shots: true
+
+robustness:
+  seeds: [20260827, 20260828, 20260829]
+  save_per_seed_checkpoints: true
+  save_per_seed_figures: true
+
+aimd:
+  enabled: true
+  ensemble: nve
+  initial_internal_coordinates: [0.9572, 0.9572, 104.52]
+  temperature_K: 300.0
+  time_step_fs: 0.1
+  steps: 1000
+  seed: 20260829
+  remove_translation: true
+  remove_rotation: true
+  trajectory_interval: 1
+  log_interval: 1
+  stage_steps: [0, 1, 10, 100, 1000]
+  max_total_energy_drift_eV: 0.005
+  max_total_energy_range_eV: 0.010
+  max_linear_energy_drift_eV_per_ps: 0.05
+  linear_energy_drift_hard_gate_minimum_steps: 100
+  max_center_of_mass_displacement_A: 0.000001
+  max_force_component_eV_per_A: 20.0
+  max_adjacent_force_jump_eV_per_A: 3.0
+  force_refinement_step_A: 0.0005
+  max_force_refinement_error_eV_per_A: 0.02
+
+plots:
+  backend: matplotlib
+  dpi: 220
+  format: png
+  style: default
+
+checkpoint:
+  path: checkpoints/hybrid_model_readout_pruned_shot_robust.pt
+  sha256: 21ba3e8be89ed141fd05d384b0cf6a0d4f054a170aebef14ff028639a706b6ac
+  parent_checkpoint: outputs/data_force_campaign/08_noisy_adaptation/03_noise_adaptation/checkpoints/mlp_only_noise_aware.pt
+  parent_checkpoint_sha256: 81d7bc95fdbe96b2ef136854fc903ae09a5dc0038175dd98ac707d423b8e9f9a
+  current_candidate: R1_DROP_XXX_MLP_ONLY
+
+readout_pruning:
+  enabled: true
+  experiment_id: h2o_f2a2_readout_pruning_shot_robustness
+  output_root: outputs/readout_pruning_campaign
+  status: completed_with_readout_shot_robustness_failure
+  baseline_features: [ZII, IZI, IIZ, ZZI, ZIZ, IZZ, ZZZ, XII, IXI, IIX, XXI, XIX, XXX]
+  candidates:
+    first_priority: [XXX]
+  selected_candidate: R1_DROP_XXX_MLP_ONLY
+  selected_features: [ZII, IZI, IIZ, ZZI, ZIZ, IZZ, ZZZ, XII, IXI, IIX, XXI, XIX]
+  dropped_features: [IXX, XXX]
+  feature_count: 12
+  quantum_backend_observable_count: 14
+  measurement_basis_count: 2
+  measurement_bases: [Z, X]
+  quantum_circuit_changed: false
+  joint_fine_tuning_status: not_run_not_required
+  shot_augmentation_accepted_in_energy_stage: true
+  sensitivity_regularization_status: not_run_not_required
+  practical_shots_per_basis: []
+  selection_metrics:
+    - exact_noisy_rmse
+    - finite_shot_rmse
+    - task_aware_risk
+    - variance_contribution
+  completed_result:
+    validation_exact_energy_rmse_eV: 0.05770708471422843
+    validation_exact_force_rmse_eV_per_A: 1.1234477340955138
+    locked_exact_energy_rmse_eV: 0.0504909086526395
+    locked_offgrid_exact_energy_rmse_eV: 0.047626858475568086
+    locked_exact_force_rmse_eV_per_A: 0.7363720478315657
+    variance_concentration_c_max: 0.36554038669189914
+
+task_aware_feature_metrics:
+  enabled: true
+  design_shots: 3000
+  metrics:
+    - signal_std
+    - shot_std
+    - snr
+    - rho
+    - dE_dz
+    - variance_contribution
+    - task_signal
+    - task_noise
+    - task_quality_ratio
+  xxx_baseline:
+    signal_std: 0.0006277740384680765
+    shot_std: 0.01825739711266076
+    snr: 0.034384640625072495
+    rho: 29.082752700658524
+    task_signal_eV: 0.0008137783741232911
+    task_noise_eV: 0.02366691520777165
+    variance_contribution: 0.06939883267946617
+
+aimd_diagnostics:
+  separate_energy_estimators: true
+  measured_energy:
+    enabled: true
+    source: finite_shot_quantum_features_on_trajectory
+  exact_noisy_diagnostic_energy:
+    enabled: true
+    simulator_only: true
+  trajectory_force_source: finite_shot_input_angle_parameter_shift
+  shots_per_basis: 10000
+  fallback_shots_used: true
+  shot_seeds: [20260827, 20260828, 20260829, 20260830, 20260831]
+  requested_stage_steps: [1, 10, 100, 1000]
+  completed_stage_steps: [1, 10, 100]
+  status: stopped_by_dynamics_gate
+  trajectory_dynamics_stable: false
+  measured_energy_conservation_unresolved: false
+  failure_classes: [measurement_failure, dynamics_failure, mixed_failure]
+  ten_step_failure_class_counts: {passed: 0, measurement_failure: 5, dynamics_failure: 0, mixed_failure: 0}
+  hundred_step_failure_class_counts: {passed: 0, measurement_failure: 1, dynamics_failure: 0, mixed_failure: 4}
+
+data_force_campaign:
+  status: completed_stopped_by_finite_shot_energy_gate
+  completed_at: 2026-08-28T23:17:36+08:00
+  config_path: configs/data_force_campaign.yaml
+  output_root: outputs/data_force_campaign
+  development_energy_path: data/h2o_pyscf_sto3g_fci_energy_development_v2.csv
+  development_force_path: data/h2o_pyscf_sto3g_fci_force_development_v2.csv
+  development_total_energy: 1000
+  split: {train: 800, validation: 100, test: 100}
+  force_labels: {total: 350, train: 280, validation: 40, test: 30}
+  historical_locked_tests: {final_energy: 22, offgrid_energy: 48, force_geometries: 300}
+  objective: energy_force
+  lambda_energy: 1.0
+  lambda_force: null
+  lambda_force_scan: [0.0, 0.1, 0.3, 1.0]
+  energy_normalization: true
+  force_normalization: true
+  conservative_force: true
+  independent_force_head: false
+  compare: [232E_energy_only, 1000E_energy_only, 1000E_350F_energy_force]
+  learning_curve_dataset_sizes: [232, 400, 700, 1000]
+  generated_dataset_hashes:
+    energy_sha256: 18361f86f91c9e1091bce61f0ed442dbc2038622b50b2b66161899b05bf038af
+    force_sha256: 39bf334bf55486e3ba073bfd1c0732999886d0cee7786d4670f4654a00ee9a92
+  selected:
+    lambda_force: 1.0
+    checkpoint: outputs/data_force_campaign/03_1000E_350F_joint/hybrid_model_1000E_350F.pt
+    checkpoint_sha256: 56a3229969276fd2d807d94ce0d2b495c8497c564246ec4840576e8b73285ad4
+    validation_energy_rmse_eV: 0.1051372650341552
+    validation_force_rmse_eV_per_A: 1.2945205255422252
+  historical_locked_metrics:
+    final_energy_rmse_eV: 0.1235708081543177
+    offgrid_energy_rmse_eV: 0.12190008237565218
+    force_rmse_eV_per_A: 1.154408999096693
+    force_p95_abs_eV_per_A: 2.4954178587921882
+    force_max_abs_eV_per_A: 10.70626055516355
+  learning_curve_result:
+    status: DATA_SATURATION
+    force_rmse_relative_improvement_700_to_1000: 0.011212099900570224
+  ideal_aimd_1000step:
+    status: passed
+    linear_total_energy_drift_eV_per_ps: 0.0000251163640239313
+    total_energy_range_eV: 0.00030157795726715175
+    max_force_component_eV_per_A: 5.075421723776062
+    max_adjacent_force_jump_eV_per_A: 0.32421072403868845
+  physical_noise:
+    frozen_validation_energy_rmse_eV: 0.479303540635664
+    adaptation_selected: mlp_only
+    adapted_validation_energy_rmse_eV: 0.07447796103199164
+    adapted_locked_force_rmse_eV_per_A: 1.0798276861337477
+  finite_shots:
+    maximum_scanned_shots_per_basis: 16777216
+    energy_knee_shots: null
+    common_energy_force_aimd_shots: null
+    shot_selection_feasible: false
+    noisy_aimd_run: false
+  qpu_readiness: false
+  report: null
+  report_archive: "历史完整报告已移出公开仓库归档；完成清单见 provenance/data_force_campaign_completion_manifest.json"
+
+finite_shot_robustness:
+  enabled: true
+  status: completed_energy_force_gates_passed_aimd_10step_measured_energy_gate_failed
+  config_path: configs/finite_shot_robustness_campaign.yaml
+  output_root: outputs/finite_shot_robustness_campaign
+  protocol_sha256: 6596fcce2a19e06ae132522af64e7d83f5700a791bb4cfcc416cad2976484415
+  problematic_features:
+    - name: IXX
+      training_std: 0.0026347825128857235
+      checkpoint_scaler_denominator: 0.0024669998096870423
+      baseline_variance_contribution: 0.9977417276536797
+  feature_policy:
+    mode: drop_IXX_13_plus_shot_aware_scaling
+  shot_aware_scaler:
+    enabled: true
+    formula: max_signal_std_and_kappa_times_design_shot_std
+    kappa: 1.0
+    design_shots: 3000
+  shot_augmentation:
+    enabled: false
+    shot_values: []
+    finite_shot_batch_fraction: 0.0
+  sensitivity_regularization:
+    enabled: false
+    lambda_sensitivity: 0.0
+    covariance_mode: diagonal_linearized
+    reason: not_required_after_B_C_D_practical_shot_and_variance_concentration_gates
+  validation:
+    exact_noisy_energy_rmse_eV: 0.08334925368468594
+    exact_noisy_force_rmse_eV_per_A: 1.510085730252809
+    sampling_energy_rmse_eV_at_100000_shots: 0.018668883414518483
+    sampling_force_rmse_eV_per_A_at_100000_shots: 0.05882574734316863
+    variance_concentration_c_max: 0.34832503580853974
+    practical_shots_per_basis: [100000]
+  locked_test:
+    exact_noisy_energy_rmse_eV: 0.06684972810044043
+    exact_noisy_offgrid_energy_rmse_eV: 0.07671089428466303
+    exact_noisy_force_rmse_eV_per_A: 1.0012281975835602
+    sampling_energy_rmse_eV_at_100000_shots: 0.015748271554596904
+    sampling_force_rmse_eV_per_A_at_100000_shots: 0.06008546036556271
+    hashes_unchanged: true
+  aimd:
+    status: failed_all_validation_feasible_shots
+    one_step_pass_count: 5
+    one_step_run_count: 5
+    ten_step_pass_count: 0
+    ten_step_run_count: 5
+    ten_step_failure_checks: [energy_drift, energy_range]
+    hundred_step_run: false
+    thousand_step_run: false
+  qpu_readiness: false
+  report: null
+  report_archive: "历史完整报告已移出公开仓库归档；完成清单见 provenance/finite_shot_robustness_completion_manifest.json"
+
+readout:
+  original_feature_dimension: 14
+  active_feature_dimension: 13
+  active_features: [ZII, IZI, IIZ, ZZI, ZIZ, IZZ, ZZZ, XII, IXI, IIX, XXI, XIX, XXX]
+  dropped_features: [IXX]
+
+training:
+  finite_shot_aware: true
+  strategy: mlp_only_exact_training_with_shot_aware_scaler
+  quantum_parameters_updated: false
+  mlp_parameters_updated: true

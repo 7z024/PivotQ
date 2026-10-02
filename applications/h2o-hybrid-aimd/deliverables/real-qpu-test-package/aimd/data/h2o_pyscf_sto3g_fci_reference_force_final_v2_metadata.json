@@ -1,0 +1,50 @@
+{
+  "dataset_name": "h2o_pyscf_sto3g_fci_reference_force_final_v2",
+  "purpose": "locked replacement final reference Force test after v1 was consumed; never fit or select",
+  "sample_count": 300,
+  "seed": 20260829,
+  "sampling": "deterministic three-dimensional Latin hypercube",
+  "domain": {
+    "oh_length_A": [
+      0.75,
+      1.25
+    ],
+    "hoh_angle_deg": [
+      80.0,
+      130.0
+    ]
+  },
+  "split": "final_reference_force_test_v2",
+  "reference_energy": "full-space CASCI",
+  "reference_force": "negative full-space CASCI analytic nuclear gradient after minimum-L2 rigid-translation/rotation numerical-residual projection",
+  "raw_reference_force_preserved": true,
+  "rigid_projection_max_allowed_correction_eV_per_A": 0.001,
+  "energy_crosscheck": "direct FCI at every geometry",
+  "basis": "sto-3g",
+  "units": {
+    "energy": "eV",
+    "force": "eV/Angstrom",
+    "position": "Angstrom"
+  },
+  "atomic_numbers": [
+    8,
+    1,
+    1
+  ],
+  "pyscf_versions": [
+    "2.13.1"
+  ],
+  "geometry_manifest_path": "reference_data/h2o_pyscf_sto3g_fci_reference_force_final_v2_geometries.json",
+  "geometry_manifest_sha256": "913ffb6603fea90ca1fdb26c94c2404a311843c60f181675c9737c957ae5f38f",
+  "csv_path": "reference_data/h2o_pyscf_sto3g_fci_reference_force_final_v2.csv",
+  "csv_sha256": "87ce470d73d3ab1ad0d15e6df8f5f23da2a8f953e476676dc3274699fed2f20b",
+  "max_abs_casci_minus_direct_fci_Ha": 1.0194156629950157e-09,
+  "energy_crosscheck_tolerance_Ha": 5e-09,
+  "max_abs_rigid_projection_correction_eV_per_A": 1.5542470906439156e-05,
+  "max_raw_total_force_norm_eV_per_A": 5.655660467764134e-13,
+  "max_raw_total_torque_norm_eV": 3.720637492632406e-05,
+  "max_total_force_norm_eV_per_A": 6.233089088255942e-15,
+  "max_total_torque_norm_eV": 3.552713678800501e-15,
+  "leakage_policy": "These geometries are final-only. Reading labels or metrics before candidate, checkpoint, finite-difference step, OOD threshold, and all acceptance thresholds are frozen invalidates this dataset version.",
+  "generator": "september_launch_event.data.prepare_water_reference_forces"
+}

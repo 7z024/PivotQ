@@ -1,0 +1,16 @@
+* text=auto
+
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.csv text eol=lf
+*.h text eol=lf
+
+*.a binary
+*.so binary
+*.pt binary
+*.png binary
+*.traj binary
+*.tar.gz binary

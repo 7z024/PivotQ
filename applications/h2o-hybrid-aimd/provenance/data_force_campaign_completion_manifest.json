@@ -1,0 +1,140 @@
+{
+  "report_archive": {
+    "status": "moved_out_of_public_repository",
+    "location": "external archive qhai-2026-revision-archive-20261002",
+    "original_path": "reports/H2O_ENERGY_FORCE_DATASET_CAMPAIGN.md",
+    "hashes_preserved": true
+  },
+  "experiment": "h2o_energy_force_dataset_campaign_v2",
+  "completed_at": "2026-08-28T23:21:04+08:00",
+  "status": "completed",
+  "formal_runtime": {
+    "host": "109-32cpu",
+    "conda_environment": "ase-aimd-gpaw",
+    "remote_project": "/data/hzhang/tmp/lcz_hybrid_v1/single_h20_aimd",
+    "python_bytecode_disabled": true
+  },
+  "verification": {
+    "unit_tests_passed": 37,
+    "unit_tests_failed": 0,
+    "locked_test_hashes_unchanged": true,
+    "historical_locked_geometry_overlap_count": 0,
+    "force_loss_reaches_quantum_and_mlp": true
+  },
+  "configuration": {
+    "path": "configs/data_force_campaign.yaml",
+    "sha256": "79243e591895509bc68b0115ae7913a27c7940cb43ff8cdbfc2ad660044a77a2",
+    "bytes": 5732
+  },
+  "datasets": {
+    "energy": {
+      "path": "data/h2o_pyscf_sto3g_fci_energy_development_v2.csv",
+      "sha256": "18361f86f91c9e1091bce61f0ed442dbc2038622b50b2b66161899b05bf038af",
+      "bytes": 223096
+    },
+    "force": {
+      "path": "data/h2o_pyscf_sto3g_fci_force_development_v2.csv",
+      "sha256": "39bf334bf55486e3ba073bfd1c0732999886d0cee7786d4670f4654a00ee9a92",
+      "bytes": 438050
+    },
+    "energy_split_counts": {
+      "train": 800,
+      "validation": 100,
+      "test": 100
+    },
+    "force_split_counts": {
+      "train": 280,
+      "validation": 40,
+      "test": 30
+    }
+  },
+  "selected_model": {
+    "lambda_force": 1.0,
+    "checkpoint": {
+      "path": "outputs/data_force_campaign/03_1000E_350F_joint/hybrid_model_1000E_350F.pt",
+      "sha256": "56a3229969276fd2d807d94ce0d2b495c8497c564246ec4840576e8b73285ad4",
+      "bytes": 38037
+    },
+    "loss_diagnostics": {
+      "initial_total_normalized_loss": 2.1412514346000844,
+      "final_total_normalized_loss": 0.03929678516262037,
+      "minimum_total_normalized_loss": 0.03929678516262037,
+      "total_loss_decreased_initial_to_final": true,
+      "initial_validation_energy_normalized_mse": 0.7860676852628036,
+      "final_validation_energy_normalized_mse": 0.0052380407145847215,
+      "validation_energy_loss_decreased": true,
+      "force_loss_applicable": true,
+      "initial_validation_force_normalized_mse": 0.8940351311105262,
+      "final_validation_force_normalized_mse": 0.019312222850632502,
+      "validation_force_loss_decreased": true,
+      "quantum_gradient_nonzero_epoch_count": 100,
+      "classical_gradient_nonzero_epoch_count": 100,
+      "first_epoch": 1.0,
+      "last_epoch": 100.0
+    },
+    "force_supervision_improved_validation_force": true
+  },
+  "stage_outputs": {
+    "dataset": {
+      "path": "outputs/data_force_campaign/00_dataset_generation/summary.json",
+      "sha256": "04f49d10cfd4e3af115e5ab26c5c95d3fca465fee90c2e17c212d3124c548e1c",
+      "bytes": 3070
+    },
+    "lambda_force_ablation": {
+      "path": "outputs/data_force_campaign/04_lambda_force_ablation/summary.json",
+      "sha256": "e5baf3ea8ba92a5c07a8f557ca894c4f1da9812c270e49e0b6014ca9a850af04",
+      "bytes": 415932
+    },
+    "learning_curve": {
+      "path": "outputs/data_force_campaign/05_learning_curve/summary.json",
+      "sha256": "8023e8f56518be08e241dc1d1f2ffab0607275741c00b38da871f96a4a528f3d",
+      "bytes": 815630
+    },
+    "locked_evaluation": {
+      "path": "outputs/data_force_campaign/06_final_locked_evaluation/summary.json",
+      "sha256": "788901363734ef3126520c7ed42b8db7bed3d9b6629e1825f65b587cc8503ac2",
+      "bytes": 4724
+    },
+    "aimd": {
+      "path": "outputs/data_force_campaign/07_aimd_comparison/summary.json",
+      "sha256": "615e3af8e1327aa56265b49d3b8b0ef6635855bc7458a894bfde33ca1c4bc308",
+      "bytes": 185670
+    },
+    "final_selection": {
+      "path": "outputs/data_force_campaign/final_selection/summary.json",
+      "sha256": "27014d6fd8c777a677102a32e268c7173aec54af1f33a45aff169c4140356c72",
+      "bytes": 1131907
+    },
+    "figures": {
+      "path": "outputs/data_force_campaign/figures/figure_manifest.json",
+      "sha256": "ade9df723b07403e74e171b4b63ab0f21eb7458f0fd04a9a741218281e888588",
+      "bytes": 961
+    },
+    "noise_and_shots": {
+      "path": "outputs/data_force_campaign/08_noisy_adaptation/campaign_summary.json",
+      "sha256": "16c4741cfde79d9d9f7eeef66a810ed551289936ad0861f1de08c12828aaf040",
+      "bytes": 46532
+    }
+  },
+  "physical_noise_gate": {
+    "force_supervision_improved_validation_force": true,
+    "both_1000_step_runs_completed": true,
+    "at_least_one_aimd_stability_metric_improved": true,
+    "proceed_to_physical_noise": true,
+    "comparison": {
+      "energy_only_abs_linear_drift_eV_per_ps": 0.00014378901137682495,
+      "joint_abs_linear_drift_eV_per_ps": 2.51163640239313e-05,
+      "energy_only_total_energy_range_eV": 0.00030116166768917596,
+      "joint_total_energy_range_eV": 0.00030157795726715175,
+      "energy_only_max_force_component_eV_per_A": 5.538915400711021,
+      "joint_max_force_component_eV_per_A": 5.075421723776062,
+      "energy_only_max_adjacent_force_jump_eV_per_A": 0.344086751349336,
+      "joint_max_adjacent_force_jump_eV_per_A": 0.32421072403868845
+    }
+  },
+  "report": {
+    "path": "reports/H2O_ENERGY_FORCE_DATASET_CAMPAIGN.md",
+    "sha256": "61795523dd09bca0e83963356efe42808cf77f3846db18247e3869b888c19f01",
+    "bytes": 8991
+  }
+}

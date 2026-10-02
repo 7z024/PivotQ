@@ -1,0 +1,117 @@
+{
+  "passed": true,
+  "scope": "Real HTTP/Ray; one-step H2O AIMD with Fake SC-36 quantum and logical CPU classical targets",
+  "started_at": "2026-10-02T07:05:14.879622+00:00",
+  "runs": [
+    {
+      "task_id": "h2o-hybrid-aimd",
+      "run_id": "run-5002491baed2",
+      "status": "SUCCEEDED",
+      "execution_mode": "local_cpu",
+      "actual_device": "cpu",
+      "elapsed_seconds": 36.255521446466446,
+      "scientific_status": "passed",
+      "source_sha256": "965195195161fb89943cde9f2f836398d287ae1aa2270ba03f7536c4499d1215",
+      "hardware": {
+        "initialization": "cpu-0",
+        "quantum_features": "fake-sc-36",
+        "classical_predict": "cpu-0",
+        "force_and_integration": "cpu-0",
+        "trajectory_analysis": "cpu-0"
+      },
+      "trace_records": 10,
+      "cleanup_succeeded": true,
+      "target_profiles": {
+        "initialization": {
+          "id": "cpu-0",
+          "kind": "cpu",
+          "title": "参考 CPU",
+          "profile_version": "1",
+          "profile_sha256": "3c133e11bd8506b505b67c2ac4a9c69b1f4ddd02dce5cbdc7cbe2a1058dee3d4"
+        },
+        "quantum_features": {
+          "id": "fake-sc-36",
+          "kind": "qpu",
+          "title": "Fake SC-36 · 6×6 超导芯片",
+          "profile_version": "1",
+          "profile_sha256": "9ed1bfc938871895abd06cfe8f0a6727afba8eed9bf2f6ed70e3a17230087898"
+        },
+        "classical_predict": {
+          "id": "cpu-0",
+          "kind": "cpu",
+          "title": "参考 CPU",
+          "profile_version": "1",
+          "profile_sha256": "3c133e11bd8506b505b67c2ac4a9c69b1f4ddd02dce5cbdc7cbe2a1058dee3d4"
+        },
+        "force_and_integration": {
+          "id": "cpu-0",
+          "kind": "cpu",
+          "title": "参考 CPU",
+          "profile_version": "1",
+          "profile_sha256": "3c133e11bd8506b505b67c2ac4a9c69b1f4ddd02dce5cbdc7cbe2a1058dee3d4"
+        },
+        "trajectory_analysis": {
+          "id": "cpu-0",
+          "kind": "cpu",
+          "title": "参考 CPU",
+          "profile_version": "1",
+          "profile_sha256": "3c133e11bd8506b505b67c2ac4a9c69b1f4ddd02dce5cbdc7cbe2a1058dee3d4"
+        }
+      },
+      "runtime_selections": [
+        {
+          "actual_devices": [
+            "CPU"
+          ],
+          "backend": "native",
+          "component_id": "h2o-classical-predict",
+          "effective_resources": {
+            "custom_resources": {},
+            "num_cpus": 0.25,
+            "num_gpus": 0.0
+          },
+          "reason": "hardware_available",
+          "requested_devices": [
+            "CPU"
+          ],
+          "requested_resources": {
+            "custom_resources": {},
+            "num_cpus": 0.25,
+            "num_gpus": 0.0
+          },
+          "simulated": false
+        },
+        {
+          "actual_devices": [
+            "CPU"
+          ],
+          "backend": "qiskit_statevector",
+          "component_id": "qpu-circuits",
+          "effective_resources": {
+            "custom_resources": {},
+            "num_cpus": 1.0,
+            "num_gpus": 0.0
+          },
+          "reason": "hardware_unavailable",
+          "requested_devices": [
+            "QPU"
+          ],
+          "requested_resources": {
+            "custom_resources": {},
+            "num_cpus": 1.0,
+            "num_gpus": 0.0
+          },
+          "simulated": true
+        }
+      ],
+      "measured_compute_seconds": 2.2686394676566124,
+      "logical_qubits": 3,
+      "chip_capacity": 36,
+      "trajectory_frames": 2,
+      "persistent_classical_actor": true,
+      "classical_actor_terminated": true
+    }
+  ],
+  "history_restored_without_resubmission": true,
+  "finished_at": "2026-10-02T07:05:51.170255+00:00"
+}

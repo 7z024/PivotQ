@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "recorded_at": "2026-10-02T07:04:08Z",
+  "scope": "Actual libfusion.so predictions through the project-private runtime; no physical QPU or Docker",
+  "verification": [
+    {
+      "command": "PYTHONPATH=dashboard QHAI_RUN_NATIVE_PREDICTIONS=1 .venv/bin/python -m unittest discover -s dashboard/tests/backend -p test_qperfsim_virtual.py -v",
+      "tests": 8,
+      "passed": 8,
+      "skipped": 0
+    },
+    {
+      "command": "PYTHONPATH=dashboard QPERFSIM_ROOT=$PWD/packages/perf-sim FUSION_QPERFSIM_RUNTIME=$PWD/dashboard/.qperfsim-runtime .venv/bin/python -m unittest discover -s dashboard/tests/backend -p 'test_qperfsim*.py' -v",
+      "tests": 11,
+      "passed": 9,
+      "skipped": 2,
+      "note": "The two opt-in virtual native tests were executed by the first command. This command also verifies the existing native H2O GPU/QPU reference adapter."
+    }
+  ],
+  "circuit": {
+    "logical_qubits": 2,
+    "chip_capacity_qubits": 36,
+    "circuit_count": 1,
+    "cases": [
+      {"shots": 1000, "shot_rate": 10000, "submit_latency_us": 1000, "latency_seconds": 0.101, "task_completion_ratio": 1.0},
+      {"shots": 2000, "shot_rate": 10000, "submit_latency_us": 1000, "latency_seconds": 0.201, "task_completion_ratio": 1.0},
+      {"shots": 1000, "shot_rate": 5000, "submit_latency_us": 1000, "latency_seconds": 0.201, "task_completion_ratio": 1.0},
+      {"shots": 1000, "shot_rate": 10000, "submit_latency_us": 11000, "latency_seconds": 0.111, "task_completion_ratio": 1.0}
+    ],
+    "interpretation": "One batch = shots / effective shot rate + submission latency. The native output does not add measurement/reset time a second time. Sensitivity changes are test-only snapshots, not editable UI presets.",
+    "ideal_numerical_invariance": "CPU statevector Bell probabilities remain 00=0.5 and 11=0.5 for all four variants. Changing throughput/submission latency preserves sampled counts at fixed shots/seed; increasing shots changes total counts but not ideal probabilities."
+  },
+  "h2o": {
+    "steps": 1,
+    "preflight": true,
+    "logical_qubits": 3,
+    "shots_per_circuit": 3000,
+    "batch_size": 32,
+    "circuits": 724,
+    "qpu_batch_count": 26,
+    "qpu_acquisition_seconds": 217.2,
+    "predictions": [
+      {"classical_target": "cpu-0", "latency_seconds": 235.909863, "task_completion_ratio": 1.0},
+      {"classical_target": "gpu-0", "latency_seconds": 236.139759, "task_completion_ratio": 1.0}
+    ],
+    "cpu_model": {
+      "source": "Frozen checkpoint classical.state_dict dimensions, FP64",
+      "checkpoint_sha256": "560bef3584db36933dfcdf1679912f04503b9339da869f489edfee0a631f2b80",
+      "layer_widths": [14, 32, 32, 1],
+      "parameter_bytes": 12552,
+      "mac_operations": 2,
+      "bias_operations": 1,
+      "peak_flops_tflops_per_node": 1,
+      "memory_bandwidth_gbps_per_node": 100,
+      "calibrated": false,
+      "scope": "Forward dense layers and bias; excludes activation, normalization and Python scheduling overhead. Other fixed host stages retain their disclosed reference envelopes."
+    },
+    "gpu_model_source": "examples/h2o/prediction_parameters.json gpu.invocations.*.seconds.classical_actor, NVIDIA A100-PCIE-40GB"
+  },
+  "preview_without_native": "Passed: task graph and scenario produced despite unavailable library and nonexistent private loader; no predicted latency returned",
+  "parameter_scope": "Illustrative, uncalibrated throughput model. Grid displayed only; no routing, gate-depth or noise effects."
+}

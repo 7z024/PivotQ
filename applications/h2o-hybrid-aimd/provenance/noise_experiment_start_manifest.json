@@ -1,0 +1,33 @@
+{
+  "experiment": "828_physical_noise_and_adaptive_shots",
+  "started_at": "2026-08-28T15:27:37+08:00",
+  "protocol": {
+    "path": "最新实验指导文档/828 加噪方案.md",
+    "sha256": "0a565ce48b83d0fbd4de25fd080dc6c7d41591e2d72b7263384f756a2c7d86e2"
+  },
+  "project_snapshot_before_changes": {
+    "file_count_excluding_python_bytecode": 353,
+    "sorted_manifest_sha256": "e0236a112004b2c91264e95d814644b17291a5251cbcd333adb2372a25b474ad"
+  },
+  "locked_noiseless_checkpoint": {
+    "path": "checkpoints/hybrid_model.pt",
+    "sha256": "560bef3584db36933dfcdf1679912f04503b9339da869f489edfee0a631f2b80"
+  },
+  "protected_source_project": {
+    "path": "/Users/zhanghao/code/LCZ/september_launch_event",
+    "file_count_excluding_python_bytecode": 963,
+    "sorted_manifest_sha256": "6f4696a7ccddc10dbf0c7093256c38aa5c2dc1919e8cd390b0c01d111597b51a"
+  },
+  "frozen_scientific_constraints": {
+    "circuit_candidate": "F2/A2",
+    "shots_first_stage": null,
+    "noise_first_stage": "density_matrix_exact_expectation",
+    "quantum_gradient_method": "parameter_shift",
+    "production_force": "cartesian_central_finite_difference_with_rigid_residual_removal",
+    "default_nve": {
+      "temperature_K": 300.0,
+      "time_step_fs": 0.1,
+      "steps": 1000
+    }
+  }
+}

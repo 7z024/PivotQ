@@ -1,0 +1,10 @@
+# Single-machine workflow; qcontrol/LabRAD are installed by the laboratory.
+# No Ray or CUDA is required by run_qcontrol.py.
+numpy>=2.0,<3
+pandas>=2.2,<4
+qiskit==2.5.1
+torch>=2.5,<3
+PyYAML>=6.0,<7
+ase>=3.29,<4
+matplotlib>=3.10,<4
+jsonschema>=4.25,<5

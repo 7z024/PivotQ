@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "finished_at": "2026-10-01T17:18:36.868Z",
+  "scope": "Real Chromium browser against unified local CPU service; circuit and AIMD submitted through UI, then validated after service restart",
+  "runs": [
+    {
+      "id": "run-78f7371b942b",
+      "task_id": "quantum-circuit",
+      "status": "SUCCEEDED",
+      "probabilities": {
+        "11": 0.4999999999999999,
+        "00": 0.4999999999999999
+      }
+    },
+    {
+      "id": "run-34755ade4f16",
+      "task_id": "h2o-hybrid-aimd",
+      "status": "SUCCEEDED",
+      "completed_steps": 2,
+      "trajectory_frames": 3
+    }
+  ],
+  "checks": {
+    "webgl": true,
+    "playback": true,
+    "actual_final_time_fs": 0.2,
+    "download_matches_original": true,
+    "restart_restore": true,
+    "terminal_polling_stops": true,
+    "mobile_no_overflow": true,
+    "page_errors": []
+  }
+}

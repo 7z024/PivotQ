@@ -1,0 +1,198 @@
+# H2O F2/A2 ADAPT-inspired 最终交付配置；参数移位重训代表 seed 20260829。
+
+deployment:
+  purpose: h2o_f2_adapt_energy_force_nve_aimd
+  inference_uses_frozen_checkpoint: true
+  coordinate_force_method: cartesian_central_finite_difference
+  training_gradient_method: ideal_statevector_parameter_shift_and_classical_backprop
+  remote_autograd_required: false
+  result_scope: real-QPU evidence
+
+scheduling:
+  coordinator:
+    worker: aimd_run
+    resources: {cpu: 1.0, gpu: 0.0, qpu: 0.0, custom: {}}
+  quantum_targets:
+    gpu:
+      worker: quantum_features
+      backend: adapt_water_statevector_gpu
+      resources: {cpu: 1.0, gpu: 1.0, qpu: 0.0, custom: {}}
+      execution:
+        mode: exact_statevector
+        device: cuda
+        gradient_method: none
+      timeout_seconds: 60.0
+    qpu:
+      worker: quantum_features
+      backend: framework_real_qpu
+      resources: {cpu: 0.25, gpu: 0.0, qpu: 1.0, custom: {}}
+      execution:
+        mode: real_qpu
+        device: qpu
+        gradient_method: none
+        shots: 3000
+        # 老接口不需要；若集群框架要求物理映射，由 QPU 侧确认后覆盖为三个标识。
+        physical_qubits: null
+      timeout_seconds: 3600.0
+  classical_actor:
+    actor_type: classical_predict
+    resources: {cpu: 0.25, gpu: 1.0, qpu: 0.0, custom: {}}
+    device: cuda
+    require_gpu: true
+    startup_timeout_seconds: 300.0
+    call_timeout_seconds: 60.0
+
+project:
+  name: h2o_adapt_finalist_F2
+  seed: 20260829
+  data_path: data/h2o_pyscf_sto3g_fci_v1.csv
+  output_root: outputs
+  run_name: h2o_f2_aimd
+
+dataset:
+  molecule: H2O
+  atom_symbols: [O, H, H]
+  atomic_numbers: [8, 1, 1]
+  charge: 0
+  multiplicity: 1
+  geometry_representation: water_internal_coordinates
+  use_relative_energy: true
+  valid_geometry_domain:
+    oh_length_A: [0.75, 1.25]
+    hoh_angle_deg: [80.0, 130.0]
+  required_splits: [train, validation]
+  metadata_path: data/h2o_pyscf_sto3g_fci_v1_metadata.json
+  final_energy_path: data/h2o_pyscf_sto3g_fci_test_final_v2.csv
+  offgrid_final_path: data/h2o_pyscf_sto3g_fci_offgrid_final_v2.csv
+  reference_force_final_path: data/h2o_pyscf_sto3g_fci_reference_force_final_v2.csv
+  reference_method: FCI
+  basis: STO-3G
+  has_force_labels: false
+
+hardware_constraints:
+  source: frozen_authority_proxy_without_provider_calibration_id
+  calibration_id: null
+  calibration_timestamp: null
+  num_qubits: 3
+  connectivity: [[0, 1], [1, 2]]
+  native_single_qubit_gates: [ry, rz]
+  native_two_qubit_gate: cz
+  cnot_allowed: false
+  T1_us: [30.0, 40.0]
+  T2_us: [3.0, 4.0]
+  single_qubit_fidelity: 0.998
+  cz_fidelity: 0.992
+  single_qubit_gate_duration_ns: 56.0
+  cz_gate_duration_ns: 34.0
+  readout_duration_ns: 1000.0
+  readout_assignment_error: null
+
+quantum:
+  backend: adapt_water_statevector
+  encoding:
+    atomic_numbers: [8, 1, 1]
+    template: one_to_one
+    mapping: affine
+    invariant_mean: [2.000077837837838, 0.04827027027027026, -0.25122480774613504]
+    invariant_scale: [0.2584499140053624, 0.06534095551409179, 0.2567215495625882]
+    offset: [1.5707963267948966, 1.5707963267948966, 1.5707963267948966]
+    angle_scale: [0.7853981633974483, 0.39269908169872414, 0.7853981633974483]
+    one_to_one_axis: ry
+    multi_axis_axes: [ry, rz]
+  observables: [ZII, IZI, IIZ, ZZI, ZIZ, IZZ, ZZZ, XII, IXI, IIX, XXI, XIX, IXX, XXX]
+  circuit:
+    num_qubits: 3
+    seed: native
+    connectivity: [[0, 1], [1, 2]]
+    entangler_gate: cz
+    data_reuploading: false
+    seed_parameters:
+      [0.1887169726203465, -0.16610493972706575, -0.06556470871437482,
+       0.06819523802826741, -0.6384290292144779, -0.28951789889959006]
+    selected_operators: [IYZ, YII, YZI, IIX, YII]
+    adapt_parameters:
+      [0.320517432886528, -0.04629778056154185, 0.16421749065261415,
+       0.05754179225620465, -0.023529718740523457]
+  execution:
+    mode: exact_statevector
+    device: cpu
+    shots: null
+    noise: false
+    gradient_method: parameter_shift
+  training:
+    optimizer: {name: adam}
+    learning_rate: 0.01
+    gradient_clip_norm: 5.0
+    classical_warmup_epochs: 0
+    learning_rate_scheduler: {name: none}
+    l2: 0.0
+
+classical:
+  backend: torch_mlp
+  device: cpu
+  dtype: float64
+  feature_transform: {name: identity}
+  linear_initialization: {name: random}
+  noise_feature_correction: {enabled: false}
+  hidden_dims: [32, 32]
+  activation: silu
+  epochs: 100
+  optimizer: {name: adam}
+  learning_rate: 0.01
+  learning_rate_scheduler: {name: none}
+  l2: 0.0
+  seed: 20260829
+  early_stopping:
+    enabled: false
+    patience: 100
+    min_delta_eV2: 0.0
+  history_interval: 1
+  stability_guard: {}
+
+force:
+  backend: cartesian_central_finite_difference
+  step_A: 0.001
+  project_rigid_body_residuals: true
+
+evaluation:
+  evaluate_forces: true
+  accuracy_policy: minimize_and_report_without_fixed_pass_thresholds
+  acceptance_basis: aimd_trajectory_reasonableness
+
+robustness:
+  seeds: [20260827, 20260828, 20260829]
+  save_per_seed_checkpoints: true
+  save_per_seed_figures: true
+
+aimd:
+  enabled: true
+  ensemble: nve
+  initial_internal_coordinates: [0.9572, 0.9572, 104.52]
+  temperature_K: 300.0
+  time_step_fs: 0.1
+  steps: 1000
+  seed: 20260829
+  remove_translation: true
+  remove_rotation: true
+  trajectory_interval: 1
+  log_interval: 1
+  stage_steps: [0, 1, 10, 100, 1000]
+  max_total_energy_drift_eV: 0.005
+  max_total_energy_range_eV: 0.010
+  max_linear_energy_drift_eV_per_ps: 0.05
+  linear_energy_drift_hard_gate_minimum_steps: 100
+  max_center_of_mass_displacement_A: 0.000001
+  max_force_component_eV_per_A: 20.0
+  max_adjacent_force_jump_eV_per_A: 3.0
+  force_refinement_step_A: 0.0005
+  max_force_refinement_error_eV_per_A: 0.02
+
+plots:
+  backend: matplotlib
+  dpi: 220
+  format: png
+  style: default
+
+checkpoint:
+  path: checkpoints/hybrid_model.pt
+  sha256: 560bef3584db36933dfcdf1679912f04503b9339da869f489edfee0a631f2b80

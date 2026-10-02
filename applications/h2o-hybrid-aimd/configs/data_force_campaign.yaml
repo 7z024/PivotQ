@@ -1,0 +1,172 @@
+# H2O F2/A2 1000E+350F development campaign; historical final tests remain locked.
+
+deployment:
+  purpose: h2o_f2_energy_force_dataset_campaign
+  inference_uses_frozen_checkpoint: false
+  coordinate_force_method: conservative_autograd_during_training_cartesian_fd_in_production
+  training_gradient_method: ideal_statevector_autograd_mixed_second_derivative
+  result_scope: ideal exact-expectation development campaign; not real-QPU evidence
+
+project:
+  name: h2o_f2_energy_force_development_v2
+  seed: 20260830
+  data_path: data/h2o_pyscf_sto3g_fci_energy_development_v2.csv
+  output_root: outputs/data_force_campaign
+  run_name: h2o_f2_1000e_350f
+
+dataset:
+  molecule: H2O
+  atom_symbols: [O, H, H]
+  atomic_numbers: [8, 1, 1]
+  charge: 0
+  multiplicity: 1
+  geometry_representation: water_internal_coordinates
+  use_relative_energy: true
+  valid_geometry_domain:
+    oh_length_A: [0.75, 1.25]
+    hoh_angle_deg: [80.0, 130.0]
+  required_splits: [train, validation, test]
+  metadata_path: data/h2o_pyscf_sto3g_fci_energy_force_development_v2_metadata.json
+  force_development_path: data/h2o_pyscf_sto3g_fci_force_development_v2.csv
+  baseline_energy_path: data/h2o_pyscf_sto3g_fci_v1.csv
+  trajectory_source_path: data/sources/h2o_exact_noisy_1000step_positions.csv
+  final_energy_path: data/h2o_pyscf_sto3g_fci_test_final_v2.csv
+  offgrid_final_path: data/h2o_pyscf_sto3g_fci_offgrid_final_v2.csv
+  reference_force_final_path: data/h2o_pyscf_sto3g_fci_reference_force_final_v2.csv
+  reference_method: FCI Energy / full-space CASCI analytic Force
+  basis: STO-3G
+  has_force_labels: true
+
+quantum:
+  backend: adapt_water_statevector
+  encoding:
+    atomic_numbers: [8, 1, 1]
+    template: one_to_one
+    mapping: affine
+    invariant_mean: [2.000077837837838, 0.04827027027027026, -0.25122480774613504]
+    invariant_scale: [0.2584499140053624, 0.06534095551409179, 0.2567215495625882]
+    offset: [1.5707963267948966, 1.5707963267948966, 1.5707963267948966]
+    angle_scale: [0.7853981633974483, 0.39269908169872414, 0.7853981633974483]
+    one_to_one_axis: ry
+    multi_axis_axes: [ry, rz]
+  observables: [ZII, IZI, IIZ, ZZI, ZIZ, IZZ, ZZZ, XII, IXI, IIX, XXI, XIX, IXX, XXX]
+  circuit:
+    num_qubits: 3
+    seed: native
+    connectivity: [[0, 1], [1, 2]]
+    entangler_gate: cz
+    data_reuploading: false
+    seed_parameters:
+      [0.1887169726203465, -0.16610493972706575, -0.06556470871437482,
+       0.06819523802826741, -0.6384290292144779, -0.28951789889959006]
+    selected_operators: [IYZ, YII, YZI, IIX, YII]
+    adapt_parameters:
+      [0.320517432886528, -0.04629778056154185, 0.16421749065261415,
+       0.05754179225620465, -0.023529718740523457]
+  execution:
+    mode: exact_statevector
+    device: cpu
+    shots: null
+    noise: false
+    gradient_method: autograd
+  training:
+    optimizer: {name: adam}
+    learning_rate: 0.001
+    gradient_clip_norm: 5.0
+    classical_warmup_epochs: 0
+    learning_rate_scheduler: {name: none}
+    l2: 0.0
+
+classical:
+  backend: torch_mlp
+  device: cpu
+  dtype: float64
+  feature_transform: {name: identity}
+  linear_initialization: {name: random}
+  noise_feature_correction: {enabled: false}
+  hidden_dims: [32, 32]
+  activation: silu
+  epochs: 100
+  optimizer: {name: adam}
+  learning_rate: 0.003
+  learning_rate_scheduler: {name: none}
+  l2: 0.0
+  seed: 20260830
+  early_stopping:
+    enabled: true
+    patience: 15
+    min_delta_eV2: 1.0e-10
+  history_interval: 1
+  stability_guard: {}
+
+force:
+  backend: cartesian_central_finite_difference
+  step_A: 0.001
+  project_rigid_body_residuals: true
+
+evaluation:
+  evaluate_forces: true
+  accuracy_policy: validation_selected_relative_improvement
+  acceptance_basis: force_and_aimd_improvement_without_historical_test_selection
+
+aimd:
+  enabled: true
+  ensemble: nve
+  initial_internal_coordinates: [0.9572, 0.9572, 104.52]
+  temperature_K: 300.0
+  time_step_fs: 0.1
+  steps: 1000
+  seed: 20260829
+  remove_translation: true
+  remove_rotation: true
+  trajectory_interval: 1
+  log_interval: 1
+  stage_steps: [0, 1, 10, 100, 1000]
+  max_total_energy_drift_eV: 0.005
+  max_total_energy_range_eV: 0.010
+  max_linear_energy_drift_eV_per_ps: 0.05
+  linear_energy_drift_hard_gate_minimum_steps: 100
+  max_center_of_mass_displacement_A: 0.000001
+  max_force_component_eV_per_A: 20.0
+  max_adjacent_force_jump_eV_per_A: 3.0
+  force_refinement_step_A: 0.0005
+  max_force_refinement_error_eV_per_A: 0.02
+
+plots:
+  backend: matplotlib
+  dpi: 220
+  format: png
+  style: default
+
+checkpoint:
+  path: checkpoints/hybrid_model.pt
+  sha256: 560bef3584db36933dfcdf1679912f04503b9339da869f489edfee0a631f2b80
+
+data_force_campaign:
+  development_total_energy: 1000
+  split: {train: 800, validation: 100, test: 100}
+  force_labels: {total: 350, train: 280, validation: 40, test: 30}
+  historical_locked_tests: {final_energy: 22, offgrid_energy: 48, force_geometries: 300}
+  force_training:
+    enabled: true
+    conservative_force: true
+    independent_force_head: false
+    mixed_second_derivative: true
+    energy_normalization: train_only_standard_deviation
+    force_normalization: train_force_component_rms
+  lambda_energy: 1.0
+  lambda_force_scan: [0.0, 0.1, 0.3, 1.0]
+  experiments: [232E_energy_only, 1000E_energy_only, 1000E_350F_energy_force]
+  learning_curve:
+    dataset_sizes: [232, 400, 700, 1000]
+    force_counts: [0, 150, 250, 350]
+  labeling:
+    workers: 8
+    threads_per_worker: 4
+    reference_energy: direct_fci
+    reference_force: full_space_casci_analytic_gradient
+  selection:
+    lambda_metric: equal_weight_validation_normalized_energy_force_mse
+    checkpoint_metric_energy_only: validation_energy_mse
+    checkpoint_metric_energy_force: validation_total_normalized_loss
+    historical_tests_used_for_selection: false

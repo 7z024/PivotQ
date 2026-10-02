@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+build/
+dist/
+*.egg-info/
+runs/
+evidence/private/
+*.pem
+*.key
+.env
+.env.*
+secrets/
+aimd/reports/
+

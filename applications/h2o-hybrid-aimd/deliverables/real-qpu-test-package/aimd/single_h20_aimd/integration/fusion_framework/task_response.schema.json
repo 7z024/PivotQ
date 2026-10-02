@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://single-h20-aimd.local/schemas/fusion-task-response-v1.json",
+    "title": "Standalone H2O Fusion Task Response v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["api_version", "run_id", "task_id", "task_type", "status", "outputs", "metrics", "error", "metadata"],
+  "properties": {
+    "api_version": {"const": "1.0"},
+    "run_id": {"type": "string", "minLength": 1},
+    "task_id": {"type": "string", "minLength": 1},
+    "task_type": {"enum": ["aimd_run", "quantum_features"]},
+    "status": {"enum": ["queued", "running", "succeeded", "failed", "cancelled"]},
+    "outputs": {
+      "type": "object",
+      "properties": {
+        "request_id": {"type": "string"},
+        "sample_ids": {"type": "array", "items": {"type": "string"}},
+        "feature_names": {"type": "array", "items": {"type": "string"}},
+        "features": {"type": "array", "items": {"type": "array", "items": {"type": "number"}}},
+        "feature_variances": {"type": ["array", "null"]},
+        "execution_metrics": {"type": "object"},
+        "backend_metadata": {"type": "object"},
+        "scientific_status": {"enum": ["passed", "failed_validation"]},
+        "acceptance": {"type": "object"},
+        "run_summary": {"type": "object"},
+        "artifacts": {"type": "array", "items": {"$ref": "#/$defs/artifactReference"}},
+        "artifact_manifest": {"type": "array", "items": {"type": "object"}},
+        "execution": {"type": "object"}
+      }
+    },
+    "metrics": {"type": "object"},
+    "error": {"type": ["object", "null"]},
+    "metadata": {"type": "object"}
+  },
+  "$defs": {
+    "artifactReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_id", "file_name", "uri", "sha256", "size_bytes", "media_type"],
+      "properties": {
+        "artifact_id": {"type": "string", "minLength": 1},
+        "file_name": {"type": "string", "minLength": 1},
+        "uri": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-fA-F]{64}$"},
+        "size_bytes": {"type": "integer", "minimum": 0},
+        "media_type": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

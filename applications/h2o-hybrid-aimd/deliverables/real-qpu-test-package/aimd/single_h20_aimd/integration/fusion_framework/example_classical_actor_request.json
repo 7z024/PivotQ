@@ -1,0 +1,22 @@
+{
+  "api_version": "1.0",
+  "run_id": "h2o-f2-fusion-aimd-001",
+  "actor_id": "h2o-f2-fusion-aimd-001.classical",
+  "actor_type": "classical_predict",
+  "payload": {
+    "checkpoint_path": "/data/hzhang/tmp/lcz_hybrid_v1/single_h20_aimd/checkpoints/hybrid_model.pt",
+    "device": "cuda",
+    "require_gpu": true
+  },
+  "resources": {
+    "cpu": 0.25,
+    "gpu": 1.0,
+    "qpu": 0.0,
+    "memory_bytes": null,
+    "custom": {}
+  },
+  "timeout_seconds": 300.0,
+  "metadata": {
+    "role": "persistent-energy-actor"
+  }
+}

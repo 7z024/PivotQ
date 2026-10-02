@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://single-h20-aimd.local/schemas/fusion-task-request-v1.json",
+    "title": "Standalone H2O Fusion Task Request v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["api_version", "run_id", "task_id", "task_type", "payload", "resources"],
+  "properties": {
+    "api_version": {"const": "1.0"},
+    "run_id": {"type": "string", "minLength": 1},
+    "task_id": {"type": "string", "minLength": 1},
+    "parent_task_id": {"type": ["string", "null"]},
+    "task_type": {"enum": ["aimd_run", "quantum_features"]},
+    "payload": {"type": "object"},
+    "resources": {"$ref": "#/$defs/resources"},
+    "timeout_seconds": {"type": "number", "exclusiveMinimum": 0},
+    "max_retries": {"type": "integer", "minimum": 0},
+    "idempotency_key": {"type": ["string", "null"]},
+    "metadata": {"type": "object"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"task_type": {"const": "quantum_features"}}},
+      "then": {"properties": {"payload": {"$ref": "#/$defs/quantumFeaturesPayload"}}}
+    },
+    {
+      "if": {"properties": {"task_type": {"const": "aimd_run"}}},
+      "then": {"properties": {"payload": {"$ref": "#/$defs/aimdRunPayload"}}}
+    }
+  ],
+  "$defs": {
+    "resources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cpu", "gpu", "qpu", "custom"],
+      "properties": {
+        "cpu": {"type": "number", "minimum": 0},
+        "gpu": {"type": "number", "minimum": 0},
+        "qpu": {"type": "number", "minimum": 0},
+        "memory_bytes": {"type": ["integer", "null"], "minimum": 1},
+        "custom": {"type": "object", "additionalProperties": {"type": "number", "minimum": 0}}
+      }
+    },
+    "quantumFeaturesPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["backend", "quantum_request"],
+      "properties": {
+                "backend": {
+                    "enum": [
+                        "adapt_water_statevector",
+                        "adapt_water_statevector_gpu",
+                        "framework_real_qpu"
+                    ]
+                },
+        "quantum_request": {
+          "type": "object",
+          "additionalProperties": false,
+                    "required": [
+                        "request_id",
+                        "sample_ids",
+                        "bond_lengths_A",
+                        "molecular_geometries_A",
+                        "atomic_numbers",
+                        "encoding_spec",
+                        "circuit_spec",
+                        "observables",
+                        "execution_spec"
+                    ],
+          "properties": {
+            "request_id": {"type": "string", "minLength": 1},
+            "sample_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+                        "bond_lengths_A": {"type": "null"},
+            "molecular_geometries_A": {
+                            "type": "array",
+                            "minItems": 1,
+                            "items": {
+                                "type": "array",
+                                "minItems": 3,
+                                "maxItems": 3,
+                                "items": {
+                                    "type": "array",
+                                    "minItems": 3,
+                                    "maxItems": 3,
+                                    "items": {"type": "number"}
+                                }
+                            }
+                        },
+                        "atomic_numbers": {"const": [8, 1, 1]},
+            "encoding_spec": {"type": "object"},
+            "circuit_spec": {"type": "object"},
+                        "observables": {
+                            "const": [
+                                "ZII", "IZI", "IIZ", "ZZI", "ZIZ", "IZZ", "ZZZ",
+                                "XII", "IXI", "IIX", "XXI", "XIX", "IXX", "XXX"
+                            ]
+                        },
+                        "execution_spec": {"type": "object"}
+                    }
+                }
+            }
+    },
+    "aimdRunPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["config_path", "checkpoint_path", "output_dir", "execution_mode", "quantum_target", "config_overrides"],
+      "properties": {
+        "config_path": {"type": "string", "minLength": 1, "pattern": "^/"},
+        "checkpoint_path": {"type": "string", "minLength": 1, "pattern": "^/"},
+        "output_dir": {"type": "string", "minLength": 1, "pattern": "^/"},
+        "execution_mode": {"enum": ["heterogeneous", "colocated"]},
+        "quantum_target": {"enum": ["cpu", "gpu", "qpu"]},
+        "config_overrides": {"type": "object"}
+      }
+    }
+  }
+}

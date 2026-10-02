@@ -1,0 +1,57 @@
+{
+  "api_version": "1.0",
+  "run_id": "h2o-f2-adapt-example",
+  "task_id": "quantum-features-h2o-f2-001",
+  "parent_task_id": null,
+  "task_type": "quantum_features",
+  "payload": {
+    "backend": "adapt_water_statevector",
+    "quantum_request": {
+      "request_id": "h2o-f2-feature-batch-001",
+      "sample_ids": ["h2o-f2-asymmetric", "h2o-f2-hydrogens-swapped"],
+      "bond_lengths_A": null,
+      "molecular_geometries_A": [
+        [[0.0, 0.0, 0.0], [0.0, 0.0, 0.9], [1.0832885283, 0.0, -0.191013]],
+        [[0.0, 0.0, 0.0], [1.0832885283, 0.0, -0.191013], [0.0, 0.0, 0.9]]
+      ],
+      "atomic_numbers": [8, 1, 1],
+      "encoding_spec": {
+        "atomic_numbers": [8, 1, 1],
+        "template": "one_to_one",
+        "mapping": "affine",
+        "invariant_mean": [2.000077837837838, 0.04827027027027026, -0.25122480774613504],
+        "invariant_scale": [0.2584499140053624, 0.06534095551409179, 0.2567215495625882],
+        "offset": [1.5707963267948966, 1.5707963267948966, 1.5707963267948966],
+        "angle_scale": [0.7853981633974483, 0.39269908169872414, 0.7853981633974483],
+        "one_to_one_axis": "ry",
+        "multi_axis_axes": ["ry", "rz"]
+      },
+      "circuit_spec": {
+        "num_qubits": 3,
+        "seed": "native",
+        "entangler_gate": "cz",
+        "connectivity": [[0, 1], [1, 2]],
+        "data_reuploading": false,
+        "seed_parameters": [0.18871697262028317, -0.16610493972710424, -0.0655647087143071, 0.06819523802843586, -0.6384290292143766, -0.28951789889944457],
+        "selected_operators": ["IYZ", "YII", "YZI", "IIX", "YII"],
+        "adapt_parameters": [0.32051743288676066, -0.04629778056157863, 0.16421749065267227, 0.05754179225646257, -0.023529718740651004]
+      },
+      "observables": ["ZII", "IZI", "IIZ", "ZZI", "ZIZ", "IZZ", "ZZZ", "XII", "IXI", "IIX", "XXI", "XIX", "IXX", "XXX"],
+      "execution_spec": {
+        "mode": "exact_statevector",
+        "device": "cpu",
+        "shots": null,
+        "noise": false,
+        "gradient_method": "none"
+      }
+    }
+  },
+  "resources": {"cpu": 1.0, "gpu": 0.0, "qpu": 0.0, "memory_bytes": null, "custom": {}},
+  "timeout_seconds": 60.0,
+  "max_retries": 0,
+  "idempotency_key": "h2o-f2-adapt-example-001",
+  "metadata": {
+    "purpose": "fusion-framework-final-h2o-contract-test",
+    "scope": "three-qubit-f2-adapt-energy-force-aimd-compatible"
+  }
+}

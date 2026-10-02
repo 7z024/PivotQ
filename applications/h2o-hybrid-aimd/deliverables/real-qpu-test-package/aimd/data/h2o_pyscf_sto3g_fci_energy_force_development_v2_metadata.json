@@ -1,0 +1,62 @@
+{
+  "dataset_name": "h2o_pyscf_sto3g_fci_energy_force_development_v2",
+  "purpose": "1000E+350F development dataset; historical locked tests excluded",
+  "generated_at": "2026-08-28T23:14:16+08:00",
+  "seed": 20260830,
+  "sample_count": 1000,
+  "split_counts": {
+    "test": 100,
+    "train": 800,
+    "validation": 100
+  },
+  "source_counts": {
+    "legacy_grid": 232,
+    "aimd_trajectory": 168,
+    "aimd_region_latin_hypercube": 250,
+    "full_domain_latin_hypercube": 250,
+    "boundary_targeted": 100
+  },
+  "force_label_count": 350,
+  "force_split_counts": {
+    "test": 30,
+    "train": 280,
+    "validation": 40
+  },
+  "reference_energy": "PySCF direct full-CI total energy",
+  "reference_force": "negative full-space CASCI analytic nuclear gradient after minimum-L2 rigid translation/rotation residual projection",
+  "energy_force_crosscheck": "full-space CASCI energy against direct FCI energy",
+  "basis": "sto-3g",
+  "charge": 0,
+  "multiplicity": 1,
+  "units": {
+    "geometry": "angstrom",
+    "energy": "eV",
+    "force": "eV/angstrom"
+  },
+  "geometry_domain": {
+    "oh_length_A": [
+      0.75,
+      1.25
+    ],
+    "hoh_angle_deg": [
+      80.0,
+      130.0
+    ]
+  },
+  "energy_range_Ha": [
+    -75.02310643179204,
+    -74.74286556625499
+  ],
+  "relative_energy_reference_Ha": -75.02251322002965,
+  "force_norm_range_eV_per_A": [
+    2.0440608219236513,
+    65.42411909018955
+  ],
+  "max_abs_casci_minus_direct_fci_Ha": 9.322178584625362e-10,
+  "energy_csv": "/data/hzhang/tmp/lcz_hybrid_v1/single_h20_aimd/data/h2o_pyscf_sto3g_fci_energy_development_v2.csv",
+  "energy_csv_sha256": "18361f86f91c9e1091bce61f0ed442dbc2038622b50b2b66161899b05bf038af",
+  "force_csv": "/data/hzhang/tmp/lcz_hybrid_v1/single_h20_aimd/data/h2o_pyscf_sto3g_fci_force_development_v2.csv",
+  "force_csv_sha256": "39bf334bf55486e3ba073bfd1c0732999886d0cee7786d4670f4654a00ee9a92",
+  "generation_output_dir": "/data/hzhang/tmp/lcz_hybrid_v1/single_h20_aimd/outputs/data_force_campaign/00_dataset_generation/labels",
+  "generator": "single_h20_aimd.data.expansion"
+}

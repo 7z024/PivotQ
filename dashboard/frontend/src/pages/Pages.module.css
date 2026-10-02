@@ -1,0 +1,496 @@
+.page {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 34px 34px 42px;
+}
+
+.hero {
+  margin: 10px 0 26px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #5267d8;
+  font: 600 11px/1.4 "IBM Plex Mono", monospace;
+  letter-spacing: .13em;
+}
+
+.hero h1 {
+  margin: 0;
+  color: #1f2d45;
+  font-size: clamp(24px, 2.4vw, 30px);
+  font-weight: 600;
+  letter-spacing: -.04em;
+}
+
+.hero p:last-child {
+  margin-top: 10px;
+  color: #718096;
+  font-size: 13px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e8ebf2;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(42, 63, 105, .06);
+}
+
+.overview {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.stat {
+  padding: 18px 20px;
+}
+
+.stat span,
+.muted {
+  color: #7e8ba0;
+  font-size: 12px;
+}
+
+.stat strong {
+  display: block;
+  margin-top: 8px;
+  color: #263751;
+  font: 600 24px/1.15 "IBM Plex Mono", monospace;
+}
+
+.section {
+  margin-top: 16px;
+  padding: 22px 24px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.sectionHeader h2 {
+  color: #273852;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+.stage {
+  position: relative;
+  overflow: hidden;
+  padding: 16px;
+  border: 1px solid #e7ebf3;
+  border-radius: 10px;
+  background: #fbfcff;
+}
+
+.stage:after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: linear-gradient(90deg, #5267d8, #9ba9f0);
+  transform-origin: left;
+  transform: scaleX(var(--stage-progress, .7));
+}
+
+.stage span {
+  display: block;
+  color: #718096;
+  font-size: 12px;
+}
+
+.stage strong {
+  display: block;
+  margin-top: 9px;
+  color: #2c3c56;
+  font: 600 17px "IBM Plex Mono", monospace;
+}
+
+.stage small {
+  display: block;
+  margin-top: 7px;
+  color: #8c99ad;
+  font-size: 11px;
+}
+
+.twoColumns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+}
+
+.resourceList {
+  display: grid;
+  gap: 10px;
+}
+
+.resource {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 13px;
+  border-radius: 8px;
+  background: #f8faff;
+}
+
+.resource div {
+  display: grid;
+  gap: 3px;
+}
+
+.resource strong {
+  color: #33435d;
+  font-size: 13px;
+}
+
+.resource code {
+  color: #8996a9;
+  font-size: 10px;
+}
+
+.empty {
+  padding: 54px 24px;
+  text-align: center;
+}
+
+.empty h2 {
+  color: #2d3b54;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.empty p {
+  margin: 8px 0 18px;
+  color: #7e8ba0;
+  font-size: 13px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #5267d8;
+  border-radius: 7px;
+  padding: 8px 14px;
+  background: #5267d8;
+  color: #fff;
+  font-size: 12px;
+}
+
+.resultsLayout {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.history,
+.result {
+  min-width: 0;
+  padding: 20px;
+}
+
+.history h2,
+.result h2 {
+  margin: 0;
+  color: #293952;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.historyHint {
+  margin: 5px 0 16px;
+  color: #8793a5;
+  font-size: 11px;
+}
+
+.runs {
+  display: grid;
+  gap: 8px;
+  max-height: 610px;
+  overflow: auto;
+}
+
+.run {
+  position: relative;
+  width: 100%;
+  border: 1px solid #e7ebf3;
+  border-radius: 9px;
+  padding: 0;
+  background: #fbfcff;
+  text-align: left;
+  transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.run:hover,
+.runSelected {
+  border-color: #aab8f1;
+  background: #f5f7ff;
+  box-shadow: 0 5px 14px rgba(82, 103, 216, .08);
+}
+
+.runSelect {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: inherit;
+  padding: 11px 36px 11px 12px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.runSelect:focus-visible {
+  outline: 2px solid #5267d8;
+  outline-offset: -2px;
+}
+
+.runDelete {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: 7px;
+  padding: 0;
+  background: transparent;
+  color: #8b96aa;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity .18s ease, color .18s ease, background .18s ease;
+}
+
+.run:hover .runDelete,
+.run:focus-within .runDelete,
+.runDelete:focus-visible {
+  opacity: 1;
+}
+
+.runDelete:hover:not(:disabled) {
+  background: #feecee;
+  color: #c44f5b;
+}
+
+.runDelete:disabled {
+  opacity: .16;
+  cursor: not-allowed;
+}
+
+.runDelete svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.runTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.runTop strong {
+  overflow: hidden;
+  color: #33435d;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.runTop span {
+  flex: 0 0 auto;
+  color: #6e7c92;
+  font-size: 11px;
+}
+
+.run code {
+  display: block;
+  margin: 7px 0;
+  overflow: hidden;
+  color: #9aa6b7;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.run progress {
+  display: block;
+  width: 100%;
+  height: 4px;
+  accent-color: #5267d8;
+}
+
+.result {
+  min-height: 590px;
+}
+
+.resultHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.resultHeader p {
+  margin-top: 5px;
+  color: #8793a5;
+  font-size: 11px;
+}
+
+.resultBody {
+  margin-top: 16px;
+}
+
+.deleteBackdrop {
+  position: fixed;
+  z-index: 40;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(25, 36, 58, .34);
+  backdrop-filter: blur(4px);
+}
+
+.deleteDialog {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 0 14px;
+  width: min(100%, 480px);
+  border: 1px solid #e6e9f0;
+  border-radius: 16px;
+  padding: 24px;
+  background: #fff;
+  box-shadow: 0 24px 70px rgba(24, 38, 68, .22);
+}
+
+.deleteDialogIcon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #fff0f1;
+  color: #c44f5b;
+}
+
+.deleteDialogIcon svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.deleteDialogCopy h2 {
+  margin: 2px 0 7px;
+  color: #293952;
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.deleteDialogCopy p {
+  margin: 0;
+  color: #718096;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.deleteDialogCopy code {
+  display: block;
+  margin-top: 10px;
+  overflow: hidden;
+  color: #8793a5;
+  font: 11px/1.4 "IBM Plex Mono", monospace;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.deleteError {
+  margin-top: 10px;
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: #fff4f4;
+  color: #b44350;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.deleteDialogActions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.deleteCancel,
+.deleteConfirm {
+  border-radius: 8px;
+  padding: 9px 15px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.deleteCancel {
+  border: 1px solid #dce2ed;
+  background: #fff;
+  color: #56657b;
+}
+
+.deleteCancel:hover:not(:disabled) {
+  background: #f7f9fc;
+}
+
+.deleteConfirm {
+  border: 1px solid #c44f5b;
+  background: #c44f5b;
+  color: #fff;
+}
+
+.deleteConfirm:hover:not(:disabled) {
+  border-color: #aa3f4b;
+  background: #aa3f4b;
+}
+
+.deleteCancel:disabled,
+.deleteConfirm:disabled {
+  cursor: wait;
+  opacity: .58;
+}
+
+@media (max-width: 920px) {
+  .overview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .resultsLayout { grid-template-columns: 1fr; }
+  .runs { max-height: 260px; }
+}
+
+@media (max-width: 640px) {
+  .page { padding: 24px 16px 32px; }
+  .overview,
+  .twoColumns { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 28px; }
+}

@@ -1,0 +1,11 @@
+# Local standalone smoke validation on Apple Silicon, macOS >= 14, Python 3.12.
+# Match the root uv.lock direct dependency versions, using the macOS PyPI
+# torch wheel (no +cpu suffix). The scientific config still selects CPU.
+# Install into this application's .venv; do not use the Windows root uv sync.
+ase==3.29.0
+jsonschema==4.26.0
+matplotlib==3.11.1
+numpy==2.5.2
+PyYAML==6.0.3
+qiskit==2.5.1
+torch==2.13.0

@@ -1,0 +1,41 @@
+schema_version: "1.0"
+workload_id: single_h2o_f2_aimd_fusion
+
+scope:
+  molecule: H2O
+  atomic_numbers: [8, 1, 1]
+  geometry_shape: [B, 3, 3]
+  purpose: final_three_qubit_f2_adapt_energy_force_nve_aimd
+
+entrypoints:
+  registration: single_h20_aimd.integration.fusion_framework.registration:register_components
+  runner: single_h20_aimd.integration.fusion_framework.runner:run_aimd
+  submitter: single_h20_aimd.integration.fusion_framework.submit_job
+
+partition:
+  coordinator:
+    device: cpu
+    owns: [velocity_verlet, cartesian_finite_difference_control, diagnostics, artifacts]
+  quantum_task:
+    cpu_component: h2o-f2-quantum-features-cpu
+    gpu_component: h2o-f2-quantum-features-gpu
+    qpu_component: h2o-f2-quantum-features-qpu
+    backend: adapt_water_statevector
+    num_qubits: 3
+    observables: [ZII, IZI, IIZ, ZZI, ZIZ, IZZ, ZZZ, XII, IXI, IIX, XXI, XIX, IXX, XXX]
+    measurement_basis_count: 2
+  classical_actor:
+    component: h2o-classical-predict
+    device: gpu
+    lifetime: one_complete_trajectory
+  force:
+    device: cpu
+    backend: cartesian_central_finite_difference
+    project_rigid_body_residuals: true
+
+constraints:
+  training_is_colocated: true
+  remote_inference_is_not_autograd_differentiable: true
+  production_force_is_full_energy_central_difference: true
+  qpu_backend_must_be_injected_by_framework: true
+  no_cpu_fallback_may_be_reported_as_gpu_or_qpu: true

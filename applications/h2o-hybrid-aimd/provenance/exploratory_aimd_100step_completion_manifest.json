@@ -1,0 +1,99 @@
+{
+  "report_archive": {
+    "status": "moved_out_of_public_repository",
+    "location": "external archive qhai-2026-revision-archive-20261002",
+    "original_path": "reports/H2O_F2A2_EXPLORATORY_AIMD_100STEP.md",
+    "hashes_preserved": true
+  },
+  "experiment": "qpu_force_exploratory_100step_aimd",
+  "completed_at": "2026-08-28T16:49:19+08:00",
+  "execution": {
+    "host": "109-32cpu",
+    "conda_environment": "ase-aimd-gpaw",
+    "remote_project": "/data/hzhang/tmp/lcz_hybrid_v1/single_h20_aimd",
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=. python -B scripts/run_qpu_force_campaign.py aimd100_exploratory --config configs/current_experiment.yaml",
+    "python_bytecode_disabled": true,
+    "wall_time_seconds": 45.46871672999987
+  },
+  "scope": {
+    "purpose": "user_accepted_trajectory_stability_check_after_strict_energy_readout_gate",
+    "strict_10step_measured_energy_result_preserved": true,
+    "production_force_method_unchanged": "cartesian_centered_finite_difference",
+    "evaluated_candidate_force_method": "input_angle_parameter_shift_chain_rule",
+    "steps": 100,
+    "time_step_fs": 0.1,
+    "temperature_K": 300.0,
+    "shot_seeds": [20260827, 20260828, 20260829, 20260830, 20260831],
+    "shots_Z": 131072,
+    "shots_X": 131072
+  },
+  "result": {
+    "interpretation": "acceptable_trajectory_with_short_window_linear_drift_caveat",
+    "formal_predeclared_pass_count": 3,
+    "finite_shot_run_count": 5,
+    "full_length_trajectory_count": 5,
+    "all_finite_in_domain_without_ood_count": 5,
+    "latent_total_energy_range_eV_min": 0.0020418227849903214,
+    "latent_total_energy_range_eV_max": 0.0034308373335537046,
+    "sampled_total_energy_range_eV_min": 0.044120588531754934,
+    "sampled_total_energy_range_eV_max": 0.06338486965345147,
+    "maximum_oh_rmse_vs_exact_A": 0.00028907419480877946,
+    "maximum_hoh_angle_rmse_vs_exact_deg": 0.028627285159492394,
+    "maximum_force_component_eV_per_A": 4.414505273190989,
+    "maximum_adjacent_force_jump_eV_per_A": 0.41771785262942096,
+    "failed_seeds": {
+      "20260827": "latent_linear_drift=-0.12618785477384836_eV_per_ps",
+      "20260829": "latent_linear_drift=0.28010408921160046_eV_per_ps"
+    },
+    "estimated_total_measurement_shots": 926679040,
+    "thousand_step_aimd_run": false
+  },
+  "locked_checkpoint": {
+    "path": "checkpoints/hybrid_model_noise_aware_exact.pt",
+    "sha256": "d43c6a4ccf0681963aa25fda51901d3349c1d6d946b18f618ac5c551315b7baa",
+    "unchanged": true
+  },
+  "artifacts": {
+    "config": {
+      "path": "configs/current_experiment.yaml",
+      "sha256": "5b2403d3b2090e43a9e71e0bf3f58f941099866808db4e1aec3e23a936fd67c0"
+    },
+    "summary": {
+      "path": "outputs/qpu_force_campaign/08_aimd_100step/exploratory_user_accepted/summary.json",
+      "sha256": "eb3f776755ac3cd7b4fe2b4ebd8b078dfff6b256d5c47449da364995b3d6c823"
+    },
+    "sampled_envelope_plot": {
+      "path": "outputs/qpu_force_campaign/08_aimd_100step/exploratory_user_accepted/plots/exact_noisy_vs_finite_shot_envelope.png",
+      "sha256": "b7130f3594370ac7139e500c08a46ad0ac4fc37a4d9ae2d5d9e2f9c9b5908409"
+    },
+    "latent_diagnostics_plot": {
+      "path": "outputs/qpu_force_campaign/08_aimd_100step/exploratory_user_accepted/plots/exploratory_latent_trajectory_diagnostics.png",
+      "sha256": "14257e6bd6087de2ed65d2f18528676a9e930cabe0dfa91b63d1f90d75fa7ee4"
+    },
+    "report": {
+      "path": "reports/H2O_F2A2_EXPLORATORY_AIMD_100STEP.md",
+      "sha256": "b000c73b73af294be43a7ffa64b775952647f3bf5307c35907610abc7c62eb1d"
+    },
+    "integration_document": {
+      "path": "融合框架与性能模拟器对接.md",
+      "sha256": "43e1a5c99d3bac717f90941ce26f76342f89a43d598f01a25fff6561fcc7e0e8"
+    }
+  },
+  "tests": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=. python -B -m unittest discover -s tests -p test*.py -v",
+    "tests_run": 33,
+    "failures": 0,
+    "errors": 0
+  },
+  "local_remote_comparison_excluding_this_manifest": {
+    "file_count_excluding_python_bytecode": 508,
+    "sorted_manifest_sha256": "5be4244af14b51a2ab5fe68624d6fde07394b0b43df513ce9f22198d3982bd8e",
+    "local_remote_match": true
+  },
+  "protected_source_project": {
+    "path": "/Users/zhanghao/code/LCZ/september_launch_event",
+    "file_count_excluding_python_bytecode": 963,
+    "sorted_manifest_sha256": "6f4696a7ccddc10dbf0c7093256c38aa5c2dc1919e8cd390b0c01d111597b51a",
+    "matches_start_manifest": true
+  }
+}

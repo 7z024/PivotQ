@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ray-quantum"
+version = "0.1.0.dev0"
+description = "Ray extension for CPU, GPU, and QPU hybrid workloads."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "ray[default]==2.31.0",
+    "qiskit==2.5.1",
+    "numpy>=2.0,<3.0",
+    "google-api-core==2.15.0",
+    "googleapis-common-protos==1.62.0",
+    "proto-plus==1.23.0",
+    "protobuf==4.25.8",
+    "setuptools==80.9.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest==9.1.1",
+]
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["ray_quantum", "ray_quantum.*"]
+exclude = ["ray_quantum_ir", "ray_quantum_ir.*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/unit", "tests/integration"]
+addopts = "-ra --ignore-glob=tests/integration/test_ir_*.py --ignore-glob=tests/integration/test_source_*.py"
+norecursedirs = ["ir", "source"]

@@ -1,0 +1,94 @@
+{
+  "passed": true,
+  "scope": "HTTP integration; Bell circuit and two AIMD steps",
+  "started_at": "2026-10-02T07:03:14.583661+00:00",
+  "runs": [
+    {
+      "task_id": "quantum-circuit",
+      "run_id": "run-765df835030d",
+      "status": "SUCCEEDED",
+      "execution_mode": "local_cpu",
+      "actual_device": "cpu",
+      "elapsed_seconds": 12.11842030286789,
+      "scientific_status": null,
+      "source_sha256": "ae85984e711ed63ef95182b582169a52937d61eaa8273d0fd46474e7e86a184d",
+      "hardware": {
+        "circuit_execution": "cpu-0"
+      },
+      "trace_records": 1,
+      "cleanup_succeeded": true,
+      "target_profiles": {
+        "circuit_execution": {
+          "id": "cpu-0",
+          "kind": "cpu",
+          "title": "参考 CPU",
+          "profile_version": "1",
+          "profile_sha256": "3c133e11bd8506b505b67c2ac4a9c69b1f4ddd02dce5cbdc7cbe2a1058dee3d4",
+          "logical_qubits": 2
+        }
+      }
+    },
+    {
+      "task_id": "h2o-hybrid-aimd",
+      "run_id": "run-8c67f6f22333",
+      "status": "SUCCEEDED",
+      "execution_mode": "local_cpu",
+      "actual_device": "cpu",
+      "elapsed_seconds": 31.255152732133865,
+      "scientific_status": "passed",
+      "source_sha256": "d2a437f7c437baa1a7f9cd3c98cb7e3458c726d9376ffe50869339db4dfb7f83",
+      "hardware": {
+        "initialization": "cpu-0",
+        "quantum_features": "cpu-0",
+        "classical_predict": "cpu-0",
+        "force_and_integration": "cpu-0",
+        "trajectory_analysis": "cpu-0"
+      },
+      "trace_records": 12,
+      "cleanup_succeeded": true,
+      "trajectory_frames": 3,
+      "persistent_classical_actor": true,
+      "trajectory_matches_recorded_output": true,
+      "target_profiles": {
+        "initialization": {
+          "id": "cpu-0",
+          "kind": "cpu",
+          "title": "参考 CPU",
+          "profile_version": "1",
+          "profile_sha256": "3c133e11bd8506b505b67c2ac4a9c69b1f4ddd02dce5cbdc7cbe2a1058dee3d4"
+        },
+        "quantum_features": {
+          "id": "cpu-0",
+          "kind": "cpu",
+          "title": "参考 CPU",
+          "profile_version": "1",
+          "profile_sha256": "3c133e11bd8506b505b67c2ac4a9c69b1f4ddd02dce5cbdc7cbe2a1058dee3d4",
+          "logical_qubits": 3
+        },
+        "classical_predict": {
+          "id": "cpu-0",
+          "kind": "cpu",
+          "title": "参考 CPU",
+          "profile_version": "1",
+          "profile_sha256": "3c133e11bd8506b505b67c2ac4a9c69b1f4ddd02dce5cbdc7cbe2a1058dee3d4"
+        },
+        "force_and_integration": {
+          "id": "cpu-0",
+          "kind": "cpu",
+          "title": "参考 CPU",
+          "profile_version": "1",
+          "profile_sha256": "3c133e11bd8506b505b67c2ac4a9c69b1f4ddd02dce5cbdc7cbe2a1058dee3d4"
+        },
+        "trajectory_analysis": {
+          "id": "cpu-0",
+          "kind": "cpu",
+          "title": "参考 CPU",
+          "profile_version": "1",
+          "profile_sha256": "3c133e11bd8506b505b67c2ac4a9c69b1f4ddd02dce5cbdc7cbe2a1058dee3d4"
+        }
+      }
+    }
+  ],
+  "history_restored_without_resubmission": true,
+  "finished_at": "2026-10-02T07:03:58.141947+00:00"
+}

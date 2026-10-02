@@ -1,0 +1,78 @@
+{
+  "passed": true,
+  "scope": "Real Chromium UI → HTTP → isolated CPU/Ray Bell execution and native QPerfSim prediction; no mocked API",
+  "started_at": "2026-10-02T07:07:24.928Z",
+  "checks": [
+    "Read-only 6×6 topology: 36 nodes / 60 edges, 10000 shots/s, 1 ms submit latency",
+    "Compiled and ran real Bell circuit through UI, exact 00/11 probabilities 0.5, logical width 2 and chip capacity 36 distinct",
+    "Native QPerfSim prediction initiated in UI with same Fake SC-36 target",
+    "Run and prediction history restored from URL after full page reload"
+  ],
+  "run": {
+    "id": "run-4e2bee7e8d10",
+    "status": "SUCCEEDED",
+    "actual_device": "cpu",
+    "probabilities": {
+      "11": 0.4999999999999999,
+      "00": 0.4999999999999999
+    },
+    "counts": {
+      "11": 506,
+      "00": 518
+    },
+    "metrics": {
+      "compute_seconds": 0.01950162649154663,
+      "worker_seconds": 10.284398727118969
+    },
+    "runtime_execution": {
+      "simulation_enabled": true,
+      "selections": [
+        {
+          "component_id": "editor-circuit",
+          "simulated": true,
+          "reason": "hardware_unavailable",
+          "backend": "torch_cpu_statevector",
+          "requested_devices": [
+            "QPU"
+          ],
+          "actual_devices": [
+            "CPU"
+          ],
+          "requested_resources": {
+            "num_cpus": 1,
+            "num_gpus": 0,
+            "custom_resources": {
+              "QPU": 1
+            }
+          },
+          "effective_resources": {
+            "num_cpus": 1,
+            "num_gpus": 0,
+            "custom_resources": {}
+          }
+        }
+      ]
+    }
+  },
+  "prediction": {
+    "id": "prediction-7fb380b6e93649b2ade79d04b58da5dd",
+    "schema_version": "task-prediction-v1",
+    "latency_seconds": 0.1034,
+    "task_completion_ratio": 1,
+    "simulator_sha256": "151dca174a7a4596d03d4728cefbf23e74b55a8a4c3f0add5ad36706672264a9",
+    "logical_qubits": 2,
+    "chip_capacity_qubits": 36,
+    "target_id": "fake-sc-36",
+    "validation_scope": "示例参数估算，未经实机标定",
+    "profile_version": "1",
+    "profile_sha256": "9ed1bfc938871895abd06cfe8f0a6727afba8eed9bf2f6ed70e3a17230087898",
+    "shot_rate": 10000,
+    "submit_latency_us": 1000
+  },
+  "browser_errors": [],
+  "finished_at": "2026-10-02T07:07:38.727Z",
+  "frontend_build": {
+    "source_sha256": "60a025abd2ae5c288d3d1b56e6e796dc435fda68f9114880cb851d09579fc13e"
+  },
+  "owned_server_stopped": true
+}

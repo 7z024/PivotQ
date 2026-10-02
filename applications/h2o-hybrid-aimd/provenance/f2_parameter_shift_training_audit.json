@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "created_date": "2026-08-27",
+  "status": "VERIFIED",
+  "scope": "F2/A2 exact-statevector parameter-shift retraining, representative checkpoint promotion, evaluation, and 1000-step NVE AIMD",
+  "execution_environment": {
+    "host": "109-32cpu",
+    "conda_environment": "ase-aimd-gpaw",
+    "remote_project_root": "/data/hzhang/tmp/lcz_hybrid_v1/single_h20_aimd",
+    "python": "3.12.13",
+    "torch": "2.13.0+cpu",
+    "numpy": "2.5.1"
+  },
+  "scientific_configuration": {
+    "candidate": "F2/A2",
+    "qubits": 3,
+    "angle_encoding": {
+      "gate": "Ry",
+      "mapping": "one-to-one",
+      "scales": ["pi/4", "pi/8", "pi/4"]
+    },
+    "native_seed": true,
+    "adapt_sequence": ["IYZ", "YII", "YZI", "IIX", "YII"],
+    "connectivity": [[0, 1], [1, 2]],
+    "native_gate_set": ["Ry", "Rz", "CZ"],
+    "readout_features": "7Z+7X",
+    "readout_feature_count": 14,
+    "quantum_parameter_count": 11,
+    "quantum_gradient": {
+      "method": "parameter_shift",
+      "shift_radians": "pi/2",
+      "execution": "exact_statevector"
+    },
+    "classical_gradient": "backpropagation"
+  },
+  "training_runs": [
+    {
+      "seed": 20260827,
+      "accepted_path_epochs": 100,
+      "best_epoch": 92,
+      "validation_energy_rmse_eV": 0.03386906097912762,
+      "parameter_shift_state_preparation_inputs": 311910,
+      "total_state_preparation_inputs": 350710
+    },
+    {
+      "seed": 20260828,
+      "accepted_path_epochs": 100,
+      "best_epoch": 92,
+      "validation_energy_rmse_eV": 0.04144098494012449,
+      "parameter_shift_state_preparation_inputs": 311910,
+      "total_state_preparation_inputs": 350710
+    },
+    {
+      "seed": 20260829,
+      "accepted_path_epochs": 100,
+      "best_epoch": 96,
+      "validation_energy_rmse_eV": 0.035935675707620456,
+      "parameter_shift_state_preparation_inputs": 311910,
+      "total_state_preparation_inputs": 350710
+    }
+  ],
+  "checkpoint_promotion": {
+    "selection_rule": "validation RMSE closest to the three-seed median",
+    "representative_seed": 20260829,
+    "new_default_checkpoint_sha256": "560bef3584db36933dfcdf1679912f04503b9339da869f489edfee0a631f2b80",
+    "new_default_checkpoint": "checkpoints/hybrid_model.pt",
+    "representative_training_checkpoint": "outputs/adapt_campaign/experiments/F2PS_A2_seed_20260829/checkpoints/hybrid_model.pt",
+    "diagnostic_parameter_shift_backward_calls": 606,
+    "diagnostic_parameter_shift_state_family_evaluations": 10248,
+    "diagnostic_parameter_shift_circuit_evaluations": 314000
+  },
+  "frozen_evaluation": {
+    "energy_final_test_mae_eV": 0.027442988755074605,
+    "energy_final_test_rmse_eV": 0.03895555500754122,
+    "energy_offgrid_mae_eV": 0.03204020579109223,
+    "energy_offgrid_rmse_eV": 0.04428573373046442,
+    "reference_force_mae_eV_per_A": 0.2624120342251261,
+    "reference_force_rmse_eV_per_A": 0.5849645077481987,
+    "reference_force_p95_abs_eV_per_A": 1.187979231468041,
+    "reference_force_max_abs_eV_per_A": 5.739979249560783,
+    "autograd_vs_refined_finite_difference_max_abs_eV_per_A": 0.00008303980776247499,
+    "evidence": "outputs/adapt_campaign/final_evaluation/F2PS/"
+  },
+  "formal_aimd": {
+    "temperature_K": 300.0,
+    "time_step_fs": 0.1,
+    "steps": 1000,
+    "recorded_frames": 1001,
+    "simulated_time_fs": 100.0,
+    "total_energy_drift_eV": 0.00008286341804530917,
+    "total_energy_range_eV": 0.0004314675731613149,
+    "linear_total_energy_drift_eV_per_ps": 0.000048017217422592095,
+    "all_frames_finite": true,
+    "all_frames_in_training_domain": true,
+    "acceptance_passed": true,
+    "evidence": "outputs/full_1000/"
+  },
+  "verification": {
+    "isolated_validation": "PASS",
+    "unit_tests_passed": 26,
+    "unit_tests_failed": 0,
+    "protected_source_manifest_sha256": "638c7c597bd6dd531b302530060cd8ffb30a7530cb6fdb395230d20a78927bfb",
+    "current_figure_directory": "outputs/adapt_campaign/figures/f2_current/",
+    "external_figure_directory": "/Users/zhanghao/MyFile/02-组会记录/复旦-浙大合作论文/第 5 版 demo 设计/当前候选方案图"
+  },
+  "evidence_boundary": "Quantum gradients were evaluated with the exact parameter-shift rule on an exact-statevector simulator. No provider-backed shot execution, calibration, middleware adapter, or real-QPU run was performed; this audit is not real-QPU performance evidence."
+}

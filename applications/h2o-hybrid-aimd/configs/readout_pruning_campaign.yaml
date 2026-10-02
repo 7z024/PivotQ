@@ -1,0 +1,127 @@
+experiment:
+  name: h2o_f2a2_readout_pruning_shot_robustness
+  protocol_path: /Users/zhanghao/Downloads/H2O_F2A2_Readout_Pruning_Shot_Robustness_Codex_Plan.md
+  protocol_sha256: 2aba65f1e5ccbc33f30a20f6e8ec868c37d48aba6b205c60cee4af5af3cfa387
+  seed: 20260829
+  output_root: outputs/readout_pruning_campaign
+  base_runtime_config: outputs/data_force_campaign/08_noisy_adaptation/resolved_noise_config.yaml
+
+dataset:
+  energy_path: data/h2o_pyscf_sto3g_fci_energy_development_v2.csv
+  energy_sha256: 18361f86f91c9e1091bce61f0ed442dbc2038622b50b2b66161899b05bf038af
+  force_path: data/h2o_pyscf_sto3g_fci_force_development_v2.csv
+  force_sha256: 39bf334bf55486e3ba073bfd1c0732999886d0cee7786d4670f4654a00ee9a92
+  frozen_energy_split: {train: 800, validation: 100, test: 100}
+  frozen_force_split: {train: 280, validation: 40, test: 30}
+  selection_split: validation_only
+  historical_locked_tests_allowed_for_selection: false
+
+checkpoint:
+  parent_checkpoint: checkpoints/hybrid_model_finite_shot_robust.pt
+  parent_checkpoint_sha256: c710e0f2867aace58d2c10f0f8c9a7386554028648d9fe9a381370d9e5acd985
+  final_checkpoint: checkpoints/hybrid_model_readout_pruned_shot_robust.pt
+  overwrite_existing_models: false
+
+readout:
+  original_features: [ZII, IZI, IIZ, ZZI, ZIZ, IZZ, ZZZ, XII, IXI, IIX, XXI, XIX, IXX, XXX]
+  baseline_active_features: [ZII, IZI, IIZ, ZZI, ZIZ, IZZ, ZZZ, XII, IXI, IIX, XXI, XIX, XXX]
+  baseline_dropped_features: [IXX]
+  first_priority_drop: XXX
+  greedy_family: [XII, IXI, IIX, XXI, XIX, XXX]
+  quantum_measurement_order_unchanged: true
+
+shots:
+  validation_values: [1000, 3000, 5000, 10000, 30000]
+  training_values: [1000, 3000, 10000]
+  primary_values: [3000, 5000, 10000]
+  repeat_seeds: [20260827, 20260828, 20260829, 20260830, 20260831]
+  diagnostic_seed_start: 20262000
+  diagnostic_seed_count: 32
+  design_shots: 3000
+  bases: [Z, X]
+  joint_bitstring_sampling: true
+
+shot_aware_scaler:
+  enabled: true
+  formula: max_signal_kappa_shot
+  kappa: 1.0
+  design_shots: 3000
+
+shot_augmentation:
+  enabled: true
+  shot_values: [1000, 3000, 10000]
+  finite_shot_batch_fractions: [0.7]
+  exact_feature_batch_fraction: 0.3
+  seed_changes_each_epoch: true
+
+sensitivity_regularization:
+  enabled_if_required: true
+  trigger_max_variance_concentration: 0.80
+  lambda_values: [0.001, 0.01, 0.1]
+  covariance_mode: diagonal_marginal_variance
+
+training:
+  hidden_dims: [32, 32]
+  activation: silu
+  epochs: 120
+  patience: 25
+  learning_rate: 0.001
+  weight_decay: 0.0
+  gradient_clip_norm: 5.0
+  joint_fine_tuning_only_if_required: true
+  joint_epochs: 30
+  joint_quantum_learning_rate: 0.0002
+
+greedy_pruning:
+  enabled_after_XXX_success: true
+  maximum_rounds: 3
+  minimum_primary_sampling_relative_improvement: 0.05
+  exact_noisy_energy_max_relative_to_current: 1.10
+  exact_noisy_energy_absolute_tolerance_eV: 0.01
+
+selection:
+  exact_noisy_energy_max_relative_to_R0: 1.15
+  exact_noisy_energy_absolute_tolerance_eV: 0.01
+  exact_noisy_force_max_relative_to_R0: 1.10
+  max_variance_concentration: 0.90
+  practical_energy_sampling_rmse_max_eV: 0.06
+  practical_force_sampling_rmse_max_eV_per_A: 0.20
+  total_energy_rmse_max_relative_to_exact: 1.20
+  total_force_rmse_max_relative_to_exact: 1.15
+  measurement_basis_penalty_weight: 0.05
+  feature_count_penalty_weight: 0.05
+
+force_validation:
+  development_split: validation
+  exact_evaluators: [input_angle_parameter_shift_chain_rule, cartesian_centered_finite_difference]
+  finite_shot_primary_evaluator: input_angle_parameter_shift_chain_rule
+  finite_shot_cartesian_control: true
+
+aimd:
+  enabled_after_energy_and_force_scan: true
+  stage_steps: [1, 10, 100, 1000]
+  shot_seeds: [20260827, 20260828, 20260829, 20260830, 20260831]
+  preferred_shots: [3000, 5000, 10000]
+  fallback_diagnostic_shots: 10000
+  continuation_gate: diagnostic_energy_plus_force_plus_geometry
+  measured_energy:
+    max_total_drift_eV: 0.005
+    max_total_range_eV: 0.010
+    max_abs_linear_drift_eV_per_ps: 0.05
+  exact_noisy_diagnostic_energy:
+    simulator_only: true
+    max_total_drift_eV: 0.005
+    max_total_range_eV: 0.010
+    max_abs_linear_drift_eV_per_ps: 0.05
+  linear_drift_gate_minimum_steps: 100
+  max_oh_rmse_vs_exact_A: 0.05
+  max_hoh_angle_rmse_vs_exact_deg: 5.0
+  fixed_initial_geometry: true
+  fixed_initial_velocities: true
+  only_shot_seed_changes: true
+
+plots:
+  backend: matplotlib
+  dpi: 220
+  format: png
+  nature_figure_used: false

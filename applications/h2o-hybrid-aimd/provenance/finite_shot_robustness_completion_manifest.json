@@ -1,0 +1,194 @@
+{
+  "report_archive": {
+    "status": "moved_out_of_public_repository",
+    "location": "external archive qhai-2026-revision-archive-20261002",
+    "original_path": "reports/H2O_FINITE_SHOT_ROBUSTNESS_REPORT.md",
+    "hashes_preserved": true
+  },
+  "experiment": "h2o_f2a2_finite_shot_robustness",
+  "completed_at": "2026-08-29T14:44:00+08:00",
+  "status": "completed_with_aimd_gate_failure",
+  "material_passport": {
+    "type": "Experiment Result / Reproducibility Validation",
+    "verification_status": "VERIFIED",
+    "protocol_sha256": "6596fcce2a19e06ae132522af64e7d83f5700a791bb4cfcc416cad2976484415",
+    "selection_data": "frozen development validation only",
+    "locked_tests_opened_after_selection": true,
+    "plot_backend": "matplotlib",
+    "nature_figure_used": false
+  },
+  "formal_runtime": {
+    "host": "109-32cpu",
+    "conda_environment": "ase-aimd-gpaw",
+    "python": "/data/hzhang/conda/envs/ase-aimd-gpaw/bin/python",
+    "remote_project": "/data/hzhang/tmp/lcz_hybrid_v1/single_h20_aimd"
+  },
+  "verification": {
+    "unit_tests_passed": 40,
+    "unit_tests_failed": 0,
+    "locked_test_hashes_unchanged": true,
+    "quantum_circuit_changed": false
+  },
+  "configuration": {
+    "path": "configs/finite_shot_robustness_campaign.yaml",
+    "sha256": "bddad18f16b8a8cba3d5f1c956515b1d9d22eb2eb33dc9b7692023fe00fbefa3",
+    "bytes": 4134
+  },
+  "datasets": {
+    "energy": {
+      "path": "data/h2o_pyscf_sto3g_fci_energy_development_v2.csv",
+      "sha256": "18361f86f91c9e1091bce61f0ed442dbc2038622b50b2b66161899b05bf038af",
+      "bytes": 223096
+    },
+    "force": {
+      "path": "data/h2o_pyscf_sto3g_fci_force_development_v2.csv",
+      "sha256": "39bf334bf55486e3ba073bfd1c0732999886d0cee7786d4670f4654a00ee9a92",
+      "bytes": 438050
+    },
+    "energy_split_counts": {
+      "train": 800,
+      "validation": 100,
+      "test": 100
+    },
+    "force_split_counts": {
+      "train": 280,
+      "validation": 40,
+      "test": 30
+    }
+  },
+  "parent_checkpoint": {
+    "path": "outputs/data_force_campaign/08_noisy_adaptation/03_noise_adaptation/checkpoints/mlp_only_noise_aware.pt",
+    "sha256": "81d7bc95fdbe96b2ef136854fc903ae09a5dc0038175dd98ac707d423b8e9f9a",
+    "bytes": 24725
+  },
+  "selected_model": {
+    "candidate_id": "C2_13F_SHOT_AWARE_SCALER",
+    "checkpoint": {
+      "path": "checkpoints/hybrid_model_finite_shot_robust.pt",
+      "sha256": "c710e0f2867aace58d2c10f0f8c9a7386554028648d9fe9a381370d9e5acd985",
+      "bytes": 36613
+    },
+    "active_features": [
+      "ZII",
+      "IZI",
+      "IIZ",
+      "ZZI",
+      "ZIZ",
+      "IZZ",
+      "ZZZ",
+      "XII",
+      "IXI",
+      "IIX",
+      "XXI",
+      "XIX",
+      "XXX"
+    ],
+    "dropped_features": [
+      "IXX"
+    ],
+    "scaler_mode": "shot_aware",
+    "kappa": 1.0,
+    "recommended_shots_per_basis": [
+      100000
+    ],
+    "validation": {
+      "exact_energy_rmse_eV": 0.08334925368468594,
+      "exact_force_rmse_eV_per_A": 1.510085730252809,
+      "variance_concentration_c_max": 0.34832503580853974
+    },
+    "locked": {
+      "exact_energy_rmse_eV": 0.06684972810044043,
+      "exact_offgrid_energy_rmse_eV": 0.07671089428466303,
+      "exact_force_rmse_eV_per_A": 1.0012281975835602
+    }
+  },
+  "diagnostics": {
+    "ixx": {
+      "feature_index": 12,
+      "feature": "IXX",
+      "shots": 3000,
+      "linearized_diagonal_energy_variance_eV2": 3.010245874111649,
+      "linearized_diagonal_variance_contribution": 0.9977417276536797,
+      "empirical_feature_only_energy_mse_eV2": 5.065915767108046,
+      "empirical_feature_only_variance_contribution": 0.9986687210308886,
+      "training_signal_std": 0.0026347825128857235,
+      "checkpoint_scaler_denominator": 0.0024669998096870423,
+      "mean_marginal_shot_std": 0.018257351952642966,
+      "snr": 0.14431350831818235,
+      "rho": 6.929358253803937,
+      "mean_abs_dE_dz_eV": 62.343587723519605
+    },
+    "sampler_mean_loglog_slope": -0.4994552733238934
+  },
+  "aimd": {
+    "status": "failed_all_validation_feasible_shots",
+    "selected_shots_per_basis": null,
+    "attempts": [
+      {
+        "shots": 100000,
+        "completed_steps": [
+          1,
+          10
+        ],
+        "passed_all_stages": false,
+        "finite_shot_pass_counts": [
+          5,
+          0
+        ]
+      }
+    ],
+    "qpu_ready": false
+  },
+  "artifacts": {
+    "start_manifest": {
+      "path": "provenance/finite_shot_robustness_start_manifest.json",
+      "sha256": "fb259b8266c977587a97beb698c30d1cbf5cef726c364d15492037ca803202fe",
+      "bytes": 1920
+    },
+    "source_git_state": {
+      "path": "provenance/finite_shot_robustness_source_git_state.json",
+      "sha256": "158c6ede7ec690fddf6e128e523ceff280e2a4a8f92cf225b4e801731cbace87",
+      "bytes": 389
+    },
+    "reproduce_ixx": {
+      "path": "outputs/finite_shot_robustness_campaign/00_reproduce_IXX/summary.json",
+      "sha256": "cb07aa41ad20afaae3c2b5ecf376a8b5713e22be04708c1b5ce6884e9419dcfe",
+      "bytes": 2670
+    },
+    "candidate_summary": {
+      "path": "outputs/finite_shot_robustness_campaign/candidate_summary.json",
+      "sha256": "96a08d2e9a2c9dc8912dbd67f3a18f6d52827fcf1944bb963ad080c327c002ba",
+      "bytes": 379687
+    },
+    "force_validation": {
+      "path": "outputs/finite_shot_robustness_campaign/07_force_validation/summary.json",
+      "sha256": "1c3f3684aa2bafef7fefa55c6d510d5c0c606c352a5e2751f84246ec95e69a37",
+      "bytes": 407617
+    },
+    "locked_evaluation": {
+      "path": "outputs/finite_shot_robustness_campaign/06_final_comparison/summary.json",
+      "sha256": "655078a6049be2823f64530b6090d18123a6ac920a328a90ded47a7900a22dad",
+      "bytes": 15489
+    },
+    "aimd": {
+      "path": "outputs/finite_shot_robustness_campaign/08_aimd/summary.json",
+      "sha256": "09bd8bb173012184eb508899d216eca4de1655c6a82f2909cc92a4875b14a800",
+      "bytes": 19888
+    },
+    "figures": {
+      "path": "outputs/finite_shot_robustness_campaign/figures/figure_manifest.json",
+      "sha256": "7c2abb6fbd09f7eaa794459660694076b0f2ea79bb6ab30127470efaf67f97b6",
+      "bytes": 1086
+    },
+    "report": {
+      "path": "reports/H2O_FINITE_SHOT_ROBUSTNESS_REPORT.md",
+      "sha256": "c7ff5602cb36416e3b0ea26c4f9e0d9a32c758cf955522ea9f2a405a839c7ebb",
+      "bytes": 9277
+    },
+    "current_experiment": {
+      "path": "configs/current_experiment.yaml",
+      "sha256": "08ef42d81b26fa20d1d074115f2903156737295abf0da0a682ca0ab08fd6cb05",
+      "bytes": 18861
+    }
+  }
+}

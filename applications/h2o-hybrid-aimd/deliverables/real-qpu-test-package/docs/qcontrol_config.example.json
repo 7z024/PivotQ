@@ -1,0 +1,8 @@
+{
+  "device_config_path": "D:/qcontrol_gd/qcontrol/qcontrol/config/data/N36X21_20260801.json",
+  "opt_qubits": ["q11_7", "q11_9", "q9_9"],
+  "read_qubits": ["q11_7", "q11_9", "q9_9"],
+  "opt_couplers": ["c11_8", "c10_9"],
+  "data_vault_path": ["", "N36X21", "REPLACE_WITH_UNIQUE_RUN_ID"],
+  "artifact_dir": "D:/qcontrol_gd/run_artifacts/REPLACE_WITH_UNIQUE_RUN_ID"
+}

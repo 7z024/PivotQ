@@ -1,0 +1,43 @@
+{
+  "source_project": "september_launch_event",
+  "source_snapshot": {
+    "file_count_excluding_python_bytecode": 963,
+    "sorted_manifest_sha256": "6f4696a7ccddc10dbf0c7093256c38aa5c2dc1919e8cd390b0c01d111597b51a"
+  },
+  "unchanged_scientific_and_framework_files": {
+    "api/classical.py": "b5a0d085c7c6b254e0158f974a17561d4527f4fd229ca32cd980cd2eadfa2385",
+    "api/contracts.py": "a88eb15cc716bfed5702846af7c549bf84130e87c7e6cf84730b31b7bcb42b03",
+    "api/force.py": "6391df6cda99cfc027d6c3e066157f1759a6dd5faa780b02badc776378713f9f",
+    "api/quantum.py": "ed3e29fd539edd0468de038d8e9d1ed1b96e1525db94c125bf39e331ee3f41bf",
+    "backends/force/cartesian_central_finite_difference.py": "ac2ba40886e3b9ebffc1b0f754e21616b196661143a3aca919adc1adc51a6df7",
+    "backends/force/central_finite_difference.py": "e723b8602f786f6b9cb595ce52c042fbfed46a7d6c3e1eeced75de3a6bda7023",
+    "classical/torch_mlp.py": "16ec4a3c605d0774e99ce9fc21adb011389222fb4e513f4c155ed33b492f1f91",
+    "core/potential.py": "8b83880de50beb80ad4e36a9ea5637c197d8472195becc9ce36fd9a5fc29dcac",
+    "core/training.py": "4b4e6a04895e26c91429e2a21774efa945b0f4fe38c3c92d0d55e63129b01b27",
+    "data/datasets.py": "feb25b3f115036a0f11086ec29b5d59b0dc9d1edce75ce22b12ca110baab9a25",
+    "evaluation/metrics.py": "65d518b3f437d07ce9d2b4f65fa259b589b609a5dab43def8910369dad22574b",
+    "evaluation/plotting.py": "e8fe44857771be9d02256f44b10666126d7231ed8c9c936e6e397c79636b7c1b",
+    "quantum/trainable_water_hardware_efficient_statevector.py": "ca246d4a585636c6cd153ca29a516b934e5fa54cacf20a0d6778e9ee87599a2c",
+    "quantum/water_hardware_noise.py": "538e4b7ad16faf462bd70c6c305948cf7cda0d73250eb62b28178318d63e9fcd",
+    "simulation/aimd.py": "2bc7f0dc74ac4ca74e6523019e81dde42a0250cc7db60ddb6c58cab569cda344",
+    "simulation/ase_adapter.py": "0a9b569f055f3bab81c84f3c7fcb26f236a9fe9f1b39c1506b2c200b6bcc1e02",
+    "simulation/ood.py": "09ac21b7b305d5bc0899eda1386c288e350c921454788f642a331d48612590f9",
+    "workflows/run_aimd.py": "d9469a0d38f8e3a0088bab343f7347e498dce7da22803b553087f616ee54704e"
+  },
+  "locked_artifacts": {
+    "data/h2o_pyscf_sto3g_fci_v1.csv": "2d2cd289f5956fc303aef4d984b1899965b8cfe7152dfb2cf1f18c2152460f4a",
+    "data/h2o_pyscf_sto3g_fci_v1_metadata.json": "13e609c7404d2926058d1681853c6468d647e654ff1707669eacc13883533d87",
+    "data/h2o_pyscf_sto3g_fci_test_final_v2.csv": "ca9f3568afdf8b662d46ef6b978b47edd29c96c438fc63069b81e4694b30e384",
+    "data/h2o_pyscf_sto3g_fci_offgrid_final_v2.csv": "e1cdf1118d81db76ea79ecce1f6ec423791fb73ec59cec14aa6dd2791c612f17",
+    "data/h2o_pyscf_sto3g_fci_reference_force_final_v2.csv": "87ce470d73d3ab1ad0d15e6df8f5f23da2a8f953e476676dc3274699fed2f20b",
+    "data/h2o_pyscf_sto3g_fci_reference_force_final_v2_metadata.json": "9352c8615365d7273d88e9feeb3bf7fbd177d74e53ada098afd1be1ae18c7283",
+    "checkpoints/hybrid_model.pt": "19871c490c1def35fd0b0aae18775ebdfaddcda2db17002ea046ee0d49421cf1"
+  },
+  "structural_adaptations": [
+    "configuration/loader.py resolves configured relative paths from the standalone project root and rejects absolute or escaping paths",
+    "core/factory.py and core/joint_training.py expose only the final H2O hardware-efficient backend",
+    "package __init__ files no longer import absent historical backends",
+    "configs/h2o_aimd.yaml changes only project-local data, output and checkpoint paths and adds the locked checkpoint hash",
+    "workflows/train.py and workflows/evaluate.py reproduce the existing training/noise-correction and evaluation calls without changing the model"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://single-h20-aimd.local/schemas/fusion-actor-request-v1.json",
+    "title": "Standalone H2O Classical Actor Request v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["api_version", "run_id", "actor_id", "actor_type", "payload", "resources", "timeout_seconds", "metadata"],
+  "properties": {
+    "api_version": {"const": "1.0"},
+    "run_id": {"type": "string", "minLength": 1},
+    "actor_id": {"type": "string", "minLength": 1},
+    "actor_type": {"const": "classical_predict"},
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checkpoint_path", "device", "require_gpu"],
+      "properties": {
+        "checkpoint_path": {"type": "string", "minLength": 1, "pattern": "^/"},
+        "device": {"type": "string", "pattern": "^cuda(:[0-9]+)?$"},
+        "require_gpu": {"const": true}
+      }
+    },
+    "resources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cpu", "gpu", "qpu", "custom"],
+      "properties": {
+        "cpu": {"type": "number", "minimum": 0},
+        "gpu": {"type": "number", "exclusiveMinimum": 0},
+        "qpu": {"const": 0.0},
+        "memory_bytes": {"type": ["integer", "null"], "minimum": 1},
+        "custom": {"type": "object", "additionalProperties": {"type": "number", "minimum": 0}}
+      }
+    },
+    "timeout_seconds": {"type": "number", "exclusiveMinimum": 0},
+    "metadata": {"type": "object"}
+  }
+}

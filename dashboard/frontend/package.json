@@ -1,0 +1,42 @@
+{
+  "name": "qhai-dashboard",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "build": "npm run typecheck && vite build && node scripts/stamp-build.mjs",
+    "check:dist": "node scripts/stamp-build.mjs --check",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "preview": "vite preview --host 127.0.0.1",
+    "format": "prettier --write src tests *.ts scripts/*.mjs"
+  },
+  "dependencies": {
+    "@codemirror/lang-python": "^6.2.1",
+    "@codemirror/lint": "^6.8.5",
+    "@codemirror/state": "^6.5.2",
+    "@codemirror/view": "^6.38.0",
+    "@fontsource/ibm-plex-mono": "^5.2.6",
+    "@fontsource/noto-sans-sc": "^5.2.5",
+    "codemirror": "^6.0.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.1",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@types/three": "^0.180.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "prettier": "^3.9.9",
+    "typescript": "~5.9.2",
+    "vite": "^7.1.0",
+    "vitest": "^3.2.4"
+  }
+}

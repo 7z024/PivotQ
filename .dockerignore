@@ -1,0 +1,52 @@
+# Version control and exported images
+.git
+/docker-artifacts/
+
+# Local environment configuration
+**/.env
+**/.env.*
+**/.venv
+**/venv
+**/.venv-win
+**/.uv-cache*
+
+# Editor and language caches
+**/.DS_Store
+**/.idea
+**/.vscode
+**/*.swp
+**/*.swo
+**/__pycache__
+**/*.py[cod]
+**/.pytest_cache
+**/.mypy_cache
+**/.ruff_cache
+**/.coverage
+**/.coverage.*
+**/htmlcov
+**/*.egg-info
+**/node_modules
+**/.vite
+**/*.tsbuildinfo
+
+# Runtime data and generated output
+**/outputs
+**/ray-outputs
+**/runtime-state
+**/performance-outputs
+**/secrets
+**/.qperfsim-runtime
+**/logs
+**/test-results
+**/playwright-report
+**/*.log
+**/deliverables
+**/reports
+**/tmp
+/test-scenario.yaml
+
+# Applications and legacy deployment outside this image
+fusion-platform
+
+# Rebuilt in the frontend stage
+dashboard/frontend/dist

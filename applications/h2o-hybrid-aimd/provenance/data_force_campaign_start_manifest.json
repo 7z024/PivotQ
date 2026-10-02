@@ -1,0 +1,58 @@
+{
+  "experiment": "h2o_energy_force_dataset_campaign_v2",
+  "recorded_at": "2026-08-28T22:27:21+08:00",
+  "status": "formal_dataset_labeling_in_progress",
+  "protocol": {
+    "path": "/Users/zhanghao/Downloads/H2O_Energy_Force_Dataset_Expansion_Codex_Plan.md",
+    "sha256": "3444462ae094ca26ca3ecd4b4e03e2d6ccdd2022f04fc2395e287a4455ab6a95"
+  },
+  "formal_runtime": {
+    "host": "109-32cpu",
+    "remote_project": "/data/hzhang/tmp/lcz_hybrid_v1/single_h20_aimd",
+    "python": "/data/hzhang/conda/envs/ase-aimd-gpaw/bin/python",
+    "python_bytecode_disabled": true,
+    "label_workers": 8,
+    "threads_per_worker": 4,
+    "thread_limit_enforced_for_pyscf_blas_torch_and_cpu_affinity": true
+  },
+  "configuration": {
+    "path": "configs/data_force_campaign.yaml",
+    "sha256": "79243e591895509bc68b0115ae7913a27c7940cb43ff8cdbfc2ad660044a77a2"
+  },
+  "source_data": {
+    "baseline_232_energy": {
+      "path": "data/h2o_pyscf_sto3g_fci_v1.csv",
+      "sha256": "006ae2f20b1db75db507d6e374d2291af559d0c76f8b619db6f88424c99c270e"
+    },
+    "aimd_trajectory": {
+      "path": "data/sources/h2o_exact_noisy_1000step_positions.csv",
+      "sha256": "3e736ce970436f5f0a9bd48dac217e3ba51136ccd7aba3a07265777bbd449fa4"
+    }
+  },
+  "historical_locked_tests": {
+    "final_energy": {
+      "path": "data/h2o_pyscf_sto3g_fci_test_final_v2.csv",
+      "count": 22,
+      "sha256": "ded025a3757703df0dbf09b5d286e094b45c26801914e45e56fae4d04f8b8f91"
+    },
+    "offgrid_energy": {
+      "path": "data/h2o_pyscf_sto3g_fci_offgrid_final_v2.csv",
+      "count": 48,
+      "sha256": "453de86bc4b670257f192ffcc8b3b8cb5605b28b34b69f97ae1f81dc02227d42"
+    },
+    "force": {
+      "path": "data/h2o_pyscf_sto3g_fci_reference_force_final_v2.csv",
+      "count": 300,
+      "sha256": "45a1a9a2dfecae1dcabd29c29392ca61628953e5baf619aa1269c52437a3471a"
+    },
+    "allowed_for_training_validation_or_model_selection": false
+  },
+  "frozen_comparison_contract": {
+    "circuit": "F2/A2 fixed structure and 14-observable readout",
+    "classical_model": "32-32 SiLU MLP",
+    "experiments": ["232E_energy_only", "1000E_energy_only", "1000E_350F_energy_force"],
+    "lambda_force_scan": [0.0, 0.1, 0.3, 1.0],
+    "energy_split": {"train": 800, "validation": 100, "test": 100},
+    "force_split": {"train": 280, "validation": 40, "test": 30}
+  }
+}

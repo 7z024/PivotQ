@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "h2o-hybrid-aimd"
+version = "0.1.0"
+description = "H2O quantum-classical hybrid potential and NVE AIMD application"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "ase>=3.29,<4",
+    "jsonschema>=4.25,<5",
+    "matplotlib>=3.10,<4",
+    "numpy==2.4.6",
+    "PyYAML>=6.0,<7",
+    "qiskit==2.5.1",
+    "torch==2.5.1",
+]
+
+[tool.setuptools.packages.find]
+include = ["single_h20_aimd*"]
+
+[tool.setuptools.package-data]
+"single_h20_aimd.integration.fusion_framework" = ["*.json", "*.md", "*.yaml"]

@@ -1,0 +1,52 @@
+{
+  "dataset_name": "h2o_pyscf_sto3g_fci_v1",
+  "molecule": "H2O",
+  "geometry": "O at origin; two H atoms in xz plane; canonical rows satisfy r1<=r2",
+  "exchange_symmetry": "H permutations removed in reference grid and enforced by model invariants",
+  "reference_method": "FCI",
+  "basis": "sto-3g",
+  "charge": 0,
+  "multiplicity": 1,
+  "sample_count": 232,
+  "split_counts": {
+    "train": 185,
+    "validation": 25,
+    "test": 22
+  },
+  "scan": {
+    "oh_length_A": [
+      0.75,
+      1.25,
+      0.1
+    ],
+    "hoh_angle_deg": [
+      80.0,
+      130.0,
+      5.0
+    ],
+    "reference_geometry": [
+      0.9572,
+      0.9572,
+      104.52
+    ],
+    "reference_index": 165,
+    "discrete_minimum_geometry": [
+      1.05,
+      1.05,
+      95.0
+    ],
+    "discrete_minimum_energy_Ha": -75.02251322002967
+  },
+  "electronic_structure": {
+    "n_electrons": 10,
+    "n_spatial_orbitals": 7,
+    "n_spin_orbitals": 14,
+    "pyscf_version": "2.13.1",
+    "all_scf_converged": true,
+    "all_fci_converged": true
+  },
+  "has_force_labels": false,
+  "csv_path": "reference_data/h2o_pyscf_sto3g_fci_v1.csv",
+  "csv_sha256": "2d2cd289f5956fc303aef4d984b1899965b8cfe7152dfb2cf1f18c2152460f4a",
+  "generator": "september_launch_event.data.prepare_water"
+}

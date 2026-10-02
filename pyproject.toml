@@ -1,0 +1,38 @@
+[project]
+name = "qhai-runtime"
+version = "0.1.0"
+description = "Unified Linux CPU simulation environment for QHAI framework and applications"
+requires-python = "==3.12.*"
+dependencies = [
+    "h2o-hybrid-aimd",
+    "ray-quantum",
+    "torch==2.13.0+cpu",
+    "qiskit-aer>=0.17,<1",
+    "pyscf==2.14.0",
+    "scipy>=1.15,<2",
+    "threadpoolctl>=3.6,<4",
+]
+
+[tool.uv]
+package = false
+environments = [
+    "sys_platform == 'linux' and platform_machine == 'x86_64'",
+]
+required-environments = [
+    "sys_platform == 'linux' and platform_machine == 'x86_64'",
+]
+
+[tool.uv.sources]
+h2o-hybrid-aimd = { path = "applications/h2o-hybrid-aimd", editable = true }
+ray-quantum = { path = "packages/framework", editable = true }
+torch = { index = "pytorch-cpu" }
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"
+default = true

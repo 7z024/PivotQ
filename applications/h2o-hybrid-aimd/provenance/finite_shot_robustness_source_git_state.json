@@ -1,0 +1,7 @@
+{
+  "commit": "01fb71b793572cb4dafa5930328ec0f12d522472",
+  "dirty_worktree": true,
+  "dirty_entry_count_at_campaign_start": 31,
+  "remote_execution_copy": "rsync export without .git metadata",
+  "interpretation": "The commit identifies the base repository state; campaign changes are additionally frozen by config, source, checkpoint, dataset, and completion-manifest SHA-256 records."
+}

@@ -1,0 +1,105 @@
+{
+  "passed": true,
+  "scope": "HTTP integration; Bell circuit and two AIMD steps",
+  "started_at": "2026-10-02T07:01:10.630073+00:00",
+  "runs": [
+    {
+      "task_id": "quantum-circuit",
+      "run_id": "run-7e0e9b794450",
+      "status": "SUCCEEDED",
+      "execution_mode": "local_cpu",
+      "actual_device": "cpu",
+      "elapsed_seconds": 18.73865034431219,
+      "scientific_status": null,
+      "source_sha256": "ae85984e711ed63ef95182b582169a52937d61eaa8273d0fd46474e7e86a184d",
+      "hardware": {
+        "circuit_execution": "fake-sc-36"
+      },
+      "trace_records": 1,
+      "cleanup_succeeded": true,
+      "prediction": {
+        "latency_seconds": 0.0138,
+        "task_completion_ratio": 1.0
+      },
+      "target_profiles": {
+        "circuit_execution": {
+          "id": "fake-sc-36",
+          "kind": "qpu",
+          "title": "Fake SC-36 · 6×6 超导芯片",
+          "profile_version": "1",
+          "profile_sha256": "9ed1bfc938871895abd06cfe8f0a6727afba8eed9bf2f6ed70e3a17230087898",
+          "logical_qubits": 2,
+          "qubits": 36,
+          "shot_rate": 10000,
+          "submit_latency_us": 1000
+        }
+      }
+    },
+    {
+      "task_id": "h2o-hybrid-aimd",
+      "run_id": "run-43e07996803e",
+      "status": "SUCCEEDED",
+      "execution_mode": "local_cpu",
+      "actual_device": "cpu",
+      "elapsed_seconds": 53.10774238407612,
+      "scientific_status": "passed",
+      "source_sha256": "d2a437f7c437baa1a7f9cd3c98cb7e3458c726d9376ffe50869339db4dfb7f83",
+      "hardware": {
+        "initialization": "cpu-0",
+        "quantum_features": "fake-sc-36",
+        "classical_predict": "gpu-0",
+        "force_and_integration": "cpu-0",
+        "trajectory_analysis": "cpu-0"
+      },
+      "trace_records": 12,
+      "cleanup_succeeded": true,
+      "prediction": {
+        "latency_seconds": 247.884588,
+        "task_completion_ratio": 1.0
+      },
+      "target_profiles": {
+        "initialization": {
+          "id": "cpu-0",
+          "kind": "cpu",
+          "title": "参考 CPU",
+          "profile_version": "1",
+          "profile_sha256": "3c133e11bd8506b505b67c2ac4a9c69b1f4ddd02dce5cbdc7cbe2a1058dee3d4"
+        },
+        "quantum_features": {
+          "id": "fake-sc-36",
+          "kind": "qpu",
+          "title": "Fake SC-36 · 6×6 超导芯片",
+          "profile_version": "1",
+          "profile_sha256": "9ed1bfc938871895abd06cfe8f0a6727afba8eed9bf2f6ed70e3a17230087898",
+          "logical_qubits": 3,
+          "qubits": 36,
+          "shot_rate": 10000,
+          "submit_latency_us": 1000
+        },
+        "classical_predict": {
+          "id": "gpu-0",
+          "kind": "gpu",
+          "title": "A100 参考 GPU",
+          "profile_version": "1",
+          "profile_sha256": "b643bfbdb9be7d8e40f0781a32a0cbc8fc67cbc0f7205dec9e535ac43dae625c"
+        },
+        "force_and_integration": {
+          "id": "cpu-0",
+          "kind": "cpu",
+          "title": "参考 CPU",
+          "profile_version": "1",
+          "profile_sha256": "3c133e11bd8506b505b67c2ac4a9c69b1f4ddd02dce5cbdc7cbe2a1058dee3d4"
+        },
+        "trajectory_analysis": {
+          "id": "cpu-0",
+          "kind": "cpu",
+          "title": "参考 CPU",
+          "profile_version": "1",
+          "profile_sha256": "3c133e11bd8506b505b67c2ac4a9c69b1f4ddd02dce5cbdc7cbe2a1058dee3d4"
+        }
+      }
+    }
+  ],
+  "history_restored_without_resubmission": true,
+  "finished_at": "2026-10-02T07:02:26.677472+00:00"
+}

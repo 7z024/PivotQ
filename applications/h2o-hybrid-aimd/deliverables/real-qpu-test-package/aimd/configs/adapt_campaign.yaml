@@ -1,0 +1,66 @@
+project:
+  name: h2o_f2_parameter_shift_experiment
+  output_root: outputs/adapt_campaign
+  seed: 20260827
+
+dataset:
+  data_path: data/h2o_pyscf_sto3g_fci_v1.csv
+  final_energy_path: data/h2o_pyscf_sto3g_fci_test_final_v2.csv
+  offgrid_final_path: data/h2o_pyscf_sto3g_fci_offgrid_final_v2.csv
+  reference_force_final_path: data/h2o_pyscf_sto3g_fci_reference_force_final_v2.csv
+  use_relative_energy: true
+  val_confirm_count: 7
+
+f2:
+  encoding:
+    template: one_to_one
+    mapping: affine
+    offset: [1.5707963267948966, 1.5707963267948966, 1.5707963267948966]
+    angle_scale: [0.7853981633974483, 0.39269908169872414, 0.7853981633974483]
+    one_to_one_axis: ry
+  circuit:
+    num_qubits: 3
+    seed: native
+    connectivity: [[0, 1], [1, 2]]
+    entangler_gate: cz
+    data_reuploading: false
+    selected_operators: [IYZ, YII, YZI, IIX, YII]
+  observables: [ZII, IZI, IIZ, ZZI, ZIZ, IZZ, ZZZ, XII, IXI, IIX, XXI, XIX, IXX, XXX]
+  training_protocol:
+    seeds: [20260827, 20260828, 20260829]
+    accepted_path_epochs: 100
+    anchor_epochs: 25
+    growth_end_epochs: [40, 55, 70]
+    accepted_activation_epochs: 3
+    fixed_growth_blocks: [[IYZ, YII], [YZI, IIX], [YII]]
+
+training:
+  hidden_dims: [32, 32]
+  activation: silu
+  classical_optimizer: {name: adam, betas: [0.9, 0.999], amsgrad: false}
+  quantum_optimizer: {name: adam, betas: [0.9, 0.999], amsgrad: false}
+  classical_learning_rate: 0.01
+  quantum_learning_rate: 0.01
+  new_operator_learning_rate: 0.02
+  classical_weight_decay: 0.0
+  quantum_weight_decay: 0.0
+  quantum_seed_std: 0.05
+  quantum_gradient_method: parameter_shift
+  gradient_clip_norm: 5.0
+  batch_size: 32
+
+evaluation:
+  accuracy_policy: minimize_and_report_without_fixed_pass_thresholds
+  acceptance_basis: aimd_trajectory_reasonableness
+  autograd_fd_tolerance_eV_per_A: 0.02
+
+force:
+  backend: cartesian_central_finite_difference
+  step_A: 0.001
+  project_rigid_body_residuals: true
+
+aimd:
+  temperature_K: 300.0
+  time_step_fs: 0.1
+  steps: 1000
+  seed: 20260829
