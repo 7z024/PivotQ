@@ -2,6 +2,8 @@
 
 当前 Python 预测实现已并入唯一发行包 `pivotq`，公开入口为 `pivotq.performance`。请先按仓库或网站安装说明安装 `pivotq`；本目录的两个 Python 命令和 `_prediction` 导入转发到包内实现，参数和结果文件约定继续保留。Dashboard 与 SDK 共享隔离预测 Worker。此处 `lib/`、头文件及参考参数保留交付原件，包内副本的动态库字节和摘要与原件一致。
 
+QPerfSim 为量超智融合系统提供 CPU、GPU、QPU 场景的性能预测。公开 Python `Workload`/`Hardware` 构建器当前直接描述 CPU/QPU；包含 GPU 的场景使用下文的 YAML/JSON 任务图接口或 AIMD 预测命令。
+
 随包原生引擎支持 Linux x86-64：Ubuntu 24.04 可直接加载；Ubuntu 22.04 可通过 `FUSION_QPERFSIM_RUNTIME` 指定已有的兼容运行库目录。程序不会下载或替换系统运行库。下文的平台文件名表描述原生接口的命名约定；当前仓库仅交付 Linux 动态库。
 
 QPerfSim 根据设备配置和任务信息估算执行时延、吞吐及通信开销。合作方负责生成任务图，平台读取预测结果并负责展示和执行路径选择。预测按无外部平台排队、资源可用处理，任务图内部的依赖和配置的资源容量仍参与模拟。

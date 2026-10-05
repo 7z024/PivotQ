@@ -8,8 +8,7 @@ description: 选择 CPU 模拟器或已注册的 QPU Provider，并正确理解�
 执行器决定任务如何调度，量子后端决定电路如何执行。下面通过本机 Ray Worker 调用 `simulator`，在 CPU 上模拟电路；接入 QPU 后，Worker 通过对应的 Provider 提交设备请求。
 
 ```python
-from pivotq import Runtime
-from qiskit import QuantumCircuit
+from pivotq import QuantumCircuit, Runtime
 
 circuit = QuantumCircuit(2)
 circuit.h(0)
@@ -33,7 +32,7 @@ with Runtime(executor="ray", address="local") as runtime:
 
 ## 支持的电路
 
-提交已绑定参数的 Qiskit `QuantumCircuit`，或一个最终返回此对象的任务引用。标准幺正门与可分解的幺正电路可被模拟；支持末尾的全量、部分及置换测量。
+提交已绑定参数的 `QuantumCircuit`，或一个最终返回此对象的任务引用。`pivotq.QuantumCircuit` 直接复用 Qiskit 原始类型，已有的 Qiskit 电路同样兼容；电路、参数、编译与序列化入口见[电路 API](../api/quantum/#电路构造与参数)。标准幺正门与可分解的幺正电路可被模拟；支持末尾的全量、部分及置换测量。
 
 当前不支持中途测量、reset、initialize、经典条件、控制流和未绑定参数。使用 `assign_parameters()` 绑定参数，再提交电路。执行不会修改输入电路；提交后直到任务完成，请勿修改同一个电路对象。
 

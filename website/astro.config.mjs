@@ -10,6 +10,7 @@ export default defineConfig({
   base: settings.base,
   ...(settings.site ? { site: settings.site } : {}),
   trailingSlash: 'always',
+  devToolbar: { enabled: false },
   integrations: [starlight({
     title: site.name,
     description: site.description,
@@ -23,11 +24,12 @@ export default defineConfig({
       Header: './src/components/DocsHeader.astro',
       PageTitle: './src/components/DocsPageTitle.astro',
       Footer: './src/components/DocsFooter.astro',
+      Sidebar: './src/components/DocsSidebar.astro',
     },
     social: site.githubUrl ? [{ icon: 'github', label: 'GitHub', href: site.githubUrl }] : [],
     sidebar: [
       { label: '系统介绍', items: [
-        { label: '文档首页', slug: 'docs' },
+        { label: '文档首页', link: '/docs/' },
         { label: '系统与执行方式', slug: 'docs/architecture' },
       ] },
       { label: '使用文档', items: [
@@ -38,6 +40,7 @@ export default defineConfig({
         ] },
         { label: '混合编程', collapsed: true, items: [
           { label: '经典任务', slug: 'docs/classical-tasks' },
+          { label: 'GPU 与异构资源', slug: 'docs/gpu-computing' },
           { label: '量子后端', slug: 'docs/quantum-backends' },
           { label: '混合程序', slug: 'docs/hybrid-programs' },
           { label: '组件与 Actor', slug: 'docs/components-actors' },
@@ -69,7 +72,6 @@ export default defineConfig({
       ] },
       { label: '应用示例', items: [
         { label: '示例导航', slug: 'docs/examples' },
-        { label: '工作台教程', slug: 'docs/aimd' },
       ] },
     ],
     head: [{ tag: 'meta', attrs: { name: 'theme-color', content: '#ffffff' } }],

@@ -1,5 +1,5 @@
 {
-  "source": "public/aimd/qiskit_f2.py, unchanged native compiler via NumPy matrix shim",
+  "source": "public/aimd/qiskit_f2.py, PivotQ import with unchanged gate operations via NumPy matrix shim",
   "order": "q0 q1 q2",
   "cases": [
     {

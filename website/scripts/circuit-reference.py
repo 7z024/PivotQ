@@ -1,6 +1,6 @@
 """Generate small reference fixtures by executing the supplied native F2 compiler.
 
-The shim implements only Qiskit's gate API used by the original source, with
+The shim implements only PivotQ's Qiskit-compatible gate API used by the source, with
 dense NumPy matrices in Qiskit little-endian order. It does not reimplement the
 logical Pauli simulator under test. No scientific AIMD calculation is run.
 """
@@ -40,7 +40,7 @@ class QuantumCircuit:
         return copy.deepcopy(self)
 
 
-sys.modules['qiskit'] = types.SimpleNamespace(QuantumCircuit=QuantumCircuit)
+sys.modules['pivotq'] = types.SimpleNamespace(QuantumCircuit=QuantumCircuit)
 loader = importlib.util.spec_from_file_location('provided_f2', ROOT / 'public/aimd/qiskit_f2.py')
 source = importlib.util.module_from_spec(loader)
 loader.loader.exec_module(source)
@@ -62,5 +62,5 @@ for angles, seed, adapt in cases:
                          z=(abs(z.state[reorder]) ** 2).tolist(), x=(abs(x.state[reorder]) ** 2).tolist()))
 target = ROOT / 'scripts/fixtures/f2-native-reference.json'
 target.parent.mkdir(parents=True, exist_ok=True)
-target.write_text(json.dumps({'source': 'public/aimd/qiskit_f2.py, unchanged native compiler via NumPy matrix shim', 'order': 'q0 q1 q2', 'cases': fixtures}, indent=2) + '\n', encoding='utf-8')
+target.write_text(json.dumps({'source': 'public/aimd/qiskit_f2.py, PivotQ import with unchanged gate operations via NumPy matrix shim', 'order': 'q0 q1 q2', 'cases': fixtures}, indent=2) + '\n', encoding='utf-8')
 print(f'Generated {len(fixtures)} native-compiler reference cases: {target}')

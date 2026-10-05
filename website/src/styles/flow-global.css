@@ -1,0 +1,46 @@
+:root {
+  --site-header-height: 68px;
+  --ink: #14253d;
+  --body: #50627a;
+  --blue: #1468e8;
+  --accent: #20b8ab;
+  --light: #f6f9fd;
+  --line: #dce5f0;
+  --white: #fff;
+}
+
+html { scroll-padding-top: 84px; }
+body.flow-site { color: var(--ink); background: #fff; font-family: Inter, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif; line-height: 1.65; }
+.flow-site h1, .flow-site h2, .flow-site h3 { letter-spacing: 0; }
+.flow-site .container { width: min(1280px, calc(100% - 72px)); margin-inline: auto; }
+.flow-site #main { padding-top: 0; min-height: calc(100vh - var(--site-header-height)); }
+.flow-site :is(a, button, summary, [tabindex]):focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+
+.flow-site .flow-header {
+  position: sticky;
+  inset: auto;
+  top: 0;
+  z-index: 40;
+  height: var(--site-header-height);
+  border-bottom: 1px solid #e3eaf1;
+  background: #ffffffed;
+  color: var(--ink);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.flow-footer { background: #142232; color: #dde6ef; }
+.flow-footer-main { display: flex; justify-content: space-between; align-items: flex-start; gap: 48px; padding-block: 54px 58px; }
+.flow-footer-brand { display: inline-block; color: #fff; font-size: 26px; font-weight: 760; line-height: 1.2; }
+.flow-footer-brand:hover { color: #fff; }
+.flow-footer-main p { margin-top: 9px; color: #aabccc; font-size: 14px; }
+.flow-footer-main nav { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; padding-top: 8px; }
+.flow-footer-main nav a { display: inline-flex; align-items: center; gap: 3px; color: #dce7f1; font-size: 13px; font-weight: 550; white-space: nowrap; }
+.flow-footer-main nav a:hover { color: #72caff; }
+.flow-footer-bottom { display: flex; justify-content: space-between; gap: 24px; padding-block: 18px 22px; border-top: 1px solid #ffffff26; color: #aabccc; font-size: 11px; }
+
+@media (max-width: 760px) {
+  .flow-site .container { width: calc(100% - 36px); }
+  .flow-footer-main { flex-direction: column; gap: 24px; padding-block: 40px; }
+  .flow-footer-main nav { gap: 14px 24px; padding-top: 0; }
+  .flow-footer-bottom { flex-wrap: wrap; gap: 4px; }
+}

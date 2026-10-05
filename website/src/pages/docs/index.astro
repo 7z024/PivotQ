@@ -1,0 +1,7 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { Content, frontmatter, getHeadings } from '../../content/guide/system.md';
+---
+<StarlightPage frontmatter={{ ...frontmatter, title: '参考文档' }} headings={getHeadings()}>
+  <Content />
+</StarlightPage>

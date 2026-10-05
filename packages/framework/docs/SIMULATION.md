@@ -20,7 +20,7 @@ Ray 检查存活节点的总容量，已安装但繁忙的设备继续走原路�
 
 ```python
 from types import SimpleNamespace
-from qiskit import QuantumCircuit
+from pivotq import QuantumCircuit
 from pivotq._internal.executors import LocalExecutor
 from pivotq._internal.framework import ComponentRegistry, FusionFramework
 from pivotq._internal.qpu_integration import QPUCircuitService, QuantumCircuitRequest

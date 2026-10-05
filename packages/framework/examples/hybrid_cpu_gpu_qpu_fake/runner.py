@@ -9,7 +9,7 @@ import os
 from pathlib import Path
 from typing import Any
 
-from qiskit import QuantumCircuit
+from pivotq import QuantumCircuit
 
 from pivotq._internal.framework import FusionFramework
 from pivotq._internal.jobs import RayJobDriverContext

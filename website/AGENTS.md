@@ -1,18 +1,23 @@
-# 门户网站内容约定
+# 门户网站维护约定
 
-- 系统以通用的量超融合编程框架为核心，连接量子计算（QPU）与经典计算（CPU）；介绍应说明各模块的工作方式及相互配合。
-- 水分子 AIMD 是一个应用示例，不能将其写成框架的通用组成模块，也不能将系统定位为专为水分子 AIMD 开发。
-- 可视化工作台后续将扩展为通用程序工作台，现阶段仅实现水分子 AIMD 应用；教程统一命名为“工作台教程”，区分未来规划与当前能力。
-- 门户的硬件范围为 CPU 与 QPU，不包含 GPU。计算组件使用哪种资源由用户指定；框架按照资源声明与任务依赖组织执行。
-- 性能模拟器根据任务描述和硬件配置独立评估性能。区分目标硬件的预测耗时与实际执行后端的实测耗时。
-- 教程截图与配置应使用 CPU/QPU；历史结果的硬件记录按真实来源保留，明确区分历史数据与当前配置，不把 GPU 历史运行改写成 CPU。缺少运行元数据时应说明未知。
-- 门户 AIMD 轨迹为预先生成的数据，播放控件使用“重新播放”等准确表述，不暗示在线提交或重新计算。
-- 门户顶部的文档导航命名为“参考文档”；文档侧栏分组为“系统介绍”“使用文档”“应用示例”。“系统功能”和“接口概览”已按用户要求移除。
-- “使用文档”按入门、混合编程、运行与管理、性能建模与预测、后端扩展分类；API 参考单独分组并按模块拆页。优先展开入门及当前页面所在分类，其余按需展开，避免重新铺成一个平级长列表。
-- 参考文档按通用量子后端与 Provider 接口描述 QPU 接入，不展示历史三比特设备、`lab-qpu` 或实验室专用配置；应用示例的电路规模按实际算法描述，不作为框架的固定设备限制。
-- 快速上手以真实 Ray 调度的混合程序为主流程，示例命令显式选择 Ray；说明未连接 QPU 时仅量子电路使用 CPU 模拟。本地线程池作为调试选项，不把本地执行器描述为经过 Ray，也不把系统整体定位为量子模拟器。
-- 核实项目能力以工作区的 PivotQ 为准，保留已有用户修改。
-- 门户维护位置为 PivotQ 仓库的 `website/`；后续改动在此进行，不回写旧 `intro-website/site/`。
-- 使用 Node.js 24 与 `npm ci`。日常本地开发默认根路径与端口 4321；GitHub Pages 使用 `SITE_URL=https://janusq.github.io`、`SITE_BASE=/PivotQ/`。正式构建后的预览必须保留相同环境变量，浏览器验收地址也必须包含 `/PivotQ/`。
-- 根目录 `.github/workflows/website.yml` 对 PR 只验证，仅 `main` 推送或 `main` 手动运行可部署。Pages Source 由仓库管理员设为 GitHub Actions；使用平台部署身份，不要求个人访问令牌。
-- 当前迁移与发布配置任务中，`git add`、`git commit`、`git push` 由用户自行执行；不得代为提交或推送。未核实 Actions 部署与公网访问前，不宣称已上线。
+- PivotQ 的定位是量超智融合系统，协同经典 CPU、GPU 加速与量子 QPU。用户指定计算资源和任务依赖，框架据此组织执行；不得再将系统范围限定为 CPU/QPU 或写成不包含 GPU。
+- 门户使用 website-flow 的蓝色工作流设计，交付与部署位置是 PivotQ 仓库的 `website/`。独立源码包目录可叫 `website-flow/`；仓库发布始终构建 `website/dist/`。不回写旧 `intro-website/site/`。
+- 水分子 AIMD 是一个应用示例，不是框架的通用组成模块。通用编程能力与应用模型、数据及科学验收条件分别描述。
+- 系统层面的 GPU 能力来自内部 Ray 资源声明和应用桥接。公开 `pivotq` SDK 当前的任务、组件与 Actor 资源参数只暴露 `num_cpus`；不可编造 `Runtime.submit(..., num_gpus=...)` 或公开 `ComponentSpec(num_gpus=...)`。实际 GPU 运行需要支持的后端、GPU 资源与 CUDA 环境。
+- GPU 性能模型在 `packages/perf-sim` 中；公开 `pivotq.performance` 的 Hardware/Workload 当前只暴露 CPU/QPU/通信建模，不可编造 GPUProfile 或 Workload.gpu。预测依赖应用提供工作量，不能自动从任意 Python 程序推断。
+- 首页使用用户提供的 `src/assets/hero-lab.png`，不得声称照片中的设备属于 PivotQ、代表现有部署或产生页面数据。
+- `HardwareArchitecture.astro` 与 `hardware-scene.ts` 是可旋转的 CPU/GPU/QPU 互联逻辑示意。代码依据 `packages/framework/examples/hybrid_cpu_gpu_qpu_fake/`：CPU 准备输入，GPU 用 CUDA 计算角度，CPU 构造电路并请求返回固定数据的 QPU 测试后端。`build_job_spec` 与内部 `RayJobClient` 提交的是这一验证作业，不是公开 SDK 的通用写法；片段缺少完整导入与配置，不能直接拼接执行。
+- 三维造型与线缆不代表实际机型、部署、接线、带宽或性能。标签支持旋转，滚轮/双指不缩放；WebGL 不可用时保留 `public/images/hardware-render-poster.webp` 与文字标签，尊重减少动态效果设置。
+- 首页工作流固定为混合程序、选择设备、任务编排、性能模拟和运行记录五步，选项卡仅改变对应节点的高亮，节点内容不随阶段替换；不是可编辑任务图、实时调度或实际执行记录。静态门户不提交计算任务，实际工作台位于 `dashboard/`。
+- 顶部及页脚的文档导航统一叫“参考文档”。文档保留“系统介绍”“使用文档”“应用示例”分类；使用文档按入门、混合编程、运行与管理、性能建模与预测、后端扩展及分模块 API 参考组织。默认展开入门和当前页面所属分组。
+- AIMD 工作台教程保持独立 `/docs/aimd/` 页面及链接入口，不将教程全文嵌入文档总览，也不混入 SDK 文档的自动上下页序列。教程正文唯一维护在 `src/content/guide/aimd.md`，保留六张截图。
+- 文档里的 GPU 支持与具体教程的实际配置分别说明。现有 AIMD 教程使用 CPU/QPU 目标配置，截图实际运行采用 CPU 数值模拟；不改写成 GPU 或 QPU 实测。`qhai.tasks` 是工作台配置语法，公开 SDK 使用 `import pivotq`。
+- 快速上手以真实 Ray 调度为主，命令显式选择 Ray；未连接 QPU 时仅量子电路采用 CPU 模拟。本地线程池只是调试选项，不把它称为 Ray 调度。
+- QPU 文档使用通用量子后端与 Provider 接口，不恢复历史实验室专用后端或固定三比特设备限制。应用电路规模按算法实际情况描述。
+- 区分目标硬件预测耗时与实际后端实测耗时。历史 GPU 字段按原始数据保留；导入 AIMD 轨迹未记录后端时明确未知，回放不重新计算，来源与单位见 `public/aimd/README.md`。
+- QRAM 页面与 `src/lib/qram_query.py` 通过 PivotQ 构造电路、使用 Qiskit Statevector 进行本地理想态矢量模拟，存储位为假设数据，不代表 QRAM 真机或 PivotQ 在线应用。
+- 使用 Node.js 24 与 `npm ci`。开发默认根路径 `127.0.0.1:4321`，已被占用时通过 `--port` 使用空闲端口，不终止其他服务。
+- GitHub Pages 使用 `SITE_URL=https://janusq.github.io` 和 `SITE_BASE=/PivotQ/`；发布预览与浏览器回归必须保持相同子目录。正式域名由 SITE_URL 指定，子路径由 SITE_BASE 指定。
+- `.github/workflows/website.yml` 对 PR 仅验证，main 推送或 main 手动运行才部署。Pages Source 需为 GitHub Actions，使用平台部署身份；未经 Actions 与公网访问核验，不宣称已上线。
+- 当前迁移中提交与推送由用户执行，不代为 `git add`、`git commit`、`git push`。保留工作区已有改动。
+- 门户代码优先从 `pivotq` 或 `pivotq.circuit` 导入已有封装：电路、参数、寄存器、编译及序列化。尚未封装的工具（如 `qiskit.quantum_info.Statevector`）保留原导入，不编造 PivotQ API；同步网页代码、可下载源码及独立源码副本。

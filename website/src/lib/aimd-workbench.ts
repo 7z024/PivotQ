@@ -89,13 +89,13 @@ export async function mountAimdWorkbench(root: HTMLElement) {
       });
       const selectFrame = (event: PointerEvent) => {
         const rect = chart.svg.getBoundingClientRect(); const fraction = Math.max(0, Math.min(1, ((event.clientX - rect.left) / rect.width * 480 - 54) / 410));
-        const [first, last] = chart.domain; inspecting = true; pause(); update(Math.min(revealed, nearestFrame(frames[first].time + fraction * (frames[last].time - frames[first].time))));
+        const [first, last] = chart.domain; inspecting = true; pause(); update(nearestFrame(frames[first].time + fraction * (frames[last].time - frames[first].time)));
       };
       let dragging = false;
       chart.svg.addEventListener('pointerdown', event => { dragging = true; chart.svg.setPointerCapture(event.pointerId); selectFrame(event); });
       chart.svg.addEventListener('pointermove', event => { if (dragging) selectFrame(event); });
       chart.svg.addEventListener('pointerup', () => { dragging = false; }); chart.svg.addEventListener('pointercancel', () => { dragging = false; });
-      chart.svg.addEventListener('keydown', event => { if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) { event.preventDefault(); inspecting = true; pause(); update(event.key === 'Home' ? 0 : event.key === 'End' ? revealed : Math.min(revealed, current + (event.key === 'ArrowLeft' ? -1 : 1))); } });
+      chart.svg.addEventListener('keydown', event => { if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) { event.preventDefault(); inspecting = true; pause(); update(event.key === 'Home' ? 0 : event.key === 'End' ? frames.length - 1 : current + (event.key === 'ArrowLeft' ? -1 : 1)); } });
     });
     const observer = new IntersectionObserver(entries => {
       visible = entries[0].isIntersecting;

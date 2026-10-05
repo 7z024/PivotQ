@@ -76,10 +76,10 @@ docker run --rm --init \
 镜像按发布版本提供环境，源码和文档更新不会自动改变已发布镜像。运行当前 SDK 教程前，可在已启动的容器中检查：
 
 ```bash
-docker exec pivotq /app/.venv/bin/python -c "import pivotq; print(pivotq.__version__)"
+docker exec pivotq /app/.venv/bin/python -c "import pivotq; from pivotq import QuantumCircuit, Parameter; print(pivotq.__version__)"
 ```
 
-若当前镜像尚未包含教程所需的 SDK，可先使用下方的源码或 wheel 安装方式；后续镜像更新仍使用上面的镜像地址，重新执行 `docker pull` 并创建容器即可使用新版本。
+这也会检查当前镜像是否包含门户示例所需的电路与参数入口。若导入失败，可先使用下方的源码或 wheel 安装方式；后续镜像更新仍使用上面的镜像地址，重新执行 `docker pull` 并创建容器即可使用新版本。
 
 ## 从源码安装
 

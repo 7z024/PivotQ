@@ -43,6 +43,7 @@ jobs:
           node scripts/check-circuit.mjs
           node scripts/check-aimd-analysis.mjs
           node scripts/check-aimd-workbench.mjs
+          node scripts/check-aimd-notebook-data.mjs
       - run: npx playwright install --with-deps chromium
       - name: Check the website in Chromium
         env:

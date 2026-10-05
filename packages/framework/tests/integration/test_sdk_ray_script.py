@@ -28,7 +28,7 @@ def test_script_functions_cloudpickle_and_shared_runtime(tmp_path):
             return loss
 
         def build_quantum_circuit():
-            from qiskit import QuantumCircuit
+            from pivotq import QuantumCircuit
             circuit = QuantumCircuit(5)
             circuit.h(0)
             for target in range(1, 5):

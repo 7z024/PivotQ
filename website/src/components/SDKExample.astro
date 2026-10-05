@@ -1,14 +1,12 @@
 ---
 import { Code } from '@astrojs/starlight/components';
-import workflow from '../../../packages/framework/examples/system_workflow.py?raw';
-import performance from '../../../packages/framework/examples/performance_prediction.py?raw';
-import provider from '../../../packages/framework/examples/custom_backend.py?raw';
+import { docsExampleSource } from '../lib/docs-example-source';
 
 interface Props { example: 'workflow' | 'performance' | 'provider' }
 const examples = {
-  workflow: { source: workflow, filename: 'system_workflow.py' },
-  performance: { source: performance, filename: 'performance_prediction.py' },
-  provider: { source: provider, filename: 'custom_backend.py' },
+  workflow: { source: docsExampleSource('system_workflow.py'), filename: 'system_workflow.py' },
+  performance: { source: docsExampleSource('performance_prediction.py'), filename: 'performance_prediction.py' },
+  provider: { source: docsExampleSource('custom_backend.py'), filename: 'custom_backend.py' },
 };
 const { source, filename } = examples[Astro.props.example];
 ---

@@ -1,6 +1,8 @@
 """Public quantum execution: measured semantics and offline device exchange."""
 
+import io
 import json
+import math
 import pickle
 
 import httpx
@@ -21,6 +23,52 @@ def isolated_device_config(monkeypatch):
         "QPU_PROBABILITY_SOURCE", "QPU_JOB_JOURNAL_DIR", "QPU_RESULT_ARCHIVE_DIR",
     ):
         monkeypatch.delenv(name, raising=False)
+
+
+def test_circuit_facade_preserves_symbolic_serialization_and_native_interoperability():
+    from pivotq import Parameter as PivotParameter, QuantumCircuit as PivotCircuit
+    from pivotq.circuit import (
+        ClassicalRegister as PivotClassicalRegister,
+        ParameterExpression, ParameterVector,
+        QuantumRegister as PivotQuantumRegister,
+        qasm3, qpy, transpile,
+    )
+
+    theta = PivotParameter("theta")
+    angles = ParameterVector("angles", 2)
+    expression = theta / 2 + angles[0]
+    assert isinstance(expression, ParameterExpression)
+    circuit = PivotCircuit(PivotQuantumRegister(2, "q"), PivotClassicalRegister(2, "c"))
+    circuit.ry(expression, 0)
+    circuit.ry(angles[1], 1)
+    native = QuantumCircuit(2)
+    native.cx(0, 1)
+    circuit.compose(native, inplace=True)
+    circuit.measure([0, 1], [0, 1])
+
+    # QPY preserves symbolic parameter identities so the original keys still bind.
+    buffer = io.BytesIO()
+    qpy.dump(circuit, buffer)
+    buffer.seek(0)
+    restored = qpy.load(buffer)[0]
+    assert restored == circuit
+    assert set(restored.parameters) == {theta, *angles}
+    assert pickle.loads(pickle.dumps(restored)) == circuit
+    unbound_qasm = qasm3.dumps(restored)
+    assert unbound_qasm.startswith("OPENQASM 3.0;")
+    assert "input float[64] theta;" in unbound_qasm
+
+    bound = restored.assign_parameters({theta: math.pi, angles[0]: math.pi / 2, angles[1]: 0})
+    assert not bound.parameters
+    assert len(circuit.parameters) == 3
+    compiled = transpile(bound, basis_gates=["u", "cz"], optimization_level=0)
+    assert set(compiled.count_ops()) <= {"u", "cz", "measure"}
+    assert "input float" not in qasm3.dumps(compiled)
+    with Runtime() as runtime:
+        backend = runtime.quantum_backend("simulator")
+        original_result = runtime.get(backend.submit(bound, shots=32, seed=9))
+        compiled_result = runtime.get(backend.submit(compiled, shots=32, seed=9))
+    assert original_result.counts == compiled_result.counts == {"11": 32}
 
 
 def test_five_qubit_ghz_samples_and_seed_preserve_input():

@@ -6,8 +6,8 @@ const base = import.meta.env.BASE_URL;
 <div class="docs-pagination"><Pagination /></div>
 <footer class="docs-footer" role="contentinfo">
   <div class="footer-links">
-    <nav aria-label="用户指南"><h2>用户指南</h2><a href={`${base}docs/`}>用户指南</a></nav>
-    <nav aria-label="了解系统"><h2>了解系统</h2><a href={`${base}#system`}>系统介绍</a></nav>
+    <nav aria-label="文档与教程"><h2>文档与教程</h2><a href={`${base}docs/`}>参考文档</a><a href={`${base}docs/aimd/`}>AIMD 工作台教程</a></nav>
+    <nav aria-label="示例与原理"><h2>示例与原理</h2><a href={`${base}examples/aimd/`}>水分子 AIMD</a><a href={`${base}examples/qram/`}>QRAM</a></nav>
   </div>
   <p>© {new Date().getFullYear()} {site.name}</p>
 </footer>

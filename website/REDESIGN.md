@@ -1,34 +1,19 @@
-# 2026-10-01 门户改版交付
+# 门户设计与内容边界（2026-10-05）
 
-源码已更新至 zju `/opt/data/private/zhn/launch-event/intro-website/site`，预览静态文件为该目录下的 `dist/`。
+PivotQ 的门户已采用 website-flow 的蓝白工作流设计，交付位置为 `PivotQ/website/`。系统定位为量超智融合系统，覆盖 CPU、GPU 与 QPU；SDK 文档与教程保留各自实际支持的配置。
 
-## 完成内容
+## 页面设计
 
-- 首页精简为主视觉、两个应用入口、三个系统能力和单一指南入口，使用用户提供的「量超智互联.jpg」。
-- AIMD：F2/A2 逻辑电路、原生门电路、运行入口、动力学/量子代码节选、固定运行曲线、轨迹图、结果表与 CSV/JSON 下载。
-- QRAM：可访问的介绍页面；尚无项目实现与运行结果，明确标注材料准备状态。
-- 文档：原多篇模块说明合并为一篇功能与接口介绍，留给项目作者继续编写。
+- 首页保留用户提供的实验室照片，以及可旋转的 CPU/GPU/QPU Three.js 逻辑模型。设备标签与代码颜色对应，滚轮不缩放，WebGL 不可用时显示静态图；遵循减少动态效果设置。
+- 工作流以固定五步展示混合程序、设备选择、编排、预测与运行记录。阶段切换仅高亮对应节点，不替换图中的内容；设备标签包含 CPU/GPU/QPU。
+- 参考文档沿用新版蓝白色彩、品牌与字体，完整接入原门户的 SDK/API 内容，按类别折叠左侧导航并显示正文目录。
+- AIMD 工作台教程保持独立页面和链接入口，保留六张操作截图；文档总览不重复教程全文。
+- AIMD 示例读取已有轨迹并提供代码展示，QRAM 页面提供通过 PivotQ 构造电路、使用 Qiskit Statevector 模拟的本地教学程序。
 
-## 验证
+## 实现与数据边界
 
-- Node.js 24 下 `npm run check`：20 个文件，0 errors / 0 warnings / 0 hints。
-- `npm run build`：5 个静态页面（含 404）。未设置正式域名，普通预览构建不生成 sitemap。
-- `node scripts/check-results.mjs`：1001 帧；步数、初始温度、时间、总能量变化及极差与源 CSV 一致。
-- 以示例测试域名和 `/qhai/` 构建的子目录产物：4 内容页、24 本地页面/资源及 sitemap、robots、搜索索引、404 检查通过。此为本地构建检查，不代表域名部署。
-- 实际浏览器验收：390/768/1440px 首页、AIMD、QRAM、指南；手机菜单/Escape、代码复制、中文搜索、404 返回、电路及代码折叠；页面加载后无横向溢出。
-- 服务器当前预览的 4 页面和 10 项静态资源均返回 HTTP 200。
-- 浏览器验收通过 Codex 浏览器执行；可复用 `scripts/browser-check.mjs` 已适配新页面，但本次没有另行运行该脚本。
+首页 GPU 代码属于内部 Ray 验证链，QPU 后端返回固定测试数据；公开 SDK 的资源 API 与内部框架不同。GPU 性能预测入口位于 `packages/perf-sim`，公开性能 API 当前不提供 GPU Profile。
 
-## 备份与入口
+AIMD 教程截图记录 CPU 数值模拟，目标 CPU/QPU 的预测耗时不能当作 GPU 或 QPU 实测。导入轨迹没有记录实际后端时保持未知，不从三维设备图推断运行硬件。
 
-- 改版前 Git HEAD：`a89048e`；工作树初始为干净。
-- 完整源码备份：`/opt/data/private/zhn/launch-event/intro-website/site-before-redesign-20261001.tgz`（不含依赖、Git、缓存与构建产物）。
-- 原文档额外保留于服务器 `site/artifacts/previous-docs/`。
-- 本地源码：`D:/projects/front/site`；截图和 HTTP 记录：`D:/projects/front/evidence/`。
-- 服务器原预览仍为 `127.0.0.1:4321`；本机当前 SSH 隧道入口为 `http://127.0.0.1:14321/`，依赖隧道在线。
-
-## 待作者提供
-
-完整使用指南、QRAM 项目内容、可公开 GitHub 地址、正式 ZJU 域名与发布路径。尚未发布公网；没有后端、注册登录或在线任务提交。
-
-数据与电路的详细出处见 `public/aimd/README.md`；未将模拟结果描述成真实 QPU 结果。
+源码、本地构建与浏览器检查不表示网站已经公网发布。部署沿用仓库 `.github/workflows/website.yml`，详见 [DEPLOYMENT.md](DEPLOYMENT.md)。

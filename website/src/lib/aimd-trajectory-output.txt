@@ -1,0 +1,7 @@
+step=0 time_fs=0.0
+  oh1_A=0.9572 oh2_A=0.9572 hoh_deg=104.52
+  total_eV=0.5912
+step=1000 time_fs=100.0
+  oh1_A=1.2024 oh2_A=1.1422 hoh_deg=95.27
+  total_eV=0.4855
+delta_total_eV=-0.1056

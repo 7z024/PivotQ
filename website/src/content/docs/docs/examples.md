@@ -7,6 +7,10 @@ description: 从最小混合程序开始，再通过水分子 AIMD 应用了解�
 
 [快速上手](../quickstart/)直接展示仓库内的完整可执行 Python 示例。它不依赖水分子应用，用经典任务生成电路、模拟器执行采样，再由经典任务分析结果。
 
+## CPU、GPU 与 QPU 协作
+
+[GPU 与异构资源](../gpu-computing/)介绍仓库中的 CUDA 组件和 CPU → GPU → QPU 客户端验证流程，并说明 Ray 资源声明、运行环境与 GPU 性能预测入口。该验证使用固定响应的 QPU 测试后端。
+
 ## 水分子 AIMD
 
 [工作台教程](../aimd/)以现阶段已实现的水分子 AIMD 应用演示工作台操作，包括编译、硬件配置、性能预测和轨迹查看。教程采用 CPU 数值计算模式，并明确区分目标 QPU 预测耗时与 CPU 实测时间。
@@ -15,4 +19,4 @@ description: 从最小混合程序开始，再通过水分子 AIMD 应用了解�
 
 ## QRAM
 
-[QRAM 介绍](../../examples/qram/)提供概念与寻址示意。目前没有公开可运行的 QRAM 应用，不能作为 SDK 验收示例。
+[QRAM 介绍](../../examples/qram/)提供概念、寻址示意与可在本机运行的教学程序，通过 PivotQ 构造电路，再用 Qiskit `Statevector` 计算理想态矢量。它不提交 PivotQ 作业，没有 QRAM 真机读写或测量结果，不能作为 SDK 验收示例。

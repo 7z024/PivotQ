@@ -1,0 +1,92 @@
+---
+import { ArrowUpRight, Menu, Orbit } from '@lucide/astro';
+import GitHubLink from './GitHubLink.astro';
+import { site } from '../data/site';
+import '../styles/flow-header.css';
+
+interface Props { active?: 'home' | 'system' | 'applications' | 'docs'; }
+const { active = 'home' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const links = [
+  { key: 'home', label: '首页', href: base },
+  { key: 'system', label: '系统', href: `${base}#system` },
+  { key: 'applications', label: '示例与原理', href: `${base}#applications` },
+  { key: 'docs', label: '参考文档', href: `${base}docs/` },
+];
+---
+<div class="flow-header-inner">
+  <a class="flow-brand" href={base} aria-label="PivotQ 首页"><span class="flow-brand-mark"><Orbit size={21} stroke-width={2.2} /></span><span>Pivot<span class="flow-brand-q">Q</span></span></a>
+  <nav class="flow-primary-nav" aria-label="主导航">
+    {links.map(link => <a href={link.href} data-nav-key={link.key} aria-current={active === link.key ? 'page' : undefined}>{link.label}</a>)}
+  </nav>
+  <div class="flow-header-actions">
+    <slot name="controls" />
+    <span class="flow-github"><GitHubLink href={site.githubUrl} /></span>
+    <details class="flow-mobile-menu">
+      <summary aria-label="打开导航菜单"><Menu size={22} /><span>菜单</span></summary>
+      <nav aria-label="移动端导航">
+        {links.map(link => <a href={link.href} data-nav-key={link.key} aria-current={active === link.key ? 'page' : undefined}>{link.label}</a>)}
+        <a href={site.githubUrl} target="_blank" rel="noopener noreferrer">GitHub <ArrowUpRight size={15} /></a>
+      </nav>
+    </details>
+  </div>
+</div>
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('.flow-mobile-menu a').forEach(link => link.addEventListener('click', () => link.closest('details')?.removeAttribute('open')));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') document.querySelectorAll<HTMLDetailsElement>('.flow-mobile-menu[open]').forEach(menu => {
+      menu.open = false;
+      menu.querySelector('summary')?.focus();
+    });
+  });
+
+  // Only the homepage follows sections; other pages keep their server-rendered selection.
+  if (document.body.dataset.page === 'home') {
+    const header = document.querySelector<HTMLElement>('.flow-header-inner');
+    const navLinks = header?.querySelectorAll<HTMLAnchorElement>('[data-nav-key]');
+    const sections = [
+      { id: 'system', key: 'system' },
+      { id: 'workflow', key: 'system' },
+      { id: 'applications', key: 'applications' },
+    ].flatMap(({ id, key }) => {
+      const element = document.getElementById(id);
+      return element ? [{ element, key }] : [];
+    });
+    let activeSection = '';
+    let scheduled = false;
+    const updateSelection = () => {
+      scheduled = false;
+      // Use the reading area just below the sticky header, including anchor-link spacing.
+      const readingLine = Math.min(innerHeight, (header?.getBoundingClientRect().bottom ?? 68) + 120);
+      let next = 'home';
+      for (const section of sections) {
+        if (section.element.getBoundingClientRect().top <= readingLine) next = section.key;
+      }
+      // The last section may not reach the reading line in a tall viewport.
+      if (scrollY > 0 && scrollY + innerHeight >= document.documentElement.scrollHeight - 2) {
+        next = sections.at(-1)?.key ?? next;
+      }
+      if (next === activeSection) return;
+      activeSection = next;
+      navLinks?.forEach(link => {
+        if (link.dataset.navKey === next) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    };
+    const scheduleUpdate = () => {
+      if (scheduled) return;
+      scheduled = true;
+      requestAnimationFrame(updateSelection);
+    };
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    window.addEventListener('resize', scheduleUpdate);
+    window.addEventListener('hashchange', scheduleUpdate);
+    window.addEventListener('pageshow', scheduleUpdate);
+    const observer = new ResizeObserver(scheduleUpdate);
+    sections.forEach(({ element }) => observer.observe(element));
+    const main = document.querySelector('main');
+    if (main) observer.observe(main);
+    document.fonts.ready.then(scheduleUpdate);
+    updateSelection();
+  }
+</script>

@@ -13,6 +13,10 @@ function circuitView(card: HTMLElement, highlightSource: (source: number) => voi
   const viewport = card.querySelector<HTMLElement>('[data-circuit-viewport]')!;
   const svg = card.querySelector<SVGSVGElement>('[data-circuit-svg]')!;
   const clock = card.querySelector<HTMLButtonElement>('[data-clock]')!;
+  const navigation = card.querySelector<HTMLElement>('[data-circuit-navigation]')!;
+  const position = navigation.querySelector<HTMLInputElement>('[data-circuit-position]')!;
+  const previous = navigation.querySelector<HTMLButtonElement>('[data-circuit-previous]')!;
+  const next = navigation.querySelector<HTMLButtonElement>('[data-circuit-next]')!;
   const physical = card.dataset.circuitCard === 'physical';
   const name = physical ? '物理' : '逻辑';
   let operations: CircuitOperation[] = [], layers: number[] = [], depth = 0, zoom = 1, selected = -1, cursorLayer = 0, clockVisible = false;
@@ -21,6 +25,23 @@ function circuitView(card: HTMLElement, highlightSource: (source: number) => voi
   const y = (qubit: number) => 70 + qubit * 64;
   const wireTop = y(0), wireBottom = y(2);
   const label = (operation: CircuitOperation) => operation.gate.word ?? operation.gate.type;
+
+  const updateNavigation = () => {
+    const maximum = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+    navigation.hidden = maximum <= 1;
+    position.value = String(maximum ? Math.round(viewport.scrollLeft / maximum * 100) : 0);
+    previous.disabled = viewport.scrollLeft <= 1;
+    next.disabled = viewport.scrollLeft >= maximum - 1;
+  };
+  const browse = (direction: number) => viewport.scrollBy({ left: direction * viewport.clientWidth * .75, behavior: 'smooth' });
+  previous.addEventListener('click', () => browse(-1));
+  next.addEventListener('click', () => browse(1));
+  position.addEventListener('input', () => {
+    const maximum = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+    viewport.scrollLeft = maximum * Number(position.value) / 100;
+  });
+  viewport.addEventListener('scroll', updateNavigation, { passive: true });
+  new ResizeObserver(updateNavigation).observe(viewport);
 
   function describe(index: number) {
     const operation = operations[index];
@@ -49,6 +70,7 @@ function circuitView(card: HTMLElement, highlightSource: (source: number) => voi
     const width = Math.max(620, x(depth) + 72);
     svg.setAttribute('viewBox', `0 0 ${width} 272`);
     svg.style.width = `${width * zoom}px`; svg.style.height = `${272 * zoom}px`;
+    requestAnimationFrame(updateNavigation);
     const content: Element[] = [];
     for (let q = 0; q < 3; q++) {
       content.push(svgElement('line', { x1: 62, x2: width - 25, y1: y(q), y2: y(q), class: 'analysis-wire' }));
@@ -151,10 +173,20 @@ export function mountAimdAnalysis(root: HTMLElement) {
   const lines=Array.from(code.querySelectorAll<HTMLElement>('.line'));
   let codeEditor: { highlight: (line: number) => void } | undefined;
   let highlightedSource: number | undefined;
-  void import('./aimd-code-editor').then(({ mountCodeEditor }) => {
-    codeEditor = mountCodeEditor(code);
-    if (highlightedSource !== undefined) codeEditor.highlight(lineMap[highlightedSource]);
-  }).catch(error => console.error('代码编辑器加载失败', error));
+  const loadCodeEditor = () => {
+    void import('./aimd-code-editor').then(({ mountCodeEditor }) => {
+      codeEditor = mountCodeEditor(code);
+      if (highlightedSource !== undefined) codeEditor.highlight(lineMap[highlightedSource]);
+    }).catch(error => console.error('代码编辑器加载失败', error));
+  };
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      observer.disconnect();
+      loadCodeEditor();
+    });
+    observer.observe(code);
+  } else loadCodeEditor();
   const highlight=(source:number)=>{
     highlightedSource = source;
     if (codeEditor) { codeEditor.highlight(lineMap[source]); return; }
