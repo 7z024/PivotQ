@@ -346,7 +346,7 @@ try {
   await circuitNavigation.locator('[data-circuit-previous]').click();
   await page.waitForFunction(() => (document.querySelector('[data-circuit-card="physical"] [data-circuit-viewport]')?.scrollLeft ?? 1) < 20);
   const results = page.locator('.analysis-results');
-  assert.match(await results.locator('.aimd-notebook-prose').innerText(), /另一份归档.*并非上方电路的同一次运行结果/);
+  assert.match(await results.locator('.aimd-notebook-prose').innerText(), /另一份归档的 CSV[\s\S]*并非代码 3 的运行结果/, 'Archived trajectory remains distinct from the displayed CPU calculation');
   const source = results.locator('.analysis-result-source');
   await source.locator('summary').click();
   assert.match(await source.innerText(), /示例轨迹.*1001 帧/);
