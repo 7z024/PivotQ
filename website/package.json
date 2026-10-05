@@ -1,5 +1,5 @@
 {
-  "name": "qhai-intro-website",
+  "name": "pivotq-flow-website",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -7,7 +7,7 @@
     "node": ">=24 <25"
   },
   "scripts": {
-    "dev": "astro dev --host 127.0.0.1",
+    "dev": "astro dev --host 127.0.0.1 --port 4321",
     "check": "astro check",
     "build": "astro build",
     "build:release": "node scripts/site-settings.mjs --release && npm run check && npm run build && npm run check:release",
@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@astrojs/starlight": "0.42.5",
+    "@lucide/astro": "^1.52.0",
     "astro": "7.3.5",
     "monaco-editor": "^0.57.0",
     "three": "^0.186.1"
@@ -25,6 +26,7 @@
     "@astrojs/check": "^0.9.9",
     "@playwright/test": "^1.62.1",
     "@types/three": "^0.186.0",
+    "sharp": "^0.35.5",
     "typescript": "^6.0.3"
   }
 }

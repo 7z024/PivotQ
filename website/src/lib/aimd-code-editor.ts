@@ -30,24 +30,35 @@ export function mountCodeEditor(source: HTMLElement) {
     },
   });
   host.hidden = false;
+  let compact = host.clientWidth < 440;
   let editor: monaco.editor.IStandaloneCodeEditor;
   try {
     editor = monaco.editor.create(host, {
       value: source.dataset.modelSource || '', language: 'python', theme: 'aimd-light',
       readOnly: true, domReadOnly: true, ariaLabel: '水分子模型代码',
       fontFamily: 'Consolas, "SFMono-Regular", "Liberation Mono", monospace',
-      fontSize: 14, lineHeight: 25, fontWeight: '400', fontLigatures: false,
+      fontSize: compact ? 13 : 14, lineHeight: compact ? 23 : 25, fontWeight: '400', fontLigatures: false,
       lineNumbers: 'on', lineNumbersMinChars: 3, lineDecorationsWidth: 12,
       glyphMargin: false, folding: false, renderLineHighlight: 'line',
-      minimap: { enabled: true, renderCharacters: true, maxColumn: 90, size: 'fit', showSlider: 'always' },
+      minimap: { enabled: !compact, renderCharacters: true, maxColumn: 90, size: 'fit', showSlider: 'always' },
       padding: { top: 16, bottom: 16 }, automaticLayout: true,
-      scrollBeyondLastLine: false, wordWrap: 'off', contextmenu: false,
+      scrollBeyondLastLine: false, wordWrap: compact ? 'on' : 'off', contextmenu: false,
       bracketPairColorization: { enabled: true }, renderWhitespace: 'none',
       overviewRulerLanes: 0, hideCursorInOverviewRuler: true,
       scrollbar: { verticalScrollbarSize: 10, horizontalScrollbarSize: 10, useShadows: true },
     });
   } catch (error) { host.hidden = true; throw error; }
   fallback.hidden = true; source.dataset.editorReady = 'true';
+  const resizeObserver = new ResizeObserver(() => {
+    const nextCompact = host.clientWidth < 440;
+    if (nextCompact === compact) return;
+    compact = nextCompact;
+    editor.updateOptions({
+      minimap: { enabled: !compact }, wordWrap: compact ? 'on' : 'off',
+      fontSize: compact ? 13 : 14, lineHeight: compact ? 23 : 25,
+    });
+  });
+  resizeObserver.observe(host);
   const decorations = editor.createDecorationsCollection();
   function highlight(line: number) {
     if (line < 0 || line >= editor.getModel()!.getLineCount()) return;
@@ -59,6 +70,7 @@ export function mountCodeEditor(source: HTMLElement) {
   }
   window.addEventListener('pagehide', event => {
     if (event.persisted) return;
+    resizeObserver.disconnect();
     const model = editor.getModel(); editor.dispose(); model?.dispose();
   }, { once: true });
   return { highlight };

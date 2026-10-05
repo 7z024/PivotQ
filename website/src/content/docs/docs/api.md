@@ -5,7 +5,7 @@ description: 按执行编程、系统管理与性能预测查找 PivotQ 公开�
 
 按模块查阅签名、参数、返回值和生命周期约定。第一次编写程序可先阅读[快速上手](../quickstart/)，完整操作示例位于各主题教程。
 
-常用执行接口可从 `pivotq` 顶层导入；作业管理与性能预测分别从 `pivotq.jobs`、`pivotq.performance` 导入。
+常用执行接口与 `QuantumCircuit`、`Parameter` 可从 `pivotq` 顶层导入；完整电路入口、作业管理与性能预测分别从 `pivotq.circuit`、`pivotq.jobs`、`pivotq.performance` 导入。
 
 ## 执行与编程
 
@@ -14,6 +14,7 @@ description: 按执行编程、系统管理与性能预测查找 PivotQ 公开�
 | <span id="runtime"></span><span id="submit"></span><span id="get"></span><span id="release"></span><span id="close"></span>[运行时与结果引用](./runtime/) | `Runtime`、`ResultRef`、`submit/get/release`、`wait/status/resources` |
 | <span id="cpu-组件与-actor"></span>[组件与 Actor](./components/) | `ComponentSpec`、`ComponentHandle`、`register/actor` |
 | <span id="workflow"></span>[工作流](./workflows/) | `Workflow`、`NodeRef`、`WorkflowRun`、`Runtime.run` |
+| [电路构造与参数](./quantum/#电路构造与参数) | `pivotq.circuit`：电路、寄存器、参数、编译与序列化 |
 | <span id="quantum_backend"></span><span id="quantumresult"></span><span id="submit-1"></span>[量子后端与结果](./quantum/) | `QuantumBackend`、`QuantumResult`、`quantum_backend` |
 | <span id="第三方-provider"></span>[Provider 扩展协议](./providers/) | `BackendCapabilities`、`QuantumRequest`、`ProviderResult`、`QuantumProvider` |
 

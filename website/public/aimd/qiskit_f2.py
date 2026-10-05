@@ -1,4 +1,4 @@
-"""构造可直接交给融合框架的已绑定三比特 F2 Qiskit 电路。"""
+"""通过 PivotQ 构造可直接交给融合框架的已绑定三比特 F2 电路。"""
 
 from __future__ import annotations
 
@@ -20,10 +20,10 @@ def build_bound_f2_circuit_pair(
     """
 
     try:
-        from qiskit import QuantumCircuit
+        from pivotq import QuantumCircuit
     except ImportError as error:
         raise RuntimeError(
-            "QPU 电路适配层需要 qiskit；融合运行环境请安装项目锁定的 Qiskit 版本。"
+            "QPU 电路适配层需要 PivotQ；请在仓库根目录运行 python -m pip install ./packages/framework。"
         ) from error
 
     angles = tuple(float(value) for value in encoding_angles)

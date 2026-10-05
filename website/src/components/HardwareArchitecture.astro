@@ -1,0 +1,163 @@
+---
+import { RotateCcw } from '@lucide/astro';
+const base = import.meta.env.BASE_URL;
+---
+<section class="flow-architecture" id="system" aria-labelledby="architecture-title">
+  <div class="container">
+    <div class="flow-section-heading">
+      <div>
+        <p class="flow-section-kicker"><span>01</span> 设备与代码</p>
+        <h2 id="architecture-title"><span data-hardware-title="cpu">CPU</span> 准备数据，<span data-hardware-title="gpu">GPU</span> 调用 CUDA 计算电路参数，系统据此构造量子电路，并提交至 <span data-hardware-title="qpu">QPU</span> 测试后端。</h2>
+      </div>
+    </div>
+    <div class="flow-architecture-view" data-hardware-architecture data-active-hardware="qpu">
+      <div class="flow-architecture-visual">
+        <div class="flow-architecture-scene">
+          <img class="flow-architecture-poster" src={`${base}images/hardware-render-poster.webp`} width="900" height="520" alt="CPU、QPU 与 GPU 互联的三维场景" loading="lazy" />
+          <canvas data-hardware-canvas data-scene-ready="pending" tabindex="0" role="img" aria-label="可拖动旋转的互联架构：左侧 CPU 准备数值，右侧 GPU 计算角度，中间 QPU 测试后端接收用该角度构造的电路。蓝色路径从 CPU 到 GPU，绿色路径从 GPU 到 QPU。画面不可缩放"></canvas>
+          <div class="flow-architecture-labels" aria-label="架构组件">
+            <button type="button" class="flow-scene-label" data-hardware="cpu" aria-pressed="false" style="left:22%;top:28%" title="旋转至 CPU"><strong>CPU</strong><small>提供数值</small></button>
+            <button type="button" class="flow-scene-label" data-hardware="qpu" aria-pressed="true" style="left:50%;top:20%" title="旋转至 QPU"><strong>QPU</strong><small>电路测试后端</small></button>
+            <button type="button" class="flow-scene-label" data-hardware="gpu" aria-pressed="false" style="left:78%;top:31%" title="旋转至 GPU"><strong>GPU</strong><small>CUDA 求角度</small></button>
+          </div>
+          <button class="flow-architecture-reset" type="button" data-scene-reset aria-label="重置三维视角" title="重置三维视角"><RotateCcw size={17} /></button>
+        </div>
+      </div>
+      <aside class="flow-architecture-code" aria-label="CPU、GPU、QPU 与程序提交代码">
+        <div class="flow-code-block" data-code-block="cpu">
+          <div class="flow-code-heading"><span data-code-title>CPU</span><small>输出 acos_input</small></div>
+          <pre><code><span class="flow-code-keyword">def</span> <span class="flow-code-function">prepare</span>():
+    <span class="flow-code-keyword">return</span> &#123;<span class="flow-code-data-cpu">"acos_input"</span>: -1.0&#125;
+cpu_handle = framework.submit(
+    CPU_COMPONENT_ID, <span class="flow-code-string">"prepare"</span>
+)</code></pre>
+        </div>
+        <div class="flow-code-block" data-code-block="gpu">
+          <div class="flow-code-heading"><span data-code-title>GPU</span><small>接收 CPU 数值，输出 angle_radians</small></div>
+          <pre><code><span class="flow-code-keyword">def</span> <span class="flow-code-function">compute</span>(prepared):
+    value = torch.tensor(
+        prepared[<span class="flow-code-data-cpu">"acos_input"</span>],
+        device=<span class="flow-code-string">"cuda"</span>
+    )
+    angle = torch.acos(value)
+    <span class="flow-code-keyword">return</span> &#123;<span class="flow-code-data-gpu">"angle_radians"</span>:
+            float(angle.cpu())&#125;
+gpu_handle = framework.submit(
+    GPU_COMPONENT_ID, <span class="flow-code-string">"compute"</span>,
+    cpu_handle
+)</code></pre>
+        </div>
+        <div class="flow-code-block" data-code-block="qpu">
+          <div class="flow-code-heading"><span data-code-title>QPU</span><small>用 GPU 角度构造电路并请求测试后端</small></div>
+          <pre><code><span class="flow-code-keyword">from</span> pivotq <span class="flow-code-keyword">import</span> QuantumCircuit
+
+gpu_value = framework.result(
+    gpu_handle
+).value
+angle = gpu_value[<span class="flow-code-data-gpu">"angle_radians"</span>]
+circuit = QuantumCircuit(3)
+circuit.rx(angle, 2)
+request = QuantumCircuitRequest(
+    <span class="flow-code-string">"gpu-derived-rx"</span>, circuit, <span class="flow-code-string">"Z"</span>
+)
+service = QPUCircuitService(
+    framework, context
+)
+service.run_quantum_circuits(
+    step=0,
+    circuits=[request], shots=256
+)</code></pre>
+        </div>
+        <div class="flow-code-block flow-code-submit" data-code-block="submit">
+          <div class="flow-code-heading"><span data-code-title>提交</span><small>提交 CPU/GPU/QPU 验证作业</small><span class="flow-code-relations" aria-label="CPU、GPU、QPU"><span data-code-ref="cpu">CPU</span><span data-code-ref="gpu">GPU</span><span data-code-ref="qpu">QPU</span></span></div>
+          <pre><code>spec = build_job_spec(
+    submission_id=<span class="flow-code-string">"demo-001"</span>,
+    working_dir=<span class="flow-code-string">"."</span>,
+    output_dir=<span class="flow-code-string">"/tmp/pivotq"</span>,
+)
+client = RayJobClient(
+    <span class="flow-code-string">"http://127.0.0.1:8265"</span>
+)
+job = client.submit(spec)</code></pre>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+<script>
+  type Hardware = 'cpu' | 'qpu' | 'gpu';
+  document.querySelectorAll<HTMLElement>('[data-hardware-architecture]').forEach(root => {
+    const canvas = root.querySelector<HTMLCanvasElement>('[data-hardware-canvas]');
+    const poster = root.querySelector<HTMLImageElement>('.flow-architecture-poster');
+    if (!canvas) return;
+    const labels = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-hardware]'));
+    const widths: Record<Hardware, number> = { cpu: 78, qpu: 90, gpu: 78 };
+    let measuredCanvasWidth = 0;
+    let scene: { setFocus: (kind: Hardware) => void; reset: () => void; dispose: () => void } | null = null;
+    const select = (kind: Hardware) => {
+      root.dataset.activeHardware = kind;
+      labels.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.hardware === kind)));
+      scene?.setFocus(kind);
+    };
+    labels.forEach(label => label.addEventListener('click', () => select(label.dataset.hardware as Hardware)));
+    root.querySelector<HTMLButtonElement>('[data-scene-reset]')?.addEventListener('click', () => {
+      scene?.reset();
+      root.dataset.activeHardware = 'qpu';
+      labels.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.hardware === 'qpu')));
+    });
+    import('../lib/hardware-scene').then(({ mountHardwareScene }) => {
+      scene = mountHardwareScene(canvas, {
+        initialFocus: root.dataset.activeHardware as Hardware,
+        onLabels: positions => {
+          const canvasWidth = canvas.clientWidth;
+          if (canvasWidth !== measuredCanvasWidth) {
+            labels.forEach(label => {
+              const width = label.offsetWidth;
+              if (width) widths[label.dataset.hardware as Hardware] = width;
+            });
+            measuredCanvasWidth = canvasWidth;
+          }
+          const visible = labels.map(label => {
+            const kind = label.dataset.hardware as Hardware;
+            return { label, kind, position: positions[kind], width: widths[kind] };
+          }).filter(item => item.position.visible).sort((a, b) => a.position.x - b.position.x);
+          const gap = canvasWidth < 500 ? 5 : 9;
+          const centers: number[] = [];
+          // Keep projected labels in view, then spread them across the canvas when a side view compresses their x positions.
+          visible.forEach((item, index) => {
+            const edge = item.width / 2 + 4;
+            const projected = Math.max(edge, Math.min(canvasWidth - edge, item.position.x));
+            const previous = visible[index - 1];
+            centers.push(previous ? Math.max(projected, centers[index - 1] + (previous.width + item.width) / 2 + gap) : projected);
+          });
+          if (visible.length) {
+            const last = visible.at(-1)!;
+            const overflow = centers.at(-1)! + last.width / 2 + 4 - canvasWidth;
+            if (overflow > 0) centers.forEach((center, index) => { centers[index] = center - overflow; });
+            const underflow = 4 + visible[0].width / 2 - centers[0];
+            if (underflow > 0) centers.forEach((center, index) => { centers[index] = center + underflow; });
+          }
+          visible.forEach((item, index) => { item.label.style.left = `${centers[index]}px`; });
+          labels.forEach(label => {
+            const position = positions[label.dataset.hardware as Hardware];
+            label.style.top = `${position.y}px`;
+            label.hidden = !position.visible;
+          });
+        },
+        onReady: () => {
+          root.classList.add('flow-architecture-ready');
+          poster?.setAttribute('aria-hidden', 'true');
+        },
+      });
+      if (!scene) root.classList.add('flow-architecture-failed');
+    }).catch(error => {
+      canvas.dataset.sceneReady = 'failed';
+      root.classList.add('flow-architecture-failed');
+      console.error('Hardware architecture could not load', error);
+    });
+    window.addEventListener('pagehide', event => { if (!event.persisted) scene?.dispose(); });
+    window.addEventListener('pageshow', event => {
+      if (event.persisted) scene?.setFocus(root.dataset.activeHardware as Hardware);
+    });
+  });
+</script>

@@ -9,6 +9,10 @@ const groups = [
 ];
 ---
 <div class="wb" data-aimd-workbench data-lazy={lazy ? 'true' : undefined} data-log-url={`${base}aimd/imported/md_log.csv`} data-position-url={`${base}aimd/imported/positions.csv`}>
+  <noscript>
+    <style>.wb[data-aimd-workbench] > .wb-load-status, .wb[data-aimd-workbench] > .wb-analysis-grid { display: none; }</style>
+    <p class="wb-nojs">曲线和三维轨迹需要 JavaScript。<a href={`${base}aimd/imported/md_log.csv`} download>下载能量与时间数据 CSV</a><a href={`${base}aimd/imported/positions.csv`} download>下载原子坐标 CSV</a></p>
+  </noscript>
   <p class="wb-load-status" data-load-status role="status">正在读取轨迹数据…</p>
   <div class="wb-analysis-grid">
     <section class="wb-panel wb-molecule-panel" aria-labelledby="molecule-title">
@@ -28,8 +32,8 @@ const groups = [
       </div>
     </section>
   </div>
-  <noscript><p>请启用 JavaScript 查看曲线与动画，也可下载原始 CSV 数据。</p></noscript>
 </div>
+<style>.wb-nojs { padding: 22px; color: #49627a; font-size: 14px; line-height: 1.7; }.wb-nojs a { display: inline-block; margin: 8px 18px 0 0; color: #125cc0; text-decoration: underline; text-underline-offset: 3px; }</style>
 <script>
   import { mountAimdWorkbench } from '../lib/aimd-workbench';
   document.querySelectorAll<HTMLElement>('[data-aimd-workbench]:not([data-lazy])').forEach(mountAimdWorkbench);

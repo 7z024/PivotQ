@@ -5,6 +5,8 @@ description: 使用独立工作量描述与 CPU/QPU 参数预测耗时、吞吐�
 
 import SDKExample from '../../../components/SDKExample.astro';
 
+量超智融合系统的性能模拟器覆盖 CPU/GPU/QPU 场景。本页介绍公开 Python API 的 CPU/QPU 预测；GPU 场景通过 [QPerfSim 任务图与场景接口](../gpu-computing/#gpu-性能预测)接入。
+
 `pivotq.performance` 将用户编写的工作量图转换为仓库性能模拟器的输入。预测不会执行用户的 Python 算法或量子设备，也不会自动从任意程序推导运算量。
 
 ## 描述工作量

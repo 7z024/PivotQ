@@ -1,47 +1,75 @@
-/* Inter v4.1, https://github.com/rsms/inter — license: public/licenses/Inter-OFL.txt. */
-@font-face {
-  font-family: 'Inter';
-  src: url('../assets/fonts/InterVariable.woff2') format('woff2');
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-}
-
 :root,:root[data-theme='light'],:root[data-theme='dark'] {
   color-scheme: light;
   --sl-font: 'Inter',"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",system-ui,sans-serif;
   --sl-font-mono: ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;
-  --sl-color-accent-low: #e7f5fa;
-  --sl-color-accent: #007fa3;
-  --sl-color-accent-high: #006b89;
-  --sl-color-white: #161a1d;
-  --sl-color-gray-1: #22272b;
-  --sl-color-gray-2: #454f59;
-  --sl-color-gray-3: #596773;
-  --sl-color-gray-4: #85919b;
-  --sl-color-gray-5: #dfe3e8;
-  --sl-color-gray-6: #f5f7f9;
+  --sl-color-accent-low: #eaf3ff;
+  --sl-color-accent: #1468e8;
+  --sl-color-accent-high: #135cce;
+  --sl-color-white: #14253d;
+  --sl-color-gray-1: #14253d;
+  --sl-color-gray-2: #50627a;
+  --sl-color-gray-3: #5f7186;
+  --sl-color-gray-4: #879aaf;
+  --sl-color-gray-5: #dce5f0;
+  --sl-color-gray-6: #f6f9fd;
   --sl-color-black: #fff;
-  --sl-color-text: #22272b;
-  --sl-color-text-accent: #007fa3;
-  --sl-color-hairline: #e6e9ed;
-  --sl-color-hairline-shade: #e6e9ed;
+  --sl-color-text: #14253d;
+  --sl-color-text-accent: #1468e8;
+  --sl-color-hairline: #dce5f0;
+  --sl-color-hairline-shade: #dce5f0;
   --sl-color-bg: #fff;
   --sl-color-bg-nav: #fff;
-  --sl-color-bg-sidebar: #fff;
+  --sl-color-bg-sidebar: #f6f9fd;
   --sl-content-width: 52rem;
   --sl-text-h1: 2.625rem;
   --sl-text-h2: 2.125rem;
   --sl-text-h3: 1.625rem;
-  --sl-nav-height: 4rem;
+  --sl-nav-height: 4.25rem;
   --sl-sidebar-width: 17.5rem;
   --sl-line-height: 1.75;
   --sl-line-height-headings: 1.25;
   --docs-toc-width: 16rem;
 }
 
-.header {
-  box-shadow: 0 2px 8px #161a1d08;
+/* Starlight wraps the shared portal header; remove its independent gutters. */
+.page > .header {
+  height: 68px;
+  padding: 0;
+  border-bottom: 1px solid #e3eaf1;
+  background: #ffffffed;
+  box-shadow: none;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.docs-header { height: 100%; }
+.docs-controls { display: flex; align-items: center; gap: 8px; }
+.docs-sidebar-toggle, .docs-controls button[data-open-modal] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 38px;
+  width: 38px;
+  min-width: 38px;
+  max-width: 38px;
+  height: 38px;
+  margin: 0;
+  padding: 8px;
+  border: 1px solid #dce5f0;
+  border-radius: 6px;
+  background: #fff;
+  color: #26374b;
+  cursor: pointer;
+}
+.docs-sidebar-toggle { display: none; }
+.docs-controls button[data-open-modal] > :is(span, kbd) { display: none; }
+.docs-controls button[data-open-modal] > svg { width: 20px; height: 20px; margin: 0; }
+.docs-sidebar-toggle:hover, .docs-controls button[data-open-modal]:hover { color: #1468e8; border-color: #a9c8ed; }
+/* The shared header hosts the same native popover control in its action row. */
+.sidebar > .sl-menu-button { display: none; }
+body:has(#starlight__sidebar:popover-open) .docs-sidebar-toggle { background: #eef6ff; color: #1468e8; }
+@media (max-width: 49.99rem) {
+  .docs-sidebar-toggle { display: flex; }
 }
 
 .main-pane {
@@ -66,7 +94,7 @@
   margin-top: 1.75rem;
   margin-bottom: .75rem;
   font-weight: 650;
-  letter-spacing: -.035em;
+  letter-spacing: 0;
 }
 
 .docs-breadcrumbs {
@@ -111,12 +139,12 @@
 }
 
 .portal-docs-title svg {
-  color: #003f88;
+  color: #1468e8;
   flex-shrink: 0;
 }
 
 .portal-docs-title:hover {
-  color: #003f88;
+  color: #1468e8;
 }
 
 .sl-markdown-content {
@@ -126,10 +154,85 @@
 
 .sl-markdown-content img{border:1px solid var(--sl-color-gray-5);border-radius:6px}
 .sl-markdown-content table{font-size:.9375rem}
+.sl-markdown-content .docs-aimd-stages {
+  overflow-x: auto;
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 8px;
+}
+.sl-markdown-content .docs-aimd-stages:focus-visible {
+  outline: 2px solid var(--sl-color-accent);
+  outline-offset: 4px;
+}
+.sl-markdown-content .docs-aimd-stages table {
+  display: table;
+  overflow: visible;
+  width: 100%;
+  min-width: 42rem;
+  margin: 0;
+  table-layout: fixed;
+  border-collapse: collapse;
+  line-height: 1.6;
+}
+.docs-aimd-stage-column { width: 22%; }
+.docs-aimd-work-column { width: 64%; }
+.docs-aimd-device-column { width: 14%; }
+.sl-markdown-content .docs-aimd-stages :is(th, td) {
+  padding: 14px 16px;
+  border: 0;
+  text-align: left;
+  vertical-align: top;
+}
+.sl-markdown-content .docs-aimd-stages tr > * + * {
+  border-inline-start: 1px solid #eaf0f7;
+}
+.sl-markdown-content .docs-aimd-stages tbody tr > * {
+  border-top: 1px solid var(--sl-color-hairline);
+}
+.sl-markdown-content .docs-aimd-stages thead th {
+  background: #f3f7fc;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.sl-markdown-content .docs-aimd-stages tbody th {
+  font-weight: 400;
+  white-space: nowrap;
+}
+.sl-markdown-content .docs-aimd-stages tr > :last-child {
+  text-align: center;
+  white-space: nowrap;
+}
+.docs-device-tag {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 4px;
+  font-size: .8125rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+.docs-device-tag--cpu { color: #1765c5; background: #eaf3ff; }
+.docs-device-tag--qpu { color: #a05b16; background: #fff3e5; }
+.sl-markdown-content .docs-system-figure { margin: 1.75rem 0; }
+.sl-markdown-content .docs-system-diagram {
+  max-width: 640px;
+  margin-inline: auto;
+  overflow-x: auto;
+  border-radius: 14px;
+}
+.sl-markdown-content .docs-system-diagram:focus-visible {
+  outline: 2px solid var(--sl-color-accent);
+  outline-offset: 4px;
+}
+.sl-markdown-content .docs-system-figure figcaption {
+  max-width: 640px;
+  margin: .75rem auto 0;
+  color: var(--sl-color-gray-2);
+  font-size: .8125rem;
+  line-height: 1.65;
+}
 .sl-markdown-content p>em:only-child{display:block;color:var(--sl-color-gray-3);font-size:.875rem;text-align:center;font-style:normal}
 .docs-image-link{display:block;cursor:zoom-in}
 
-/* A white sidebar, neutral text and a single cyan current item, as in Ray's docs. */
+/* Collapsible reading paths with the portal blue as the current-page cue. */
 .sidebar-content {
   padding: 2rem 1.75rem 2rem 2rem;
 }
@@ -203,6 +306,11 @@
   font-weight: 600;
 }
 
+#starlight__sidebar details details > summary .large,
+#starlight__sidebar details details a {
+  font-weight: 400;
+}
+
 .sidebar-content .social-icons a {
   color: var(--sl-color-gray-2);
 }
@@ -252,46 +360,9 @@
   font-weight: 600;
 }
 
-.docs-header .github-link {
-  gap: .45rem;
-}
-
-.docs-header .github-symbol {
-  width: 20px;
-  height: 20px;
-}
-
-.docs-header .github-external {
-  width: 12px;
-  height: 12px;
-  opacity: .6;
-}
-
-@media (min-width: 50rem) {
-  .docs-controls site-search button[data-open-modal] {
-    height: 2.5rem;
-    min-width: 11.5rem;
-    border-color: #dfe3e8;
-    border-radius: 4px;
-    background: #fff;
-    color: var(--sl-color-gray-2);
-    font-size: .9375rem;
-  }
-
-  .docs-controls site-search button[data-open-modal]:hover {
-    border-color: #85919b;
-    background: #fff;
-  }
-
-  .docs-controls site-search button > kbd {
-    background: #f5f7f9;
-    box-shadow: 0 0 0 1px #e6e9ed;
-  }
-}
-
 .sl-markdown-content :is(h2,h3) {
   font-weight: 650;
-  letter-spacing: -.03em;
+  letter-spacing: 0;
 }
 
 .sl-markdown-content a {

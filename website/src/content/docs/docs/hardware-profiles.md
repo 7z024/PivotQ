@@ -5,6 +5,8 @@ description: 为 CPU、QPU 和通信链路提供明确参数及来源，用于�
 
 `pivotq.performance.Hardware` 描述要预测的目标硬件。它不注册物理设备、不预留 Ray 资源，也不改变程序的实际执行后端。
 
+系统的性能模拟器覆盖 CPU、GPU 与 QPU。这里介绍的公开 Python 构建器当前直接支持 CPU/QPU 与链路；GPU 工作量和性能参数通过 QPerfSim 任务图、场景配置或工作台接入，详见 [GPU 与异构资源](../gpu-computing/#gpu-性能预测)。
+
 ## CPU 与 QPU
 
 ```python

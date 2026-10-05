@@ -12,6 +12,8 @@ from pivotq.performance import (
 
 性能模型由用户独立编写，不自动分析 Python 程序，也不要求正在运行的 Ray 集群或 QPU。建模方法见[硬件性能模型](../../hardware-profiles/)，运行示例见[性能预测](../../performance/)。
 
+本页记录公开 Python API 的 CPU/QPU 模型。目前没有 `GPUProfile`、`Hardware.gpu` 或 `Workload.gpu`；系统中的 GPU 性能预测使用 QPerfSim 场景与任务图接口，见 [GPU 性能预测](../../gpu-computing/#gpu-性能预测)。
+
 ## Workload
 
 ```python

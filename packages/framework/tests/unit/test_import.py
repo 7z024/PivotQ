@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import importlib
 import importlib.util
+import subprocess
 import sys
+import textwrap
 import unittest
 
 
@@ -17,6 +19,33 @@ def _loaded_ray_modules() -> set[str]:
 
 
 class PackageImportTest(unittest.TestCase):
+    def test_public_circuit_types_are_discoverable_and_load_qiskit_on_demand(self) -> None:
+        script = textwrap.dedent("""
+            import sys
+            import pivotq
+
+            assert {"QuantumCircuit", "Parameter"} <= set(dir(pivotq))
+            assert {"QuantumCircuit", "Parameter"} <= set(pivotq.__all__)
+            assert not hasattr(pivotq, "unknown_circuit_type")
+            assert not any(n == "qiskit" or n.startswith("qiskit.") for n in sys.modules)
+            assert not any(n == "ray" or n.startswith("ray.") for n in sys.modules)
+
+            from pivotq import QuantumCircuit, Parameter
+            from pivotq.circuit import QuantumCircuit as Circuit, Parameter as CircuitParameter
+            from qiskit import QuantumCircuit as QiskitCircuit
+            from qiskit.circuit import Parameter as QiskitParameter
+
+            assert QuantumCircuit is Circuit is QiskitCircuit
+            assert Parameter is CircuitParameter is QiskitParameter
+            assert pivotq.__dict__["QuantumCircuit"] is QuantumCircuit
+            assert pivotq.__dict__["Parameter"] is Parameter
+            assert not any(n == "ray" or n.startswith("ray.") for n in sys.modules)
+        """)
+        completed = subprocess.run(
+            [sys.executable, "-c", script], capture_output=True, text=True, timeout=30,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
+
     def test_import_does_not_implicitly_import_ray(self) -> None:
         ray_modules_before = _loaded_ray_modules()
 

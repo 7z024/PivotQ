@@ -17,7 +17,7 @@ const tasks = [
         <h3>{task.title}</h3>
         <span class="hardware" aria-label={`目标硬件 ${task.hardware}`}>
           {task.hardware === 'CPU' ? <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 3v3m6-3v3M9 18v3m6-3v3M3 9h3m-3 6h3m12-6h3m-3 6h3"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg> : <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 17h18M12 7v10"/><circle cx="12" cy="7" r="2"/><circle cx="12" cy="17" r="4"/></svg>}
-          {task.hardware}
+          目标 {task.hardware}
         </span>
         </div>
         {index < tasks.length - 1 && <svg class="next-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h17m-5-5 5 5-5 5"/></svg>}

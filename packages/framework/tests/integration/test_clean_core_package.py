@@ -55,6 +55,7 @@ class CleanCorePackageTest(unittest.TestCase):
             with zipfile.ZipFile(wheel_path) as archive:
                 names = tuple(archive.namelist())
                 self.assertIn("pivotq/__init__.py", names)
+                self.assertIn("pivotq/circuit.py", names)
                 self.assertIn("pivotq/jobs/driver.py", names)
                 self.assertIn("pivotq/_internal/__init__.py", names)
                 self.assertIn("pivotq/_internal/performance/lib/libfusion.so", names)
@@ -148,6 +149,8 @@ assert importlib.util.find_spec("ray_quantum_ir") is None
 assert importlib.util.find_spec("ray_quantum") is None
 assert pivotq.Runtime is not None
 assert pivotq.QuantumResult is not None
+assert {"QuantumCircuit", "Parameter"} <= set(dir(pivotq))
+assert importlib.util.find_spec("pivotq.circuit") is not None
 # Pure validation/preview works without any optional runtime dependencies.
 client = JobClient("http://127.0.0.1:8265")
 predictor = Predictor(library="/not-present/libfusion.so")

@@ -18,8 +18,8 @@ import math
 from pathlib import Path
 from uuid import NAMESPACE_URL, uuid5
 
-from qiskit import QuantumCircuit, qasm3, qpy
-from qiskit.circuit import Parameter
+from pivotq import QuantumCircuit, Parameter
+from pivotq.circuit import qasm3, qpy
 
 
 ADAPT_OPERATORS = ("IYZ", "YII", "YZI", "IIX", "YII")
