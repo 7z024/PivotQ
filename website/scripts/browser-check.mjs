@@ -440,7 +440,8 @@ try {
   assert.equal(new URL(await tutorialLink.getAttribute('href'), root).href, new URL('docs/aimd/', root).href);
   assert.ok(await tutorialLink.isVisible());
   assert.equal(await page.locator('main .flow-guide-tutorial').count(), 0, 'Docs overview does not embed the complete AIMD tutorial');
-  assert.match(await page.locator('.sl-markdown-content').innerText(), /docker pull janusq\/pivotq:latest[\s\S]*127\.0\.0\.1:8787/);
+  const installationLink = page.getByRole('link', { name: 'Docker 安装与启动说明', exact: true });
+  assert.equal(await installationLink.evaluate(link => link.href), new URL('docs/installation/#使用-docker-安装', root).href);
   assert.ok(await page.locator('.right-sidebar').isVisible());
   async function expandDocsGroup(label) {
     const summary = sidebar.locator('summary').filter({ hasText: new RegExp(`^${label}$`) });
@@ -454,8 +455,11 @@ try {
     assert.equal(await activeLink.count(), 1);
     assert.equal((await activeLink.innerText()).trim(), sidebarLabel);
   }
+  await sidebar.getByRole('link', { name: 'PivotQ', exact: true }).click();
+  await assertDocsLocation('architecture/', 'PivotQ');
   await sidebar.getByRole('link', { name: '安装', exact: true }).click();
   await assertDocsLocation('installation/', '安装 PivotQ', '安装');
+  assert.match(await page.locator('.sl-markdown-content').innerText(), /docker pull janusq\/pivotq:latest[\s\S]*localhost:8787/);
   assert.ok(await page.locator('.pagination-links').isVisible());
   await sidebar.getByRole('link', { name: '快速上手', exact: true }).click();
   await assertDocsLocation('quickstart/', '快速上手');

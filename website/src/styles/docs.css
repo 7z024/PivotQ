@@ -154,6 +154,81 @@ body:has(#starlight__sidebar:popover-open) .docs-sidebar-toggle { background: #e
 
 .sl-markdown-content img{border:1px solid var(--sl-color-gray-5);border-radius:6px}
 .sl-markdown-content table{font-size:.9375rem}
+.sl-markdown-content .docs-aimd-stages {
+  overflow-x: auto;
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 8px;
+}
+.sl-markdown-content .docs-aimd-stages:focus-visible {
+  outline: 2px solid var(--sl-color-accent);
+  outline-offset: 4px;
+}
+.sl-markdown-content .docs-aimd-stages table {
+  display: table;
+  overflow: visible;
+  width: 100%;
+  min-width: 42rem;
+  margin: 0;
+  table-layout: fixed;
+  border-collapse: collapse;
+  line-height: 1.6;
+}
+.docs-aimd-stage-column { width: 22%; }
+.docs-aimd-work-column { width: 64%; }
+.docs-aimd-device-column { width: 14%; }
+.sl-markdown-content .docs-aimd-stages :is(th, td) {
+  padding: 14px 16px;
+  border: 0;
+  text-align: left;
+  vertical-align: top;
+}
+.sl-markdown-content .docs-aimd-stages tr > * + * {
+  border-inline-start: 1px solid #eaf0f7;
+}
+.sl-markdown-content .docs-aimd-stages tbody tr > * {
+  border-top: 1px solid var(--sl-color-hairline);
+}
+.sl-markdown-content .docs-aimd-stages thead th {
+  background: #f3f7fc;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.sl-markdown-content .docs-aimd-stages tbody th {
+  font-weight: 400;
+  white-space: nowrap;
+}
+.sl-markdown-content .docs-aimd-stages tr > :last-child {
+  text-align: center;
+  white-space: nowrap;
+}
+.docs-device-tag {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 4px;
+  font-size: .8125rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+.docs-device-tag--cpu { color: #1765c5; background: #eaf3ff; }
+.docs-device-tag--qpu { color: #a05b16; background: #fff3e5; }
+.sl-markdown-content .docs-system-figure { margin: 1.75rem 0; }
+.sl-markdown-content .docs-system-diagram {
+  max-width: 640px;
+  margin-inline: auto;
+  overflow-x: auto;
+  border-radius: 14px;
+}
+.sl-markdown-content .docs-system-diagram:focus-visible {
+  outline: 2px solid var(--sl-color-accent);
+  outline-offset: 4px;
+}
+.sl-markdown-content .docs-system-figure figcaption {
+  max-width: 640px;
+  margin: .75rem auto 0;
+  color: var(--sl-color-gray-2);
+  font-size: .8125rem;
+  line-height: 1.65;
+}
 .sl-markdown-content p>em:only-child{display:block;color:var(--sl-color-gray-3);font-size:.875rem;text-align:center;font-style:normal}
 .docs-image-link{display:block;cursor:zoom-in}
 
@@ -229,6 +304,11 @@ body:has(#starlight__sidebar:popover-open) .docs-sidebar-toggle { background: #e
   color: var(--sl-color-accent);
   background: transparent;
   font-weight: 600;
+}
+
+#starlight__sidebar details details > summary .large,
+#starlight__sidebar details details a {
+  font-weight: 400;
 }
 
 .sidebar-content .social-icons a {

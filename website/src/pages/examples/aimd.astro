@@ -8,6 +8,8 @@ import AimdModelEquations from '../../components/AimdModelEquations.astro';
 import modelSource from '../../lib/aimd-model-source.py?raw';
 import circuitSummarySource from '../../lib/aimd-circuit-summary.py?raw';
 import circuitOutputText from '../../lib/aimd-circuit-output.txt?raw';
+import cpuSource from '../../lib/aimd-cpu-energy-force.py?raw';
+import cpuOutputText from '../../lib/aimd-cpu-output.txt?raw';
 import trajectorySource from '../../lib/aimd-trajectory-analysis.py?raw';
 import trajectoryOutputText from '../../lib/aimd-trajectory-output.txt?raw';
 import '../../styles/aimd-workbench.css';
@@ -31,6 +33,7 @@ circuit = build_circuit()
 ${circuitSummarySource.trim()}`;
 const sourceLines = source.split('\n');
 const circuitOutput = circuitOutputText.trim();
+const cpuOutput = cpuOutputText.trim();
 const trajectoryOutput = trajectoryOutputText.trim();
 const base = import.meta.env.BASE_URL;
 const lineMap = {
@@ -69,7 +72,7 @@ const chapters = [
           </dl>
           <AimdModelEquations />
           <div class="aimd-notebook-parameter-line" aria-label="从分子构型到能量预测"><span>分子构型</span><span aria-hidden="true">→</span><strong>3 个编码角</strong><span aria-hidden="true">→</span><strong>3 比特电路</strong><span aria-hidden="true">→</span><strong>经典能量模型</strong><span class="aimd-notebook-parameter-tail">电路另有 11 个模型参数</span></div>
-          <div class="aimd-notebook-prose aimd-notebook-materials"><p>本页用两份材料解释这条计算链：代码 1、2 构建可复用的三比特电路；代码 3 读取另一份归档的轨迹 CSV。上述公式说明当前仓库的默认模型。归档轨迹没有提供配套的模型权重、编码配置或执行后端记录，不能确认与该模型一致，也不能用前两段代码重现后面的能量曲线。</p></div>
+          <div class="aimd-notebook-prose aimd-notebook-materials"><p>代码 1、2 构建可复用的三比特电路；代码 3 用当前仓库的默认模型在 CPU 上计算一个构型的能量与力，与上述公式对应。代码 4 读取另一份归档的轨迹 CSV。归档轨迹没有提供配套的模型权重、编码配置或执行后端记录，不能确认与当前模型一致，也不能用前三段代码重现后面的能量曲线。</p></div>
         </section>
 
         <section class="aimd-notebook-chapter" id="circuit" aria-labelledby="circuit-heading">
@@ -103,7 +106,7 @@ const chapters = [
 
         <section class="aimd-notebook-chapter aimd-notebook-flow" id="flow" aria-labelledby="flow-heading">
           <div class="aimd-notebook-chapter-heading"><span>03</span><div><p>CPU + QPU</p><h2 id="flow-heading">计算步骤</h2></div></div>
-          <div class="aimd-notebook-prose"><p>量子阶段接收编码角和模型参数，在 Z 基与 X 基读出中各形成 7 个统计特征，而不是直接输出原子坐标或受力。原应用的经典能量模型有两层、每层 32 个单元，接收这些特征后预测势能；随后对坐标做中心有限差分并移除刚体数值残差，再由 VelocityVerlet 积分器结合所得的力更新原子位置和速度。下一时间步从新构型开始，反复经过同一计算链。图中 QPU 是量子特征阶段选择的目标设备；工作台教程里的 10 步运行实际由 CPU 数值模拟完成。</p></div>
+          <div class="aimd-notebook-prose"><p>量子阶段接收编码角和模型参数，在 Z 基与 X 基读出中各形成 7 个统计特征，而不是直接输出原子坐标或受力。原应用的经典能量模型有两层、每层 32 个单元，接收这些特征后预测势能；随后对坐标做中心有限差分并移除刚体数值残差，再由 VelocityVerlet 积分器结合所得的力更新原子位置和速度。下一时间步从新构型开始，反复经过同一计算链。图中 QPU 是量子特征阶段选择的目标设备，CPU 承担经典能量推理、求力与位置更新。</p></div>
           <div class="aimd-notebook-time-step">
             <h3>一个时间步怎样接起来</h3>
             <ol>
@@ -116,18 +119,25 @@ const chapters = [
           </div>
           <div class="aimd-notebook-prose"><p>这里的“读出特征”是对电路输出在 Z 基、X 基下取得的统计量。若在采样设备上运行，需要多次测量来估计它；理想模拟器也可直接计算期望值。一次测量只给出一组比特结果，不能直接作为分子的势能。经典能量模型接收这些特征后，才预测当前构型的能量。</p></div>
           <AimdExecutionFlow />
+          <section class="aimd-notebook-data-cell" aria-labelledby="cpu-code-heading">
+            <div class="aimd-notebook-data-heading"><span class="aimd-notebook-cell-number">代码 3</span><h3 id="cpu-code-heading">在 CPU 上计算能量与受力</h3></div>
+            <p>使用仓库已配置的 Python 环境，在 <code>applications/h2o-hybrid-aimd/</code> 目录运行本单元格。它读取默认配置与已训练模型，计算初始水分子构型的势能和三个原子的受力。下方展示实际运行输出；浏览器不执行 Python。</p>
+            <div class="aimd-notebook-data-code"><div class="aimd-notebook-data-code-heading"><span>Python · CPU</span><button type="button" data-aimd-copy data-code-source={cpuSource} title="复制 CPU 能量与受力代码" aria-label="复制 CPU 能量与受力代码" hidden><Copy size={15} aria-hidden="true" /><span data-copy-feedback aria-live="polite">复制代码</span></button></div><Code code={cpuSource.trim()} lang="python" theme="github-light" /></div>
+            <div class="aimd-notebook-data-output"><span>运行输出 / CPU · 单个构型</span><pre>{cpuOutput}</pre></div>
+            <p>CPU 负责 MLP 能量推理、中心差分求力和刚体残差投影。差分步长为 0.001 Å，中心构型加上 9 个坐标的正负扰动，共求值 19 个构型。这里只计算一次能量与力，后续位置更新由积分器完成。</p>
+          </section>
         </section>
 
         <section class="analysis-results aimd-notebook-chapter" id="results" aria-labelledby="results-heading">
           <div class="aimd-notebook-chapter-heading"><span>04</span><div><p>已保存的数据</p><h2 id="results-heading">轨迹与能量曲线</h2></div></div>
-          <div class="aimd-notebook-prose"><p>下面换用另一份归档的 CSV：它保存了每一帧的原子坐标、能量和时间，并非上方电路的同一次运行结果。代码 2 的摘要只能确认电路结构；这里的分子视图和曲线读取归档数据，并同步显示同一帧。</p><p>横轴记录 0–100 fs 的演化时间；fs 是飞秒，1 fs 等于 10⁻¹⁵ 秒。每隔 0.1 fs 保存一帧，因此 1000 个时间步连同初始构型共有 1001 帧。先看两条 O–H 键长和 H–O–H 夹角：键长增减对应伸缩，夹角变化对应弯曲。键长用 Å（埃，1 Å = 0.1 nm）表示，夹角用度表示。</p><p>能量图以 eV（电子伏特）为单位。势能对应当前原子排布，动能对应原子的运动，总能量是两者之和；温度曲线也反映运动强弱。对照同一时间的分子构型与曲线，能看到结构变化和能量、温度变化怎样相伴出现。</p></div>
+          <div class="aimd-notebook-prose"><p>下面换用另一份归档的 CSV：它保存了每一帧的原子坐标、能量和时间，并非代码 3 的运行结果。这里的分子视图和曲线读取归档数据，并同步显示同一帧。</p><p>横轴记录 0–100 fs 的演化时间；fs 是飞秒，1 fs 等于 10⁻¹⁵ 秒。每隔 0.1 fs 保存一帧，因此 1000 个时间步连同初始构型共有 1001 帧。先看两条 O–H 键长和 H–O–H 夹角：键长增减对应伸缩，夹角变化对应弯曲。键长用 Å（埃，1 Å = 0.1 nm）表示，夹角用度表示。</p><p>能量图以 eV（电子伏特）为单位。势能对应当前原子排布，动能对应原子的运动，总能量是两者之和；温度曲线也反映运动强弱。对照同一时间的分子构型与曲线，能看到结构变化和能量、温度变化怎样相伴出现。</p></div>
           <div class="aimd-notebook-frame-example"><h3>读一帧：先对齐结构与曲线</h3><p>第 0 帧的两条 O–H 键都是 0.9572 Å，H–O–H 夹角为 104.52°，温度为 300 K，总能量为 0.5912 eV。拖到 100 fs，键长分别为 1.2024 Å 和 1.1422 Å，夹角为 95.27°。与起点相比，两条键分别长了 0.2452 Å、0.1850 Å，夹角小了 9.25°。分子图显示当前形状，曲线光标指向同一帧；首末帧之差不能说明中间是否一直伸长或收缩，要沿时间轴查看完整过程。</p></div>
           <div class="aimd-notebook-background aimd-notebook-results-background" aria-label="如何理解结构与能量曲线">
             <div><h3>怎样看分子形变？</h3><p>两条 O–H 键可以一起伸缩，也可以一长一短；H–O–H 夹角改变对应弯曲。实际轨迹会把这些变化叠在一起。只比较首末两帧，不能判断中途的振动模式或频率。</p></div>
             <div><h3>总能量应当保持不变吗？</h3><p>理想的封闭、无恒温器模拟中，总能量应大体保持。恒温控制与数值积分都可能改变曲线；归档缺少原始系综和积分器设置，所以不能凭这条曲线判断能量守恒或计算精度。</p></div>
           </div>
           <section class="aimd-notebook-data-cell" aria-labelledby="trajectory-code-heading">
-            <div class="aimd-notebook-data-heading"><span class="aimd-notebook-cell-number">代码 3</span><h3 id="trajectory-code-heading">用坐标复算首末两帧</h3></div>
+            <div class="aimd-notebook-data-heading"><span class="aimd-notebook-cell-number">代码 4</span><h3 id="trajectory-code-heading">用坐标复算首末两帧</h3></div>
             <p>在下方的“数据来源与运行条件”下载两个 CSV，放到同一个 <code>imported/</code> 目录。把这段代码保存为 <code>analyze_imported.py</code>，在 Python 3.9+ 中运行 <code>python3 analyze_imported.py imported</code>。代码从原子坐标计算键长和键角，并读取相同时间步的总能量。</p>
             <div class="aimd-notebook-data-code"><div class="aimd-notebook-data-code-heading"><span>Python · 标准库</span><button type="button" data-aimd-copy data-code-source={trajectorySource} title="复制轨迹分析代码" aria-label="复制轨迹分析代码" hidden><Copy size={15} aria-hidden="true" /><span data-copy-feedback aria-live="polite">复制代码</span></button></div><Code code={trajectorySource} lang="python" theme="github-light" /></div>
             <div class="aimd-notebook-data-output"><span>运行输出 / 导入轨迹</span><pre>{trajectoryOutput}</pre></div>

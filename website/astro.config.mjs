@@ -29,8 +29,7 @@ export default defineConfig({
     social: site.githubUrl ? [{ icon: 'github', label: 'GitHub', href: site.githubUrl }] : [],
     sidebar: [
       { label: '系统介绍', items: [
-        { label: '文档首页', link: '/docs/' },
-        { label: '系统与执行方式', slug: 'docs/architecture' },
+        { label: 'PivotQ', slug: 'docs/architecture' },
       ] },
       { label: '使用文档', items: [
         { label: '入门', items: [

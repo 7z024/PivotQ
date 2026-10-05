@@ -52,7 +52,7 @@
 .flow-architecture { --cpu-color: #1765c5; --gpu-color: #087e75; --qpu-color: #a05b16; padding: 52px 0 68px; border-bottom: 1px solid #dce7f2; background: #f8fbfd; scroll-margin-top: var(--site-header-height); }
 .flow-architecture .flow-section-heading { margin-bottom: 22px; }
 .flow-architecture .flow-section-kicker { margin-bottom: 10px; }
-.flow-architecture .flow-section-heading h2 { max-width: 30em; }
+.flow-architecture .flow-section-heading h2 { max-width: 26em; text-wrap: wrap; }
 .flow-architecture [data-hardware-title="cpu"] { color: var(--cpu-color); }
 .flow-architecture [data-hardware-title="gpu"] { color: var(--gpu-color); }
 .flow-architecture [data-hardware-title="qpu"] { color: var(--qpu-color); }

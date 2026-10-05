@@ -59,7 +59,7 @@ AIMD 轨迹回放读取已保存的 CSV；电路代码、导入轨迹与教程�
 
 ## 构建与发布
 
-仓库 `.github/workflows/website.yml` 构建 `website/`，PR 仅验证，main 的推送或手动运行可发布到 GitHub Pages。配置目标为 <https://janusq.github.io/PivotQ/>；是否已发布以实际 Actions 结果和 HTTPS 访问为准。
+仓库 `.github/workflows/website.yml` 构建 `website/`。各分支推送网站相关改动时自动验证，PR 也会验证；仅 main 的推送或手动运行发布到 GitHub Pages。配置目标为 <https://janusq.github.io/PivotQ/>；是否已发布以实际 Actions 结果和 HTTPS 访问为准。
 
 ```bash
 SITE_URL=https://janusq.github.io SITE_BASE=/PivotQ/ npm run build:release

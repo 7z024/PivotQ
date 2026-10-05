@@ -2,80 +2,95 @@
 interface Props { id?: string; }
 const { id = 'system-architecture' } = Astro.props;
 ---
-<svg class="system-architecture" viewBox="0 0 560 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby={`${id}-title ${id}-description`}>
-  <title id={`${id}-title`}>量超智融合系统中的 CPU 与 QPU 协作，独立评估执行性能</title>
-  <desc id={`${id}-description`}>Python 描述科学计算任务。融合编程框架根据资源声明与任务依赖组织执行，并列连接 CPU 与 QPU。CPU 承担经典计算与模型推理，QPU 承担量子电路计算。性能模拟器以任务图与硬件配置为输入，独立估算耗时和比较配置。</desc>
+<svg class="system-architecture" viewBox="0 0 600 402" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby={`${id}-title ${id}-description`}>
+  <title id={`${id}-title`}>PivotQ 量超智融合系统架构</title>
+  <desc id={`${id}-description`}>Python 描述科学计算任务。融合编程框架根据资源声明与任务依赖组织执行，并列连接 CPU、GPU 与 QPU。CPU 承担通用计算与流程控制，GPU 承担并行计算与模型推理，QPU 执行量子电路。右侧虚线连接独立的性能模拟器，以应用提供的任务工作量和硬件配置为输入，估算耗时并比较配置。</desc>
   <defs>
     <pattern id={`${id}-grid`} width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#dfe9f6" stroke-width=".6" /></pattern>
     <marker id={`${id}-arrow`} viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="m2 1 3 3-3 3" fill="none" stroke="#7f99b7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></marker>
   </defs>
-  <rect x="1" y="1" width="558" height="438" rx="22" fill="#f5f8fd" stroke="#dce6f3" />
-  <rect x="1" y="1" width="558" height="438" rx="22" fill={`url(#${id}-grid)`} />
+  <rect x="1" y="1" width="598" height="400" rx="20" fill="#f5f8fd" stroke="#dce6f3" />
+  <rect x="1" y="1" width="598" height="400" rx="20" fill={`url(#${id}-grid)`} />
 
-  <path d="M280 98v21" class="connector" marker-end={`url(#${id}-arrow)`} />
-  <path d="M410 60h122v316H424" class="assessment-route" />
+  <path d="M300 82v23" class="connector" marker-end={`url(#${id}-arrow)`} />
+  <path d="M425 51h159v301H434" class="assessment-route" />
 
   <g>
-    <rect x="150" y="22" width="260" height="76" rx="12" fill="#fff" stroke="#cbdbee" />
-    <rect x="167" y="40" width="40" height="40" rx="9" fill="#edf3fc" />
-    <path d="m182 52-7 8 7 8m11-16 7 8-7 8" fill="none" stroke="#42698e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-    <text x="222" y="54" class="task-title">科学计算任务</text>
-    <text x="222" y="80" class="detail">Python 程序</text>
+    <rect x="175" y="20" width="250" height="62" rx="10" fill="#fff" stroke="#cbdbee" />
+    <rect x="191" y="33" width="36" height="36" rx="8" fill="#edf3fc" />
+    <path d="m204 43-7 8 7 8m10-16 7 8-7 8" fill="none" stroke="#42698e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+    <text x="240" y="46" class="task-title">科学计算任务</text>
+    <text x="240" y="66" class="detail">Python 程序</text>
   </g>
 
   <g>
-    <rect x="104" y="124" width="352" height="76" rx="13" fill="#122d48" />
-    <g fill="none" stroke="#a5c9ee" stroke-width="1.8">
-      <rect x="124" y="145" width="14" height="14" rx="3" /><rect x="151" y="161" width="14" height="14" rx="3" /><rect x="124" y="177" width="14" height="14" rx="3" />
-      <path d="M138 152h6v16h7m-13 16h6v-16" />
+    <rect x="140" y="110" width="320" height="64" rx="11" fill="#122d48" />
+    <g fill="none" stroke="#a5c9ee" stroke-width="1.6">
+      <rect x="158" y="127" width="12" height="12" rx="2.5" /><rect x="180" y="139" width="12" height="12" rx="2.5" /><rect x="158" y="151" width="12" height="12" rx="2.5" />
+      <path d="M170 133h5v12h5m-10 12h5v-12" />
     </g>
-    <text x="183" y="156" class="framework-title">融合编程框架</text>
-    <text x="183" y="182" class="framework-detail">资源声明 · 任务依赖</text>
+    <text x="210" y="138" class="framework-title">融合编程框架</text>
+    <text x="210" y="157" class="framework-detail">资源声明 · 任务依赖</text>
   </g>
 
-  <path d="M280 200v18" class="connector" />
-  <path d="M280 218H160v18" class="resource-route cpu-stroke" />
-  <path d="M280 218H400v18" class="resource-route qpu-stroke" />
-  <circle cx="280" cy="218" r="4" fill="#fff" stroke="#7f99b7" stroke-width="1.5" />
+  <path d="M300 174v28" class="connector" />
+  <path d="M300 202H115v23" class="resource-route cpu-stroke" />
+  <path d="M300 202v23" class="resource-route gpu-stroke" />
+  <path d="M300 202H485v23" class="resource-route qpu-stroke" />
+  <circle cx="300" cy="202" r="3.5" fill="#fff" stroke="#7f99b7" stroke-width="1.4" />
 
-  <g transform="translate(55 0)">
-    <rect x="15" y="236" width="180" height="76" rx="10" fill="#fff" stroke="#b5d1f5" />
-    <path d="M16 250q0-13 13-13h152q13 0 13 13" fill="none" stroke="#145bdb" stroke-width="2" />
-    <rect x="47" y="248" width="25" height="25" rx="4" fill="#eff5ff" stroke="#145bdb" stroke-width="1.3" />
-    <path d="M54 255h11v11H54ZM52 244v4m8-4v4m7-4v4m-15 25v4m8-4v4m7-4v4" class="cpu-stroke" fill="none" stroke-width="1.2" />
-    <text x="85" y="268" class="resource-title cpu">CPU</text>
-    <text x="105" y="294" class="resource-detail" text-anchor="middle">经典计算 · 模型推理</text>
-    <circle cx="105" cy="236" r="3" fill="#145bdb" />
+  <g transform="translate(32 225)">
+    <rect width="166" height="68" rx="9" fill="#fff" stroke="#b5d1f5" />
+    <path d="M1 13Q1 1 13 1H153Q165 1 165 13" class="cpu-stroke" fill="none" stroke-width="1.8" />
+    <rect x="39" y="13" width="24" height="24" rx="4" fill="#eff5ff" stroke="#1765c5" stroke-width="1.2" />
+    <path d="M46 20h10v10H46ZM44 9v4m7-4v4m7-4v4m-14 24v4m7-4v4m7-4v4" class="cpu-stroke" fill="none" stroke-width="1.1" />
+    <text x="76" y="33" class="resource-title cpu">CPU</text>
+    <text x="83" y="55" class="resource-detail" text-anchor="middle">通用计算 · 流程控制</text>
+    <circle cx="83" r="2.7" fill="#1765c5" />
   </g>
-  <g transform="translate(-55 0)">
-    <rect x="365" y="236" width="180" height="76" rx="10" fill="#fff" stroke="#cfc3e5" />
-    <path d="M366 250q0-13 13-13h152q13 0 13 13" fill="none" stroke="#7152ad" stroke-width="2" />
-    <rect x="397" y="248" width="25" height="25" rx="4" fill="#f5f1fb" stroke="#7152ad" stroke-width="1.3" />
-    <g class="qpu-stroke" fill="none" stroke-width="1.3"><path d="M401 257h17m-17 8h17m-8-8v8" /><circle cx="410" cy="265" r="3" /></g>
-    <circle cx="410" cy="257" r="2.3" fill="#7152ad" />
-    <text x="435" y="268" class="resource-title qpu">QPU</text>
-    <text x="455" y="294" class="resource-detail" text-anchor="middle">量子电路</text>
-    <circle cx="455" cy="236" r="3" fill="#7152ad" />
+  <g transform="translate(217 225)">
+    <rect width="166" height="68" rx="9" fill="#fff" stroke="#abd7d0" />
+    <path d="M1 13Q1 1 13 1H153Q165 1 165 13" class="gpu-stroke" fill="none" stroke-width="1.8" />
+    <rect x="39" y="13" width="24" height="24" rx="4" fill="#edf8f5" stroke="#087e75" stroke-width="1.2" />
+    <path d="M45 19h5v5h-5Zm8 0h5v5h-5Zm-8 8h5v5h-5Zm8 0h5v5h-5Z" class="gpu-stroke" fill="none" stroke-width="1.1" />
+    <text x="76" y="33" class="resource-title gpu">GPU</text>
+    <text x="83" y="55" class="resource-detail" text-anchor="middle">并行计算 · 模型推理</text>
+    <circle cx="83" r="2.7" fill="#087e75" />
+  </g>
+  <g transform="translate(402 225)">
+    <rect width="166" height="68" rx="9" fill="#fff" stroke="#e1c7aa" />
+    <path d="M1 13Q1 1 13 1H153Q165 1 165 13" class="qpu-stroke" fill="none" stroke-width="1.8" />
+    <rect x="39" y="13" width="24" height="24" rx="4" fill="#fff6eb" stroke="#a05b16" stroke-width="1.2" />
+    <g class="qpu-stroke" fill="none" stroke-width="1.2"><path d="M43 21h16m-16 9h16m-8-9v9" /><circle cx="51" cy="30" r="3" /></g>
+    <circle cx="51" cy="21" r="2.3" fill="#a05b16" />
+    <text x="76" y="33" class="resource-title qpu">QPU</text>
+    <text x="83" y="55" class="resource-detail" text-anchor="middle">量子电路</text>
+    <circle cx="83" r="2.7" fill="#a05b16" />
   </g>
 
   <g>
-    <rect x="136" y="338" width="288" height="76" rx="9" fill="#fff" stroke="#bdcede" stroke-dasharray="4 3" />
-    <path d="M154 390v-9m8 9v-17m8 17v-25" stroke="#5a7c9d" stroke-width="3" />
-    <text x="188" y="370" class="simulator-title">性能模拟器</text>
-    <text x="188" y="396" class="simulator-detail">耗时估算与配置比较</text>
-    <text x="478" y="367" class="assessment-label" text-anchor="middle">独立评估</text>
+    <rect x="166" y="321" width="268" height="62" rx="9" fill="#fff" stroke="#bdcede" stroke-dasharray="4 3" />
+    <path d="M184 363v-9m8 9v-17m8 17v-25" stroke="#5a7c9d" stroke-width="2.6" />
+    <text x="220" y="347" class="simulator-title">性能模拟器</text>
+    <text x="220" y="367" class="simulator-detail">耗时估算与配置比较</text>
+    <text x="504" y="340" class="assessment-label" text-anchor="middle">独立评估</text>
   </g>
 </svg>
 <style>
-  .system-architecture{display:block;width:100%;height:auto;--diagram-title-size:22px;--diagram-detail-size:14px}
-  text{font-family:"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;fill:#122d48}
-  .connector{fill:none;stroke:#7f99b7;stroke-width:1.6}
-  .assessment-route{fill:none;stroke:#9bb0c8;stroke-width:1.4;stroke-dasharray:4 5}
-  .resource-route{fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-  .task-title,.framework-title,.resource-title,.simulator-title{font-size:var(--diagram-title-size);font-weight:600}
-  .detail,.framework-detail,.resource-detail,.simulator-detail,.assessment-label{font-size:var(--diagram-detail-size);font-weight:400;fill:#42617e}
-  .framework-title{fill:#fff}.framework-detail{fill:#d5e5f5}
-  .cpu{fill:#145bdb}.qpu{fill:#7152ad}
-  .cpu-stroke{stroke:#145bdb}.qpu-stroke{stroke:#7152ad}
-  @media(max-width:760px){.system-architecture{--diagram-title-size:24px;--diagram-detail-size:15px}}
+  .system-architecture { display: block; width: 100%; min-width: 560px; height: auto; }
+  text { font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif; fill: #122d48; }
+  .connector { fill: none; stroke: #7f99b7; stroke-width: 1.5; }
+  .assessment-route { fill: none; stroke: #9bb0c8; stroke-width: 1.3; stroke-dasharray: 4 5; }
+  .resource-route { fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .task-title, .framework-title, .simulator-title { font-size: 16px; font-weight: 600; }
+  .resource-title { font-size: 18px; font-weight: 600; }
+  .detail, .framework-detail, .resource-detail, .simulator-detail, .assessment-label { font-size: 12.5px; font-weight: 400; fill: #42617e; }
+  .framework-title { fill: #fff; }
+  .framework-detail { fill: #d5e5f5; }
+  .cpu { fill: #1765c5; }
+  .gpu { fill: #087e75; }
+  .qpu { fill: #a05b16; }
+  .cpu-stroke { stroke: #1765c5; }
+  .gpu-stroke { stroke: #087e75; }
+  .qpu-stroke { stroke: #a05b16; }
 </style>
